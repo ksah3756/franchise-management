@@ -36,6 +36,11 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
     annotationProcessor 'org.projectlombok:lombok'
+
+    // NoSQL
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+
 }
 
 tasks.named('test') {
