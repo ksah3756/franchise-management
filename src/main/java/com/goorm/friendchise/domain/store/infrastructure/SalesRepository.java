@@ -1,7 +1,12 @@
 package com.goorm.friendchise.domain.store.infrastructure;
 
 import com.goorm.friendchise.domain.store.domain.Sales;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SalesRepository extends MongoRepository<Sales, String> {
+import java.util.List;
+
+public interface SalesRepository extends JpaRepository<Sales, Long> {
+
+    List<Sales> findAllByStoreId(Long storeId, Pageable pageable);
 }

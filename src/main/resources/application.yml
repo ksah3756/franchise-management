@@ -13,7 +13,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       default_batch_fetch_size: 1000
       jdbc:
         time_zone: Asia/Seoul
@@ -23,9 +23,12 @@ spring:
     defer-datasource-initialization: true
     show-sql: true
     open-in-view: false
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/testdb
+
+kakao:
+  apiKey: ${KAKAO_API_KEY}
+  api:
+    findPosition: /search/address.json
+    convert-position-into-info: /geo/coord2regioncode.JSON
 
 jwt:
   issuer: ${JWT_ISSUER}

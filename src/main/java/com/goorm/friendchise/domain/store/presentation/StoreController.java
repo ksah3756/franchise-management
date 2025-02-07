@@ -1,6 +1,7 @@
 package com.goorm.friendchise.domain.store.presentation;
 
 import com.goorm.friendchise.domain.store.application.StoreService;
+import com.goorm.friendchise.domain.store.dto.StoreReqDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,13 +9,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/store")
+@RequestMapping("/store")
 public class StoreController {
 
     private final StoreService storeService;
 
 //    @PostMapping
-//    public ResponseEntity createStore() {
+//    public ResponseEntity searchAddress(@RequestParam String address) {
 //
 //    }
 //
