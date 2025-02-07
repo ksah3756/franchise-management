@@ -22,7 +22,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-
       - name: Build with Gradle
         run: ./gradlew clean build
 
@@ -55,5 +54,8 @@ jobs:
               -e SPRING_DATASOURCE_URL=jdbc:mysql://database-1.chgq0y8mip6h.ap-northeast-2.rds.amazonaws.com:3306/mydb \
               -e SPRING_DATASOURCE_USERNAME=root \
               -e SPRING_DATASOURCE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
+              -e JWT_ISSUER=${{ secrets.JWT_ISSUER }} \
+              -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+              -e KAKAO_API_KEY=${{ secrets.KAKAO_API_KEY }} \
               -p 8080:8080 \
               ${{ secrets.DOCKER_USERNAME }}/your-app:${{ github.sha }}
