@@ -37,6 +37,9 @@ dependencies {
 
     annotationProcessor 'org.projectlombok:lombok'
 
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
     // NoSQL
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 

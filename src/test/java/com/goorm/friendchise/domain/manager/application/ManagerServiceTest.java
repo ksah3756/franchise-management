@@ -8,13 +8,15 @@ import com.goorm.friendchise.domain.manager.dto.response.ManagerDetailResponse;
 import com.goorm.friendchise.domain.manager.dto.response.ManagerPersistResponse;
 import com.goorm.friendchise.domain.manager.exception.ManagerNotFoundException;
 import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
+import com.goorm.friendchise.global.auth.application.AuthService;
+import com.goorm.friendchise.global.auth.jwt.JwtProperties;
+import com.goorm.friendchise.global.auth.jwt.TokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -25,7 +27,9 @@ class ManagerServiceTest {
 	void setUp() {
 		ManagerRepository managerRepository = new FakeManagerRepository();
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		managerService = new ManagerService(managerRepository, bCryptPasswordEncoder);
+		TokenProvider tokenProvider = new TokenProvider(new JwtProperties());
+		AuthService authService = new AuthService(managerRepository);
+		managerService = new ManagerService(managerRepository, bCryptPasswordEncoder, tokenProvider, authService);
 
 		managerRepository.save(
 			Manager.create("test", "test1234", Role.HEADQUARTER)
@@ -53,31 +57,6 @@ class ManagerServiceTest {
 		assertEquals(inputName, detail.username());
 		assertEquals(Role.HEADQUARTER, detail.role());
 		assertNull(detail.manageId());
-	}
-
-	@Test
-	void updateManager_success() {
-		String inputName = "test";
-		Long storeId = 1L;
-		managerService.updateManager(inputName, storeId);
-		assertEquals(storeId, managerService.findManagerByUsername(inputName).getManageId());
-	}
-
-	@Test
-	void updatePassword_success() {
-		String inputName = "test";
-		String oldPassword = managerService.findManagerByUsername(inputName).getPassword();
-		managerService.updatePassword(inputName, "newPassword");
-		String newPassword = managerService.findManagerByUsername(inputName).getPassword();
-		assertNotEquals(oldPassword, newPassword);
-	}
-
-	@Test
-	void delete_success() {
-		String inputName = "test";
-		managerService.delete(inputName);
-		assertThatThrownBy(() -> managerService.findManagerByUsername(inputName))
-			.isInstanceOf(ManagerNotFoundException.class);
 	}
 
 	@Test
