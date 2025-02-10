@@ -1,9 +1,11 @@
 package com.goorm.friendchise.domain.headquarter.appilcation;
 
+import com.goorm.friendchise.domain.headquarter.domain.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.dto.HeadquarterReqDto;
-import com.goorm.friendchise.domain.headquarter.dto.HeadquarterResDto;
+import com.goorm.friendchise.domain.headquarter.domain.SubCategory;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDto;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDto;
 import com.goorm.friendchise.domain.headquarter.insfrastructure.FakeHeadquarterRepository;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
@@ -13,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class HeadquarterServiceTest {
     private HeadquarterService headquarterService;
@@ -28,7 +29,7 @@ class HeadquarterServiceTest {
     @DisplayName("성공적으로 본사를 생성한다.")
     void createHeadquarter() {
         // given
-        HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test");
+        HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "패스트푸드", "");
 
         // when
         HeadquarterResDto headquarter = headquarterService.createHeadquarter(headquarterReqDto);
@@ -43,14 +44,40 @@ class HeadquarterServiceTest {
         // given
         Headquarter headquarter = Headquarter.builder()
                 .franchiseName("test")
+                .category(Category.FASTFOOD)
+                .subCategory(SubCategory.NONE)
                 .build();
         headquarterRepository.save(headquarter);
 
         // when, then
-        HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test");
+        HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "패스트푸드", "");
         assertThatThrownBy(() -> headquarterService.createHeadquarter(headquarterReqDto))
                 .isInstanceOf(CustomException.class)
                 .hasFieldOrPropertyWithValue("errorCode", ErrorCode.FRANCHISE_NAME_DUPLICATION);
+    }
+
+    @Test
+    @DisplayName("카테고리 정보가 정의되어 있지 않을 경우 예외를 던진다.")
+    void createHeadquarter_noCategory() {
+        // given
+        HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "", "");
+
+        // when, then
+        assertThatThrownBy(() -> headquarterService.createHeadquarter(headquarterReqDto))
+                .isInstanceOf(CustomException.class)
+                .hasFieldOrPropertyWithValue("errorCode", ErrorCode.FRANCHISE_CATEGORY_NOT_FOUND);
+    }
+
+    @Test
+    @DisplayName("서브 카테고리 정보가 정의되어 있지 않을 경우 예외를 던진다.")
+    void createHeadquarter_noSubCategory() {
+        // given
+        HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "패스트푸드", "dsadsa");
+
+        // when, then
+        assertThatThrownBy(() -> headquarterService.createHeadquarter(headquarterReqDto))
+                .isInstanceOf(CustomException.class)
+                .hasFieldOrPropertyWithValue("errorCode", ErrorCode.FRANCHISE_SUBCATEGORY_NOT_FOUND);
     }
 
 
@@ -84,8 +111,8 @@ class HeadquarterServiceTest {
     }
 
     @Test
-    @DisplayName("성공적으로 본사 정보를 수정한다.")
-    void updateHeadquarter() {
+    @DisplayName("성공적으로 프랜차이즈 이름을 수정한다.")
+    void updateHeadquarterName() {
         // given
         Headquarter headquarter = Headquarter.builder()
                 .franchiseName("test")
@@ -94,13 +121,14 @@ class HeadquarterServiceTest {
         Long id = savedHeadquarter.getId();
 
         // when
-        HeadquarterResDto updatedHeadquarter = headquarterService.updateHeadquarter(id, HeadquarterReqDto.of("newTest"));
+        HeadquarterResDto updatedHeadquarter = headquarterService.updateHeadquarterName(id, HeadquarterReqDto.of("newTest", "testCategory", "testSubCategory"));
 
         // then
         assertThat(updatedHeadquarter.franchiseName()).isEqualTo("newTest");
     }
 
     @Test
+    @DisplayName("성공적으로 본사를 삭제한다.")
     void deleteHeadquarter() {
         // given
         Headquarter headquarter = Headquarter.builder()

@@ -1,31 +1,36 @@
 package com.goorm.friendchise.domain.store.application;
 
-
-
+import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
+import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
+import com.goorm.friendchise.domain.store.domain.Store;
 import com.goorm.friendchise.domain.store.dto.StoreReqDto;
 import com.goorm.friendchise.domain.store.dto.res.KakaoApiAddressResDto;
 import com.goorm.friendchise.domain.store.dto.res.KakaoApiRes;
+import com.goorm.friendchise.domain.store.dto.res.StoreRegisterDto;
 import com.goorm.friendchise.domain.store.exception.NotFoundAddressException;
 import com.goorm.friendchise.domain.store.infrastructure.SalesRepository;
 import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
+import com.goorm.friendchise.global.exception.CustomException;
+import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @Service
 @RequiredArgsConstructor
 public class StoreService {
-
 
     @Value("${kakao.api.findPosition}")
     private String findPosition;
 
     private final StoreRepository storeRepository;
     private final SalesRepository salesRepository;
+    private final HeadquarterRepository headquarterRepository;
     private final WebClient webClient;
 
     // 주소 검색 시 관련된 주소 리스트 반환
@@ -56,4 +61,17 @@ public class StoreService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public void registerStore(StoreRegisterDto req) {
+        String franchiseName = req.franchiseName();
+        Headquarter headquarter = findHeadquarterByFranchiseName(franchiseName);
+        Store store = Store.createStore(req, headquarter);
+
+        storeRepository.save(store);
+    }
+
+    private Headquarter findHeadquarterByFranchiseName(String franchiseName) {
+        return headquarterRepository.findByFranchiseName(franchiseName)
+                .orElseThrow(() -> new CustomException(ErrorCode.FRANCHISE_NOT_FOUND));
+    }
 }

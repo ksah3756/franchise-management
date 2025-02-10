@@ -1,14 +1,12 @@
 package com.goorm.friendchise.domain.headquarter.appilcation;
 
-import com.goorm.friendchise.domain.headquarter.Item.dto.ItemReqDtoList;
-import com.goorm.friendchise.domain.headquarter.Item.dto.ItemResDto;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.dto.HeadquarterReqDto;
-import com.goorm.friendchise.domain.headquarter.dto.HeadquarterResDto;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDto;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDto;
+import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
-import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,7 +45,7 @@ public class HeadquarterService {
     }
 
     @Transactional
-    public HeadquarterResDto updateHeadquarter(Long id, HeadquarterReqDto headquarterReqDto) {
+    public HeadquarterResDto updateHeadquarterName(Long id, HeadquarterReqDto headquarterReqDto) {
         Headquarter headquarter = findHeadquarterById(id);
         headquarter.updateFranchiseName(headquarterReqDto.franchiseName());
         return HeadquarterResDto.from(headquarter);
@@ -57,4 +55,13 @@ public class HeadquarterService {
     public void deleteHeadquarter(Long id) {
         headquarterRepository.deleteById(id);
     }
+
+    @Transactional(readOnly = true)
+    public List<StoreIdDto> getStoreIdList(Long id) {
+        Headquarter headquarter = findHeadquarterById(id);
+        return headquarter.getStores().stream()
+                .map(store -> StoreIdDto.of(store.getId()))
+                .toList();
+    }
+
 }

@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface JpaHeadquarterRepository extends JpaRepository<Headquarter, Long> {
 
     boolean existsByFranchiseName(@NotNull String franchiseName);
+
+    Optional<Headquarter> findByFranchiseName(String franchiseName);
 }

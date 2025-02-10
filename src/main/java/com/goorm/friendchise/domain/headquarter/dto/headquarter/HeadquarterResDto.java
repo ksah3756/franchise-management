@@ -1,4 +1,4 @@
-package com.goorm.friendchise.domain.headquarter.dto;
+package com.goorm.friendchise.domain.headquarter.dto.headquarter;
 
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 

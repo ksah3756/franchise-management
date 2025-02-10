@@ -32,4 +32,9 @@ public class HeadquarterRepositoryImpl implements HeadquarterRepository {
         jpaHeadquarterRepository.deleteById(id);
     }
 
+    @Override
+    public Optional<Headquarter> findByFranchiseName(String franchiseName) {
+        return jpaHeadquarterRepository.findByFranchiseName(franchiseName);
+    }
+
 }

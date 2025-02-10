@@ -10,4 +10,6 @@ public interface HeadquarterRepository {
     boolean existsByFranchiseName(String franchiseName);
 
     void deleteById(Long id);
+
+    Optional<Headquarter> findByFranchiseName(String franchiseName);
 }

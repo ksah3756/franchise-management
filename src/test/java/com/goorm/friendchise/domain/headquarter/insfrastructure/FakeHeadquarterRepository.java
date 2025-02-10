@@ -43,4 +43,11 @@ public class FakeHeadquarterRepository implements HeadquarterRepository {
         headquarters.removeIf(headquarter -> headquarter.getId().equals(id));
     }
 
+    @Override
+    public Optional<Headquarter> findByFranchiseName(String franchiseName) {
+        return headquarters.stream()
+                .filter(headquarter -> headquarter.getFranchiseName().equals(franchiseName))
+                .findFirst();
+    }
+
 }
