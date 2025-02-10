@@ -6,7 +6,11 @@ import java.util.Optional;
 public interface NotificationRepository {
 	List<Notification> findAll();
 
+	List<Notification> findByTargetId(Long targetId);
+
 	Notification save(Notification notification);
+
+	List<Notification> saveAll(List<Notification> notifications);
 
 	Optional<Notification> findById(Long id);
 

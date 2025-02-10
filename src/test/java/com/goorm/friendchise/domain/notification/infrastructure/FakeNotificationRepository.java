@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 public class FakeNotificationRepository implements NotificationRepository {
 	private final List<Notification> notifications = Collections.synchronizedList(new ArrayList<>());
@@ -16,6 +17,11 @@ public class FakeNotificationRepository implements NotificationRepository {
 	@Override
 	public List<Notification> findAll() {
 		return new ArrayList<>(notifications);
+	}
+
+	@Override
+	public List<Notification> findByTargetId(Long targetId) {
+		return notifications.stream().filter(notification -> notification.getTargetId().equals(targetId)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -29,6 +35,12 @@ public class FakeNotificationRepository implements NotificationRepository {
 		);
 		notifications.add(savedNotification);
 		return savedNotification;
+	}
+
+	@Override
+	public List<Notification> saveAll(List<Notification> notifications) {
+		notifications.forEach(this::save);
+		return notifications;
 	}
 
 	@Override

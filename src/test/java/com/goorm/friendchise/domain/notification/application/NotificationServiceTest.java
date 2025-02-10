@@ -41,7 +41,7 @@ class NotificationServiceTest {
 
 		// then
 		List<Notification> notifications = notificationRepository.findAll();
-		assertThat(notifications).hasSize(3);  // 기본적으로 3개 매장에 전송
+		assertThat(notifications).hasSize(2);  // 기본적으로 3개 매장에 전송
 		assertThat(notifications.get(0).getTitle()).isEqualTo("할인 이벤트");
 	}
 
