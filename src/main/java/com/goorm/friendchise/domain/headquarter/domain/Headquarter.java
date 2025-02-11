@@ -1,6 +1,7 @@
 package com.goorm.friendchise.domain.headquarter.domain;
 
 import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
+import com.goorm.friendchise.domain.manager.exception.HeadquarterAuthNotMatchException;
 import com.goorm.friendchise.domain.store.domain.Store;
 import com.goorm.friendchise.global.common.BaseEntity;
 import jakarta.persistence.*;
@@ -66,5 +67,10 @@ public class Headquarter extends BaseEntity {
 
     public void addStore(Store store) {
         this.stores.add(store);
+    }
+
+    public void validateCertificationNumber(String certificationNumber){
+		if (! this.certificationNumber.equals(certificationNumber))
+			throw new HeadquarterAuthNotMatchException();
     }
 }
