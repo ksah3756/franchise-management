@@ -43,6 +43,30 @@ public class TokenProvider {
 			.compact();
 	}
 
+	public String generateToken(String username, Duration expiredAt, String role,
+								Long userId, String category, String subCategory) {
+		Date now = new Date();
+		Date expiry = new Date(now.getTime() + expiredAt.toMillis());
+		return makeToken(now, expiry, username, role, userId, category, subCategory);
+	}
+
+	private String makeToken(Date now, Date expiry, String username, String role,
+							 Long userId, String category, String subCategory) {
+		return Jwts.builder()
+			.setHeaderParam(TYPE, JWT_TYPE)
+			.setIssuer(jwtProperties.getIssuer())
+			.setIssuedAt(now)
+			.setExpiration(expiry)
+			.setSubject(username)
+			.claim("username", username)
+			.claim("role", role)
+			.claim("userId", userId.toString())
+			.claim("category", category)
+			.claim("subCategory", subCategory)
+			.signWith(HS256, jwtProperties.getSecretKey())
+			.compact();
+	}
+
 	public boolean validateToken(String token) {
 		try {
 			Jwts.parser()
@@ -81,6 +105,21 @@ public class TokenProvider {
 	public String getUsername(String token) {
 		Claims claims = getClaims(token);
 		return claims.get("username", String.class);
+	}
+
+	public String getHeadquarterManagerId(String token) {
+		Claims claims = getClaims(token);
+		return claims.get("userId", String.class);
+	}
+
+	public String getHeadquarterCategory(String token) {
+		Claims claims = getClaims(token);
+		return claims.get("category", String.class);
+	}
+
+	public String getHeadquarterSubCategory(String token) {
+		Claims claims = getClaims(token);
+		return claims.get("subCategory", String.class);
 	}
 
 	private Claims getClaims(String token) {

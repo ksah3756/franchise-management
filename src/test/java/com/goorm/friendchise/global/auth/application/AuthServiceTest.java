@@ -1,9 +1,11 @@
 package com.goorm.friendchise.global.auth.application;
 
-import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
+import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
+import com.goorm.friendchise.domain.headquarter.insfrastructure.FakeHeadquarterRepository;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
 import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
+import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
 import com.goorm.friendchise.global.auth.jwt.JwtProperties;
 import com.goorm.friendchise.global.auth.jwt.TokenProvider;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +28,9 @@ class AuthServiceTest {
 		TokenProvider tokenProvider = new TokenProvider(new JwtProperties());
 		RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
 		FakeManagerRepository managerRepository = new FakeManagerRepository();
-		this.authService = new AuthService(managerRepository, tokenProvider, refreshTokenRepository);
+		HeadquarterRepository headquarterRepository = new FakeHeadquarterRepository();
+		this.authService = new AuthService(managerRepository, tokenProvider,
+			refreshTokenRepository, headquarterRepository);
 
 		managerRepository.save(
 			Manager.create("test", "test1234", HEADQUARTER)

@@ -47,11 +47,11 @@ class ManagerServiceTest {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		TokenProvider tokenProvider = new TokenProvider(new JwtProperties());
 		RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
-		AuthService authService = new AuthService(managerRepository, tokenProvider, refreshTokenRepository);
 		this.headquarterRepository = new FakeHeadquarterRepository();
-		managerService = new ManagerService(
-			managerRepository, bCryptPasswordEncoder, tokenProvider,
-			authService, refreshTokenRepository, headquarterRepository);
+		AuthService authService = new AuthService(managerRepository, tokenProvider,
+			refreshTokenRepository, headquarterRepository);
+		managerService = new ManagerService(managerRepository, bCryptPasswordEncoder,
+			authService, headquarterRepository);
 
 		managerRepository.save(
 			Manager.create("test", "test1234", HEADQUARTER)

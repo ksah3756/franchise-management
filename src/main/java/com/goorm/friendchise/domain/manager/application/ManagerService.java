@@ -10,17 +10,12 @@ import com.goorm.friendchise.domain.manager.dto.response.ManagerDetailResponse;
 import com.goorm.friendchise.domain.manager.dto.response.ManagerPersistResponse;
 import com.goorm.friendchise.domain.manager.exception.ManagerNotFoundException;
 import com.goorm.friendchise.global.auth.application.AuthService;
-import com.goorm.friendchise.global.auth.domain.RefreshToken;
-import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
 import com.goorm.friendchise.global.auth.dto.response.TokenResponse;
-import com.goorm.friendchise.global.auth.jwt.TokenProvider;
 import com.goorm.friendchise.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Duration;
 
 import static com.goorm.friendchise.domain.manager.domain.Role.STORE;
 import static com.goorm.friendchise.global.exception.ErrorCode.HEADQUARTER_NOT_FOUND;
@@ -32,13 +27,8 @@ import static com.goorm.friendchise.global.exception.ErrorCode.INVALID_PARAMETER
 public class ManagerService {
 	private final ManagerRepository managerRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	private final TokenProvider tokenProvider;
 	private final AuthService authService;
-	private final RefreshTokenRepository refreshTokenRepository;
 	private final HeadquarterRepository headquarterRepository;
-
-	private static final Duration REFRESH_TOKEN_EXP = Duration.ofDays(1);
-	private static final Duration ACCESS_TOKEN_EXP = Duration.ofHours(1);
 
 	public ManagerPersistResponse create(ManageCreateRequest request) {
 		// STORE일 경우 HQ의 certificationNumber 비교
@@ -64,15 +54,7 @@ public class ManagerService {
 		Manager manager = findManagerByUsername(name);
 		manager.isPasswordMatch(request.password(), bCryptPasswordEncoder);
 
-		String role = manager.getRole().name();
-		String accessToken = tokenProvider.generateToken(name, ACCESS_TOKEN_EXP, role);
-		String refreshToken = tokenProvider.generateToken(name, REFRESH_TOKEN_EXP, role);
-
-		refreshTokenRepository.save(
-			RefreshToken.of(refreshToken, manager.getId(), manager.getRole())
-		);
-
-		return TokenResponse.of(accessToken, refreshToken);
+		return authService.managerLogin(manager);
 	}
 
 	public ManagerDetailResponse detail(String username) {
