@@ -27,4 +27,8 @@ public record ChatCompletionResponseDto(
         private final int promptTokens;
         private final int completionTokens;
     }
+
+    public static ChatCompletionResponseDto of(List<Choice> choices, Usage usage) {
+        return new ChatCompletionResponseDto(choices, usage);
+    }
 }
