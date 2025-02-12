@@ -3,11 +3,13 @@ package com.goorm.friendchise.domain.manager.presentation;
 import com.goorm.friendchise.domain.manager.application.ManagerService;
 import com.goorm.friendchise.domain.manager.dto.request.ManageCreateRequest;
 import com.goorm.friendchise.domain.manager.dto.request.ManageLoginRequest;
+import com.goorm.friendchise.domain.manager.dto.request.ManagerPasswordRequest;
 import com.goorm.friendchise.domain.manager.dto.response.ManagerDetailResponse;
 import com.goorm.friendchise.domain.manager.dto.response.ManagerPersistResponse;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.dto.request.TokenReissueRequest;
 import com.goorm.friendchise.global.auth.dto.response.TokenResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,14 +33,14 @@ public class ManagerController {
 
 	@PostMapping("/register")
 	public ResponseEntity<ManagerPersistResponse> register(
-		@RequestBody ManageCreateRequest request
+		@RequestBody @Valid ManageCreateRequest request
 	) {
 		return ResponseEntity.status(CREATED).body(managerService.create(request));
 	}
 
 	@PostMapping("/login")
 	public ResponseEntity<TokenResponse> login(
-		@RequestBody ManageLoginRequest request
+		@RequestBody @Valid ManageLoginRequest request
 	) {
 		return ResponseEntity.ok(managerService.login(request));
 	}
@@ -65,9 +67,9 @@ public class ManagerController {
 
 	@PutMapping("/update/password")
 	public ResponseEntity<Void> updatePassword(
-		@RequestParam String newPassword
+		@RequestBody @Valid ManagerPasswordRequest request
 	) {
-		managerService.updatePassword(newPassword);
+		managerService.updatePassword(request.password());
 		return ResponseEntity.noContent().build();
 	}
 
@@ -79,7 +81,7 @@ public class ManagerController {
 
 	@PostMapping("/reissue")
 	public ResponseEntity<TokenResponse> reissue(
-		@RequestBody TokenReissueRequest request
+		@RequestBody @Valid TokenReissueRequest request
 	) {
 		TokenResponse response = authService.reissue(request);
 		return ResponseEntity.ok(response);

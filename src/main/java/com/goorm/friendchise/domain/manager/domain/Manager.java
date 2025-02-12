@@ -1,9 +1,12 @@
 package com.goorm.friendchise.domain.manager.domain;
 
 import com.goorm.friendchise.domain.manager.exception.PasswordNotMatchException;
-import com.goorm.friendchise.domain.store.domain.Store;
 import com.goorm.friendchise.global.common.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,7 +36,7 @@ public class Manager extends BaseEntity implements UserDetails {
 	@Column(nullable = false, unique = true, length = 50)
 	private String username;
 
-	@Column(nullable = false, length = 100)
+	@Column(nullable = false, length = 200)
 	private String password;
 
 	@Column(nullable = false)
