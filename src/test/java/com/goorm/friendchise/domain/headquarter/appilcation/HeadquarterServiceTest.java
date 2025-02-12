@@ -1,5 +1,6 @@
 package com.goorm.friendchise.domain.headquarter.appilcation;
 
+import com.goorm.friendchise.domain.headquarter.application.HeadquarterService;
 import com.goorm.friendchise.domain.headquarter.domain.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;

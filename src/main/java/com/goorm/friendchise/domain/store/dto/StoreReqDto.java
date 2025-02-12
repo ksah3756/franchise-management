@@ -1,6 +1,8 @@
 package com.goorm.friendchise.domain.store.dto;
 
+import lombok.Builder;
 
+@Builder
 public record StoreReqDto(
         String address,
         String roadAddress,
