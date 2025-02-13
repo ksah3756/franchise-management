@@ -55,8 +55,6 @@ public class StoreService {
                 .bodyToMono(KakaoApiRes.class)
                 .block();
 
-        log.info("address: {}", address);
-        log.info("message: {}", query.getDocuments().get(0).getAddress_type());
         if(query == null || query.getDocuments().isEmpty()) {
             throw new NotFoundAddressException();
         }
@@ -105,20 +103,14 @@ public class StoreService {
 
     private static List<KakaoApiAddressResDto> getCollect(KakaoApiRes query) {
         return query.getDocuments().stream()
+                .filter(doc -> doc.getRoad_address() != null)
                 .map(doc -> {
-                    String address = "";
-                    String roadAddress = "";
-                    String zoneNumber = "";
-                    Double x = 0.0;
-                    Double y = 0.0;
-                    if(doc.getRoad_address() != null) {
-                        address = doc.getAddress().getAddress_name() != null ? doc.getAddress().getAddress_name() : "";
-                        roadAddress = doc.getRoad_address().getAddress_name() != null ? doc.getRoad_address().getAddress_name() : "";
-                        zoneNumber = doc.getRoad_address().getZone_no() != null ? doc.getRoad_address().getZone_no() : "";
-                        x = Double.valueOf(doc.getRoad_address().getX());
-                        y = Double.valueOf(doc.getRoad_address().getY());
-                    }
-                    String dong = doc.getAddress().getRegion_3depth_name() != null ? doc.getAddress().getRegion_3depth_name() : "";
+                    String address = doc.getRoad_address().getAddress_name();
+                    String roadAddress = doc.getRoad_address().getAddress_name();
+                    String zoneNumber = doc.getRoad_address().getZone_no();
+                    Double x = Double.valueOf(doc.getRoad_address().getX());
+                    Double y = Double.valueOf(doc.getRoad_address().getY());
+                    String dong = doc.getRoad_address().getRegion_3depth_name();
                     return new KakaoApiAddressResDto(address, roadAddress, zoneNumber, dong, x, y);
                 })
                 .collect(Collectors.toList());

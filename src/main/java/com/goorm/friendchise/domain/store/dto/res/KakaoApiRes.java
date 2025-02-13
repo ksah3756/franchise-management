@@ -1,5 +1,6 @@
 package com.goorm.friendchise.domain.store.dto.res;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -9,10 +10,10 @@ import java.util.List;
 @Getter
 @ToString
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class KakaoApiRes {
 
     private List<Document> documents;
-    private Meta meta;
 
     @Getter
     public static class Document {
