@@ -91,6 +91,7 @@ public class StoreService {
         store.updateStore(req, headquarter);
     }
 
+    @Transactional
     public void deleteStore(){
         Manager currentManager = getCurrentManager();
         Store store = findIfStoreExists(currentManager);
