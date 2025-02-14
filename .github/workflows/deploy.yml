@@ -27,7 +27,7 @@ jobs:
         env:
           KAKAO_API_KEY: ${{ secrets.KAKAO_API_KEY }}
           REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-          EC2_HOST: ${{ secrets.EC2.HOST }}
+          EC2_HOST: ${{ secrets.EC2_HOST }}
 
       - name: Log in to DockerHub
         uses: docker/login-action@v2
