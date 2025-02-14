@@ -15,7 +15,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfigTest {
 
-    @Value("13.209.82.1")
+    @Value("${EC2_HOST}") //EC2와 주소가 같습니다
     private String redisHost;
 
     @Value("6379")
