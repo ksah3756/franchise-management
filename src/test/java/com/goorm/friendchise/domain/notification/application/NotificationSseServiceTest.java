@@ -10,11 +10,11 @@ import java.io.IOException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class NotificationSseServiceTest {
-	private NotificationSseService sseService;
+	private NotificationSseSender sseSender;
 
 	@BeforeEach
 	void setUp() {
-		sseService = new NotificationSseService();
+		sseSender = new NotificationSseSender();
 	}
 
 	@Test
@@ -24,7 +24,7 @@ class NotificationSseServiceTest {
 		Long targetId = 101L;
 
 		// When
-		SseEmitter emitter = sseService.subscribe(targetId);
+		SseEmitter emitter = sseSender.subscribe(targetId);
 
 		// Then
 		assertThat(emitter).isNotNull();
@@ -35,15 +35,15 @@ class NotificationSseServiceTest {
 	void sendSse() throws IOException {
 		// Given
 		Long targetId = 101L;
-		SseEmitter emitter = sseService.subscribe(targetId);
+		SseEmitter emitter = sseSender.subscribe(targetId);
 		String title = "New Promotion";
 		String content = "Promotion Content";
 
 		// When
-		sseService.sendSse(targetId, title, content);
+		sseSender.sendSse(targetId, title, content);
 
 		// Then
 		// SSEEmitter 내부 동작을 직접 검증하기 어려우므로, 로그 또는 정상 동작 확인
-		assertThat(sseService.subscribe(targetId)).isNotNull();
+		assertThat(sseSender.subscribe(targetId)).isNotNull();
 	}
 }

@@ -17,22 +17,27 @@ import java.util.List;
 public class NotificationEventHandler {
 	private final HeadquarterService headquarterService;
 	private final NotificationManager notificationManager;
-	private final NotificationSseService notificationSseService;
+	private final NotificationSseSender notificationSseSender;
 
 	@EventListener
 	public void handlePromotionCreated(PromotionCreatedEvent promotion) {
 		log.info("프로모션 생성 이벤트 감지 완료: {}", promotion);
+		List<Notification> notifications = processPromotionNotification(promotion);
+		sendNotifications(notifications);
+	}
 
+	private List<Notification> processPromotionNotification(PromotionCreatedEvent promotion) {
 		Long headquarterId = promotion.getPromotion().getHeadquarterId();
 		String title = promotion.getPromotion().getTitle();
 		String content = promotion.getPromotion().getContent();
 
 		List<StoreIdDto> storeIds = headquarterService.getStoreIdList(headquarterId);
+		return notificationManager.createNotifications(storeIds, title, content);
+	}
 
-		// 알림 생성 요청
-		List<Notification> notifications = notificationManager.createNotifications(storeIds, title, content);
-
-		// SSE 전송
-		storeIds.forEach(storeId -> notificationSseService.sendSse(storeId.id(), title, content));
+	private void sendNotifications(List<Notification> notifications) {
+		notifications.forEach(notification ->
+			notificationSseSender.sendSse(notification.getStoreId(), notification.getTitle(), notification.getContent())
+		);
 	}
 }

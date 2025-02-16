@@ -17,7 +17,7 @@ public class Notification extends BaseEntity {
 	private Long id;
 
 	@Column(nullable = false)
-	private Long targetId; // 매장 ID (무조건 STORE)
+	private Long storeId;
 
 	@Column(nullable = false, length = 100)
 	private String title;
@@ -30,7 +30,7 @@ public class Notification extends BaseEntity {
 
 	public static Notification create(Long storeId, String title, String content) {
 		return Notification.builder()
-			.targetId(storeId)
+			.storeId(storeId)
 			.title(title)
 			.content(content)
 			.isRead(false)

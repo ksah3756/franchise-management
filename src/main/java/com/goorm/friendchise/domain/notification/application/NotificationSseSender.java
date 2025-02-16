@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class NotificationSseService {
+public class NotificationSseSender {
 	private final Map<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
 
 	public void sendSse(Long targetId, String title, String content) {
@@ -43,15 +43,18 @@ public class NotificationSseService {
 		}
 
 		emitter.onCompletion(() -> {
-			log.info("SSE 연결 종료: targetId = {}", targetId);
-			emitters.remove(targetId);
+			removeEmitter("SSE 연결 종료", targetId);
 		});
 
 		emitter.onTimeout(() -> {
-			log.info("SSE 타임아웃 발생: targetId = {}", targetId);
-			emitters.remove(targetId);
+			removeEmitter("SSE 타임 아웃", targetId);
 		});
 
 		return emitter;
+	}
+
+	private void removeEmitter(String reason, Long targetId) {
+		log.info("{}: {}", reason, targetId);
+		emitters.remove(targetId);
 	}
 }
