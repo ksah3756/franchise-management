@@ -37,7 +37,7 @@ public class NotificationEventHandler {
 
 	private void sendNotifications(List<Notification> notifications) {
 		notifications.forEach(notification ->
-			notificationSseSender.sendSse(notification.getStoreId(), notification.getTitle(), notification.getContent())
+			notificationSseSender.sendSse(notification.getStoreId(), notification.getTitle(), notification.getContent(), notification.getId())
 		);
 	}
 }

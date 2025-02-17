@@ -65,6 +65,6 @@ class NotificationEventHandlerTest {
 		verify(notificationManager, times(1)).createNotifications(storeIds, title, content);
 
 		mockedNotifications.forEach(notification -> verify(notificationSseSender, times(1))
-			.sendSse(notification.getStoreId(), notification.getTitle(), notification.getContent()));
+			.sendSse(notification.getStoreId(), notification.getTitle(), notification.getContent(), notification.getId()));
 	}
 }

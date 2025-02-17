@@ -36,11 +36,12 @@ class NotificationSseServiceTest {
 		// Given
 		Long targetId = 101L;
 		SseEmitter emitter = sseSender.subscribe(targetId);
+		Long notificationId = 1L;
 		String title = "New Promotion";
 		String content = "Promotion Content";
 
 		// When
-		sseSender.sendSse(targetId, title, content);
+		sseSender.sendSse(targetId, title, content, notificationId);
 
 		// Then
 		// SSEEmitter 내부 동작을 직접 검증하기 어려우므로, 로그 또는 정상 동작 확인

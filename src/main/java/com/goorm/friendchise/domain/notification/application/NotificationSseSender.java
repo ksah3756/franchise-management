@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class NotificationSseSender {
 	private final Map<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
 
-	public void sendSse(Long targetId, String title, String content) {
+	public void sendSse(Long targetId, String title, String content, Long notificationId) {
 		SseEmitter emitter = emitters.get(targetId);
 		if (emitter == null) {
 			log.info("🚨 SSE Emitter 없음: targetId={}", targetId);
@@ -29,6 +29,7 @@ public class NotificationSseSender {
 
 			// JSON 형태로 데이터 구성
 			Map<String, String> payload = new HashMap<>();
+			payload.put("notificationId", notificationId.toString());
 			payload.put("title", title);
 			payload.put("content", content);
 
