@@ -7,8 +7,10 @@ import com.goorm.friendchise.domain.customer.dto.request.CustomerDestinationRequ
 import com.goorm.friendchise.domain.customer.dto.request.CustomerStartLocationRequest;
 import com.goorm.friendchise.domain.customer.dto.response.CustomerPersistResponse;
 import com.goorm.friendchise.domain.customer.infrastructure.FakeCustomerRepository;
+import com.goorm.friendchise.domain.customer.infrastructure.FakeStoreRepository;
 import com.goorm.friendchise.domain.location.domain.Location;
 import com.goorm.friendchise.domain.location.infrastructure.FakeLocationRepository;
+import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
 import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
@@ -35,8 +37,9 @@ public class LocationServiceTest {
         TokenProvider tokenProvider= new TokenProvider(jwtProperties);
         CustomerRepository customerRepository = new FakeCustomerRepository();
         RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
+        StoreRepository storeRepository = new FakeStoreRepository();
         AuthService authService = new AuthService(null, tokenProvider,
-                refreshTokenRepository, null,customerRepository);
+            refreshTokenRepository, null, customerRepository, storeRepository);
         locationService=new LocationService(authService,fakeLocationRepository);
         Customer customer=Customer.builder().id(1L).username("test").password("sddd").build();
         customerRepository.save(customer);
