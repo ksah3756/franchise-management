@@ -18,6 +18,7 @@ import com.goorm.friendchise.domain.headquarter.insfrastructure.FakeHeadquarterR
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
 import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
+import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
 import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
@@ -58,6 +59,9 @@ class ItemServiceTest {
     private HeadquarterRepository headquarterRepository;
 
     @Autowired
+    private StoreRepository storeRepository;
+
+    @Autowired
     private ItemRepository itemRepository;
 
     private AuthService authService;
@@ -73,7 +77,7 @@ class ItemServiceTest {
         CustomerRepository customerRepository = new FakeCustomerRepository();
         TokenProvider tokenProvider = new TokenProvider(new JwtProperties());
         RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
-        authService = new AuthService(managerRepository, tokenProvider, refreshTokenRepository, headquarterRepository, customerRepository);
+        authService = new AuthService(managerRepository, tokenProvider, refreshTokenRepository, headquarterRepository, customerRepository, storeRepository);
         itemService = new ItemService(headquarterRepository, itemRepository, authService);
     }
 

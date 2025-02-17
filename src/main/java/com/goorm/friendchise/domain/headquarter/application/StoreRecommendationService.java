@@ -10,6 +10,7 @@ import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoPlaceDto;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto.Choice;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatMessage;
+import com.goorm.friendchise.global.aop.ExecutionTime;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class StoreRecommendationService {
      * @param req 사용자의 좌표
      * @return ChatCompletionResponseDto
      */
+    @ExecutionTime
     public ChatCompletionResponseDto getRecommendation(StoreRecommendReqDto req) {
         // franchiseName, category, subCategory SecurityContextHolder 에서 가져와서 keyword로 사용
         StringBuilder sb = new StringBuilder();
