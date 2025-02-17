@@ -18,6 +18,8 @@ public class FakeHeadquarterRepository implements HeadquarterRepository {
         Headquarter savedHeadquarter = Headquarter.builder()
                 .id(sequence.getAndIncrement())
                 .franchiseName(headquarter.getFranchiseName())
+                .category(headquarter.getCategory())
+                .subCategory(headquarter.getSubCategory())
                 .build();
         headquarters.add(savedHeadquarter);
         return savedHeadquarter;
@@ -48,6 +50,12 @@ public class FakeHeadquarterRepository implements HeadquarterRepository {
         return headquarters.stream()
                 .filter(headquarter -> headquarter.getFranchiseName().equals(franchiseName))
                 .findFirst();
+    }
+
+    @Override
+    public void deleteAll() {
+        headquarters.clear();
+        sequence.set(1);
     }
 
 }

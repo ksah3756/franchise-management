@@ -2,11 +2,11 @@ package com.goorm.friendchise.domain.headquarter.application;
 
 import com.goorm.friendchise.domain.customer.domain.CustomerRepository;
 import com.goorm.friendchise.domain.customer.infrastructure.FakeCustomerRepository;
-import com.goorm.friendchise.domain.customer.infrastructure.FakeStoreRepository;
 import com.goorm.friendchise.domain.headquarter.domain.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
 import com.goorm.friendchise.domain.headquarter.domain.SubCategory;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetailResDto;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDto;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDto;
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
@@ -16,7 +16,6 @@ import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
 import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
 import com.goorm.friendchise.domain.store.domain.Store;
 import com.goorm.friendchise.domain.store.dto.StoreReqDto;
-import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
 import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
@@ -24,6 +23,7 @@ import com.goorm.friendchise.global.auth.jwt.JwtProperties;
 import com.goorm.friendchise.global.auth.jwt.TokenProvider;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,6 +33,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.goorm.friendchise.domain.manager.domain.Role.HEADQUARTER;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,6 +44,7 @@ class HeadquarterServiceTest {
 	private HeadquarterRepository headquarterRepository;
 	private AuthService authService;
 	private ManagerRepository managerRepository;
+
 	@BeforeEach
 	void setup() {
 		headquarterRepository = new FakeHeadquarterRepository();
@@ -50,9 +52,14 @@ class HeadquarterServiceTest {
 		CustomerRepository customerRepository = new FakeCustomerRepository();
 		TokenProvider tokenProvider = new TokenProvider(new JwtProperties());
 		RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
-		StoreRepository storeRepository = new FakeStoreRepository();
-		authService = new AuthService(managerRepository, tokenProvider, refreshTokenRepository, headquarterRepository, customerRepository, storeRepository);
+		authService = new AuthService(managerRepository, tokenProvider, refreshTokenRepository, headquarterRepository, customerRepository);
 		headquarterService = new HeadquarterService(authService, headquarterRepository);
+	}
+
+	@AfterEach
+	void tearDown() {
+		SecurityContextHolder.clearContext();
+		headquarterRepository.deleteAll();
 	}
 
 	private void setContextHolder(Manager manager) {
@@ -134,10 +141,10 @@ class HeadquarterServiceTest {
 		HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "패스트푸드", "");
 
 		// when
-		HeadquarterResDto headquarter = headquarterService.createHeadquarter(headquarterReqDto);
+		 HeadquarterResDto res = headquarterService.createHeadquarter(headquarterReqDto);
 
 		// then
-		assertThat(headquarter.franchiseName()).isEqualTo("test");
+		assertThat(res.franchiseName()).isEqualTo("test");
 	}
 
 	private void createManager() {
@@ -199,7 +206,7 @@ class HeadquarterServiceTest {
 		createManagerAndHeadquarter();
 
 		// when
-		HeadquarterResDto headquarterResDto = headquarterService.getHeadquarter();
+		HeadquarterDetailResDto headquarterResDto = headquarterService.getHeadquarter();
 
 		// then
 		assertThat(headquarterResDto.franchiseName()).isEqualTo("test");
@@ -218,10 +225,6 @@ class HeadquarterServiceTest {
 		Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
 		savedManager.updateManageId(savedHeadquarter.getId());
 
-		// 원래는 manager create 하고 바로 save 해야 하지만 그렇게 하면 managerId 업데이트가 repository에서 꺼내올 때 반영이 안되므로
-		// 근데 왜 안되는거지
-//		managerRepository.save(manager);
-//		setContextHolder(manager);
 		return savedHeadquarter.getId();
 	}
 
@@ -238,16 +241,19 @@ class HeadquarterServiceTest {
 	}
 
 	@Test
-	@DisplayName("성공적으로 프랜차이즈 이름을 수정한다.")
+	@DisplayName("성공적으로 프랜차이즈 정보를 수정한다.")
 	void updateHeadquarterName() {
 		// given
 		createManagerAndHeadquarter();
 
 		// when
-		HeadquarterResDto updatedHeadquarter = headquarterService.updateHeadquarterName(HeadquarterReqDto.of("newTest", "패스트푸드", ""));
+		HeadquarterResDto res = headquarterService.updateHeadquarterName(HeadquarterReqDto.of("newTest", "한식", "국밥"));
 
 		// then
-		assertThat(updatedHeadquarter.franchiseName()).isEqualTo("newTest");
+		Headquarter headquarter = headquarterRepository.findById(res.id()).orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
+		assertThat(headquarter.getFranchiseName()).isEqualTo("newTest");
+		assertThat(headquarter.getCategory()).isEqualTo(Category.KOREANFOOD);
+		assertThat(headquarter.getSubCategory()).isEqualTo(SubCategory.GOOKBAB);
 	}
 
 	@Test

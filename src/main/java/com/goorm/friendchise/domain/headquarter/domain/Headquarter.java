@@ -1,6 +1,7 @@
 package com.goorm.friendchise.domain.headquarter.domain;
 
 import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDto;
 import com.goorm.friendchise.domain.manager.exception.HeadquarterAuthNotMatchException;
 import com.goorm.friendchise.domain.store.domain.Store;
 import com.goorm.friendchise.global.common.BaseEntity;
@@ -56,8 +57,13 @@ public class Headquarter extends BaseEntity {
                 .build();
     }
 
-    public void updateFranchiseName(String franchiseName) {
-        this.franchiseName = franchiseName;
+    /*
+    * PATCH method를 구현할 때 사용하려고 만든 메소드인데, 특정 필드가 null인 경우는 없기 때문에 이렇게 했는데 만약 null인 경우가 생긴다면 로직 변경 필요
+    */
+    public void updateByRequestDto(HeadquarterReqDto headquarterReqDto) {
+        if(headquarterReqDto.franchiseName() != null) this.franchiseName = headquarterReqDto.franchiseName();
+        if(headquarterReqDto.category() != null) this.category = Category.fromString(headquarterReqDto.category());
+        if(headquarterReqDto.subCategory() != null) this.subCategory = SubCategory.fromString(headquarterReqDto.subCategory());
     }
 
     public void addItem(Item item) {

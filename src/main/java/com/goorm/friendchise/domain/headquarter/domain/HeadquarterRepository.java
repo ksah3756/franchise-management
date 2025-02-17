@@ -12,4 +12,6 @@ public interface HeadquarterRepository {
     void deleteById(Long id);
 
     Optional<Headquarter> findByFranchiseName(String franchiseName);
+
+    void deleteAll();
 }

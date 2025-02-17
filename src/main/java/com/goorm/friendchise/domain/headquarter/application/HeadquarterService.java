@@ -2,6 +2,7 @@ package com.goorm.friendchise.domain.headquarter.application;
 
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetailResDto;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDto;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDto;
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
@@ -40,9 +41,9 @@ public class HeadquarterService {
     }
 
     @Transactional(readOnly = true)
-    public HeadquarterResDto getHeadquarter() {
+    public HeadquarterDetailResDto getHeadquarter() {
         Headquarter headquarter = getHeadquarterByContext();
-        return HeadquarterResDto.from(headquarter);
+        return HeadquarterDetailResDto.from(headquarter);
     }
 
 
@@ -53,7 +54,7 @@ public class HeadquarterService {
 
         findIfMine(headquarter, currentManager);
 
-        headquarter.updateFranchiseName(headquarterReqDto.franchiseName());
+        headquarter.updateByRequestDto(headquarterReqDto);
         return HeadquarterResDto.from(headquarter);
     }
 
@@ -78,8 +79,7 @@ public class HeadquarterService {
 
     public Headquarter getHeadquarterByContext() {
         Manager currentManager = getCurrentManager();
-        Headquarter headquarter = findHeadquarterById(currentManager);
-        return headquarter;
+        return findHeadquarterById(currentManager);
     }
 
     private void checkIfFranchiseNameExists(HeadquarterReqDto headquarterReqDto) {

@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum OpenAiModel {
     GPT_4o_MINI("gpt-4o-mini"),
     GPT_4o("gpt-4o"),
-    GPT_o3_MINI("gpt-o3-mini");
+    GPT_o3_MINI("o3-mini");
 
     private final String value;
 

@@ -71,7 +71,10 @@ public class StoreRecommendationService {
         String data = sb.toString();
         log.info("openAi api에 사용될 데이터 메시지: {}", data);
 
-        return openAiApiService.requestChatCompletion(data);
+        ChatCompletionResponseDto res = openAiApiService.requestChatCompletion(data);
+        int totalTokens = res.usage().getCompletionTokens() + res.usage().getPromptTokens();
+        log.info("전체 사용 토큰 수: {}", totalTokens);
+        return res;
     }
 
     private static List<String> getUserSelectedCategory(StoreRecommendReqDto req) {
