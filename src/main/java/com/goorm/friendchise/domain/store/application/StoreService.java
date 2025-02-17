@@ -11,7 +11,6 @@ import com.goorm.friendchise.domain.store.dto.res.KakaoApiRes;
 import com.goorm.friendchise.domain.store.exception.NoAuthenticationException;
 import com.goorm.friendchise.domain.store.exception.NotFoundAddressException;
 import com.goorm.friendchise.domain.store.exception.StoreNotFoundException;
-import com.goorm.friendchise.domain.store.infrastructure.SalesRepository;
 import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.exception.CustomException;
@@ -35,7 +34,6 @@ public class StoreService {
     private String findPosition;
 
     private final StoreRepository storeRepository;
-    private final SalesRepository salesRepository;
     private final HeadquarterRepository headquarterRepository;
     private final WebClient webClient;
     private final AuthService authService;
