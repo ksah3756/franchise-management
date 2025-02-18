@@ -1,9 +1,9 @@
 package com.goorm.friendchise.domain.customer.application;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goorm.friendchise.domain.customer.domain.Customer;
 import com.goorm.friendchise.domain.customer.domain.CustomerRepository;
 import com.goorm.friendchise.domain.customer.dto.request.CustomerCreateRequest;
-import com.goorm.friendchise.domain.customer.dto.request.CustomerLoginRequest;
 import com.goorm.friendchise.domain.customer.dto.request.CustomerRecommendStoreRequest;
 import com.goorm.friendchise.domain.customer.dto.response.CustomerDetailResponse;
 import com.goorm.friendchise.domain.customer.dto.response.CustomerPersistResponse;
@@ -15,16 +15,15 @@ import com.goorm.friendchise.domain.headquarter.insfrastructure.FakeHeadquarterR
 import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
 import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
 import com.goorm.friendchise.domain.redis.config.RedisConfigTest;
-import com.goorm.friendchise.domain.store.domain.Store;
+import com.goorm.friendchise.domain.store.application.StoreService;
 import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
-import com.goorm.friendchise.global.auth.domain.RefreshToken;
 import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
-import com.goorm.friendchise.global.auth.dto.response.TokenResponse;
 import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
 import com.goorm.friendchise.global.auth.jwt.JwtProperties;
 import com.goorm.friendchise.global.auth.jwt.TokenProvider;
 import com.goorm.friendchise.global.config.WebClientConfig;
+import com.goorm.friendchise.global.redis.RedisService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +52,8 @@ public class CustomerServiceTest {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private RedisTemplate<String, Object> redisServiceRedisTemplate;
     private RefreshTokenRepository refreshTokenRepository;
     @Autowired
     private KaKaoApiService kaKaoApiService;
@@ -63,7 +64,6 @@ public class CustomerServiceTest {
     void setUp() {
         CustomerRepository customerRepository = new FakeCustomerRepository();
         ManagerRepository managerRepository = new FakeManagerRepository();
-        FakeStoreRepository fakeStoreRepository = new FakeStoreRepository();
         bCryptPasswordEncoder = new BCryptPasswordEncoder();
         CustomerCreateRequest request=new CustomerCreateRequest("testUser","testPassword");
         HeadquarterRepository headquarterRepository=new FakeHeadquarterRepository();
@@ -74,9 +74,13 @@ public class CustomerServiceTest {
         AuthService authService = new AuthService(managerRepository, tokenProvider,
                 refreshTokenRepository, headquarterRepository,customerRepository,storeRepository);
 
+        RedisService redisService = new RedisService(redisServiceRedisTemplate);
 
-        customerService = new CustomerService(customerRepository, bCryptPasswordEncoder,fakeStoreRepository,
-                kaKaoApiService,redisTemplate,authService,null);
+        StoreService storeService = new StoreService(storeRepository,null,
+                null,null,null,redisServiceRedisTemplate,new ObjectMapper());
+
+        customerService = new CustomerService(customerRepository, bCryptPasswordEncoder,
+                kaKaoApiService,redisTemplate,authService,null,redisService,storeService);
         customerService.create(request);
 
         customer=customerRepository.findByUsername("testUser").orElseThrow();
@@ -169,6 +173,12 @@ public class CustomerServiceTest {
             } catch (Exception e) {
                 System.err.println("오류 발생: " + e.getMessage());
             }
+        }
+
+        //레디스 비우기
+        for(int i=1;i<=10;i++){
+            String storeKey = "store:" + i;
+            redisTemplate.delete(storeKey);
         }
 
     }

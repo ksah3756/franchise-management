@@ -46,10 +46,10 @@ public class FakeLocationRepository implements LocationRepository
     }
 
     @Override
-    public List<Location> findByCustomerUsernameOrderByRecordedAtAsc(String username) {
+    public List<Location> findByCustomerUsernameOrderByRecordedAtDesc(String username) {
         return store.values().stream()
                 .filter(location -> location.getCustomer().getUsername().equals(username)) // username이 일치하는 Location만 필터링
-                .sorted(Comparator.comparing(Location::getRecordedAt)) // recordedAt 기준 오름차순 정렬
+                .sorted(Comparator.comparing(Location::getRecordedAt).reversed()) // recordedAt 기준 오름차순 정렬
                 .collect(Collectors.toList()); // 리스트로 반환
     }
 }

@@ -59,7 +59,8 @@ public class CustomerController
 
 
     @GetMapping("/nearest-store")
-    public ResponseEntity<String> findNearestStore(@RequestBody @Valid CustomerRecommendStoreRequest request) {
+    public ResponseEntity<String> findNearestStore(@RequestParam String address, @RequestParam String franchiseName) {
+        CustomerRecommendStoreRequest request = new CustomerRecommendStoreRequest(address, franchiseName);
         String storeAddress = customerService.findNearestStoreWithCache(request);
         return ResponseEntity.ok(storeAddress);
     }

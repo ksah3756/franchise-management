@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface JpaLocationRepository extends JpaRepository<Location, Long>
 {
-    List<Location> findByCustomerUsernameOrderByRecordedAtAsc(String username);
+    List<Location> findByCustomerUsernameOrderByRecordedAtDesc(String username);
 
 }

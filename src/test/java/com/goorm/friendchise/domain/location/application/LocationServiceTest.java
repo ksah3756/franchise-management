@@ -1,5 +1,6 @@
 package com.goorm.friendchise.domain.location.application;
 
+import com.goorm.friendchise.domain.customer.application.CustomerService;
 import com.goorm.friendchise.domain.customer.domain.Customer;
 import com.goorm.friendchise.domain.customer.domain.CustomerRepository;
 import com.goorm.friendchise.domain.customer.dto.request.CustomerCreateRequest;
@@ -40,7 +41,10 @@ public class LocationServiceTest {
         StoreRepository storeRepository = new FakeStoreRepository();
         AuthService authService = new AuthService(null, tokenProvider,
             refreshTokenRepository, null, customerRepository, storeRepository);
-        locationService=new LocationService(authService,fakeLocationRepository);
+
+        CustomerService customerService =new CustomerService(customerRepository,
+                null,null,null,null,null,null,null);
+        locationService=new LocationService(authService,fakeLocationRepository,customerService);
         Customer customer=Customer.builder().id(1L).username("test").password("sddd").build();
         customerRepository.save(customer);
 
@@ -67,6 +71,7 @@ public class LocationServiceTest {
                 new CustomerDestinationRequest(16.555555,15.222222);
         locationService.saveDestinationLocation(dRequest);
         Location dLocation=fakeLocationRepository.findAll().get(0);
+        System.out.println(dLocation.getCustomer().getMovedDistance()+"km를 걸었습니다.");
         assertEquals(15.222222, dLocation.getDestinationX());
         assertEquals(16.555555, dLocation.getDestinationY());
     }

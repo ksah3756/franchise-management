@@ -13,5 +13,5 @@ public interface LocationRepository {
 
     void delete(Location location);
 
-    List<Location> findByCustomerUsernameOrderByRecordedAtAsc(String username);
+    List<Location> findByCustomerUsernameOrderByRecordedAtDesc(String username);
 }

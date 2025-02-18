@@ -35,6 +35,9 @@ public class Customer extends BaseEntity implements UserDetails {
     @Column(nullable = false, length = 100)
     private String password;
 
+    @Builder.Default
+    private Double movedDistance = 0.0;
+
     @ElementCollection
     @Builder.Default
     private Set<Achievement> achievements = new HashSet<>();
@@ -50,5 +53,9 @@ public class Customer extends BaseEntity implements UserDetails {
         if (!passwordEncoder.matches(inputPassword, this.password)) {
             throw new PasswordNotMatchException();
         }
+    }
+
+    public void plusMovedDistance(double movedDistance) {
+        this.movedDistance+=movedDistance;
     }
 }

@@ -34,7 +34,7 @@ public class LocationRepositoryImpl implements LocationRepository
     }
 
     @Override
-    public List<Location> findByCustomerUsernameOrderByRecordedAtAsc(String username) {
-        return jpaLocationRepository.findByCustomerUsernameOrderByRecordedAtAsc(username);
+    public List<Location> findByCustomerUsernameOrderByRecordedAtDesc(String username) {
+        return jpaLocationRepository.findByCustomerUsernameOrderByRecordedAtDesc(username);
     }
 }
