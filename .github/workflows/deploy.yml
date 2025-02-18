@@ -70,7 +70,7 @@ jobs:
               -e JAVA_OPTS="-javaagent:/opt/pinpoint-agent/pinpoint-bootstrap-3.0.0.jar \
               -Dpinpoint.agentId=friendchiseAgent1 \
               -Dpinpoint.applicationName=friendchise \
-              -Dpinpoint.collector.ip=${{ secrets.COLLECTOR_IP }} \
+              -Dpinpoint.collector.ip=${{ secrets.COLLECTOR_IP }}" \
               --name my-app \
               -e SPRING_DATASOURCE_URL=jdbc:mysql://database-1.chgq0y8mip6h.ap-northeast-2.rds.amazonaws.com:3306/mydb \
               -e SPRING_DATASOURCE_USERNAME=root \
