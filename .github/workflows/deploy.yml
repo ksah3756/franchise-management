@@ -41,6 +41,7 @@ jobs:
           TAG=${{ github.sha }}
           docker build -t $IMAGE_NAME:$TAG .
           docker push $IMAGE_NAME:$TAG
+        
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.8
@@ -65,6 +66,11 @@ jobs:
 
             # 새로운 컨테이너 실행
             docker run -d \
+              -v /home/ubuntu/pinpoint/pinpoint-agent-3.0.0:/opt/pinpoint-agent \
+              -e JAVA_OPTS="-javaagent:/opt/pinpoint-agent/pinpoint-bootstrap-3.0.0.jar \
+              -Dpinpoint.agentId=friendchiseAgent1 \
+              -Dpinpoint.applicationName=friendchise \
+              -Dpinpoint.collector.ip=${{ secrets.COLLECTOR_IP }} \
               --name my-app \
               -e SPRING_DATASOURCE_URL=jdbc:mysql://database-1.chgq0y8mip6h.ap-northeast-2.rds.amazonaws.com:3306/mydb \
               -e SPRING_DATASOURCE_USERNAME=root \
