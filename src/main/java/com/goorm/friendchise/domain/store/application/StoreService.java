@@ -43,7 +43,7 @@ public class StoreService {
     private final HeadquarterRepository headquarterRepository;
     private final WebClient webClient;
     private final AuthService authService;
-	private final NotificationSseSender notificationSseSender;
+    private final NotificationSseSender notificationSseSender;
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final ObjectMapper objectMapper; // JSON 변환용
@@ -132,6 +132,8 @@ public class StoreService {
         currentManager.updateManageId(null);
         storeRepository.delete(store);
     }
+
+    /*--------------------------------------------------------------------------------*/
 
     private static List<KakaoApiAddressResDto> getCollect(KakaoApiRes query) {
         return query.getDocuments().stream()

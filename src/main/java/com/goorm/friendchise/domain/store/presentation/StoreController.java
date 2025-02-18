@@ -39,8 +39,8 @@ public class StoreController {
         return ResponseEntity.ok("Store updated successfully!");
     }
 
-    @DeleteMapping("/{storeId}")
-    public ResponseEntity deleteStore(@PathVariable("storeId") String storeId) {
+    @DeleteMapping
+    public ResponseEntity deleteStore() {
         storeService.deleteStore();
 
         return ResponseEntity.ok("Store deleted successfully!");
