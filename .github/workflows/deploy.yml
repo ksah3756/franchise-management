@@ -71,6 +71,7 @@ jobs:
               -Dpinpoint.agentId=friendchiseAgent1 \
               -Dpinpoint.applicationName=friendchise \
               -Dpinpoint.collector.ip=${{ secrets.COLLECTOR_IP }}" \
+              -Dpinpoint.config=/opt/pinpoint-agent/pinpoint-root.config \
               --name my-app \
               -e SPRING_DATASOURCE_URL=jdbc:mysql://database-1.chgq0y8mip6h.ap-northeast-2.rds.amazonaws.com:3306/mydb \
               -e SPRING_DATASOURCE_USERNAME=root \
