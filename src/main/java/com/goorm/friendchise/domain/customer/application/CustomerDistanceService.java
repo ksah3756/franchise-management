@@ -1,6 +1,7 @@
 package com.goorm.friendchise.domain.customer.application;
 
 import com.goorm.friendchise.domain.customer.domain.Customer;
+import com.goorm.friendchise.domain.customer.domain.CustomerRepository;
 import com.goorm.friendchise.domain.location.domain.Location;
 import com.goorm.friendchise.global.auth.util.DistanceCalculator;
 import lombok.RequiredArgsConstructor;
@@ -11,14 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class CustomerDistanceService {
-    private final CustomerService customerService;
-
+    private final CustomerRepository customerRepository;
 
     public void updateMovedDistance(Customer customer, Location location) {
         double distance = DistanceCalculator.calculateDistance(
                 location.getStartY(), location.getStartX(),
                 location.getDestinationY(), location.getDestinationX()
         );
-        customerService.plusMovedDistance(customer, distance);
+        customer.plusMovedDistance(distance);
+        customerRepository.save(customer);
     }
 }

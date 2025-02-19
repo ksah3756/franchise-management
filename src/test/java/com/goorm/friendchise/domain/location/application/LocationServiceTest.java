@@ -45,7 +45,7 @@ public class LocationServiceTest {
 
         CustomerService customerService =new CustomerService(customerRepository,
                 null,null,null,null,null,null,null);
-        CustomerDistanceService customerDistanceService=new CustomerDistanceService(customerService);
+        CustomerDistanceService customerDistanceService=new CustomerDistanceService(customerRepository);
         locationService=new LocationService(authService,fakeLocationRepository,customerDistanceService);
 
         Customer customer=Customer.builder().id(1L).username("test").password("sddd").build();

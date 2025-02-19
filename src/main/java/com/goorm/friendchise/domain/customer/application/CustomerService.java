@@ -184,10 +184,4 @@ public class CustomerService {
         return cachedAddress;
     }
 
-    @Transactional
-    public void plusMovedDistance(Customer customer, Double distance)
-    {
-        customer.plusMovedDistance(distance);
-        customerRepository.save(customer);
-    }
 }
