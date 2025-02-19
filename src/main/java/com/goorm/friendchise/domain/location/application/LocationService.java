@@ -1,8 +1,7 @@
 package com.goorm.friendchise.domain.location.application;
 
 
-import com.goorm.friendchise.domain.customer.application.CustomerService;
-import com.goorm.friendchise.domain.customer.application.KaKaoApiService;
+import com.goorm.friendchise.domain.customer.application.CustomerDistanceService;
 import com.goorm.friendchise.domain.customer.domain.Customer;
 import com.goorm.friendchise.domain.customer.dto.request.CustomerDestinationRequest;
 import com.goorm.friendchise.domain.customer.dto.request.CustomerStartLocationRequest;
@@ -12,8 +11,6 @@ import com.goorm.friendchise.domain.location.domain.LocationRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.jwt.JwtProperties;
 import com.goorm.friendchise.global.auth.jwt.TokenProvider;
-import com.goorm.friendchise.global.auth.util.DistanceCalculator;
-import com.goorm.friendchise.global.config.WebClientConfig;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Import;
@@ -33,7 +30,7 @@ public class LocationService
 
     private final LocationRepository locationRepository;
 
-    private final CustomerService customerService;
+    private final CustomerDistanceService customerDistanceService;
     @Transactional
     public void saveStartLocation(CustomerStartLocationRequest request)
     {
@@ -55,7 +52,7 @@ public class LocationService
             throw new CustomerException(ErrorCode.NOT_FOUND_ADDRESS);
         Location location =locationList.get(0);
         location.setDestination(request.destinationX(), request.destinationY());
-        customerService.plusMovedDistance(location.getCustomer()
-            , DistanceCalculator.calculateDistance(location.getStartY(),location.getStartX(),location.getDestinationY(),location.getDestinationX()));
+
+        customerDistanceService.updateMovedDistance(location.getCustomer(),location);
     }
 }

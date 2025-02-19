@@ -1,5 +1,6 @@
 package com.goorm.friendchise.domain.location.application;
 
+import com.goorm.friendchise.domain.customer.application.CustomerDistanceService;
 import com.goorm.friendchise.domain.customer.application.CustomerService;
 import com.goorm.friendchise.domain.customer.domain.Customer;
 import com.goorm.friendchise.domain.customer.domain.CustomerRepository;
@@ -44,7 +45,9 @@ public class LocationServiceTest {
 
         CustomerService customerService =new CustomerService(customerRepository,
                 null,null,null,null,null,null,null);
-        locationService=new LocationService(authService,fakeLocationRepository,customerService);
+        CustomerDistanceService customerDistanceService=new CustomerDistanceService(customerService);
+        locationService=new LocationService(authService,fakeLocationRepository,customerDistanceService);
+
         Customer customer=Customer.builder().id(1L).username("test").password("sddd").build();
         customerRepository.save(customer);
 
