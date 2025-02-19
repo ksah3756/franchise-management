@@ -69,4 +69,9 @@ public class HeadquarterController {
         return ResponseEntity.ok().body(storeRecommendationService.getRecommendation(req));
     }
 
+    @PostMapping("/store-recommendation-dummy")
+    public ResponseEntity<ChatCompletionResponseDto> getRecommendationResultDummy(@Valid @RequestBody StoreRecommendReqDto req) throws InterruptedException {
+        return ResponseEntity.ok().body(storeRecommendationService.getRecommendationDummy(req));
+    }
+
 }

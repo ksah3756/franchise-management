@@ -79,6 +79,15 @@ public class StoreRecommendationService {
         return res;
     }
 
+    public ChatCompletionResponseDto getRecommendationDummy(StoreRecommendReqDto req) throws InterruptedException {
+        // 카카오 API 호출
+        Thread.sleep(100);
+        // OpenAI API 호출
+        Thread.sleep(5000);
+
+        return ChatCompletionResponseDto.of(List.of(), new ChatCompletionResponseDto.Usage(0, 0));
+    }
+
     private static List<String> getUserSelectedCategory(StoreRecommendReqDto req) {
         List<String> userSelectedCategory;
         if(req.userSelectedCategory() == null) userSelectedCategory = List.of();

@@ -73,7 +73,8 @@ public class SecurityConfig {
 		"/customer/**",
 		"/manager/**",
 		"/notifications/**",
-		"/promotions/**"
+		"/promotions/**",
+			"/headquarter/store-recommendation-dummy"
 	};
 
 	CorsConfigurationSource corsConfigurationSource() {
