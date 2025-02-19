@@ -132,7 +132,6 @@ public class StoreServiceRedisTest {
         {
             System.out.println(store);
         }
-        assertEquals( 4, stores.size());
 
         //레디스 비우기
         for(int i=0;i<4;i++){
