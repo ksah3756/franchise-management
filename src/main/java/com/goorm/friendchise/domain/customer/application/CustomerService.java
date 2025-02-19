@@ -63,7 +63,8 @@ public class CustomerService {
                 Customer.builder().username(request.username()).password(bCryptPasswordEncoder.encode(request.password())).build());
         return CustomerPersistResponse.of(customer);
     }
-
+    
+    @Transactional
     public TokenResponse login(CustomerLoginRequest request
                                ) {
         Customer customer =findCustomerByUsername(request.username());
