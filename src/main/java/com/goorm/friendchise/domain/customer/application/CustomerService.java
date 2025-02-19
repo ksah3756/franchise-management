@@ -75,6 +75,7 @@ public class CustomerService {
         return authService.customerLogin(customer);
     }
 
+    @Transactional
     public void logout(CustomerDestinationRequest request)
     {
         locationService.saveDestinationLocation(request);
