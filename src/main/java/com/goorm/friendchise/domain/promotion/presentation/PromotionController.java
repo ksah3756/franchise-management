@@ -5,6 +5,7 @@ import com.goorm.friendchise.domain.promotion.dto.request.PromotionCreateRequest
 import com.goorm.friendchise.domain.promotion.dto.response.PromotionDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/promotions")
 @RequiredArgsConstructor
+@Secured("ROLE_HEADQUARTER")
 public class PromotionController {
 	private final PromotionService promotionService;
 

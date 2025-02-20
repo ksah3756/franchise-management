@@ -62,11 +62,6 @@ public class ManagerService {
 		return authService.managerLogin(manager);
 	}
 
-	public ManagerDetailResponse detail(String username) {
-		Manager manager = findManagerByUsername(username);
-		return ManagerDetailResponse.from(manager);
-	}
-
 	public ManagerDetailResponse mypage() {
 		Manager manager = authService.findManagerByAuth();
 

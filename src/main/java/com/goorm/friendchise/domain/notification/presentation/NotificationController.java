@@ -6,6 +6,7 @@ import com.goorm.friendchise.domain.notification.dto.response.NotificationRespon
 import com.goorm.friendchise.domain.notification.dto.response.ReceivedNotificationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/notifications")
 @RequiredArgsConstructor
+@Secured("ROLE_STORE")
 public class NotificationController {
 	private final NotificationManager notificationManager;
 	private final NotificationSseSender notificationSseSender;

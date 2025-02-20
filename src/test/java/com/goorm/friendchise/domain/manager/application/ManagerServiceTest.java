@@ -156,23 +156,6 @@ class ManagerServiceTest {
 	}
 
 	@Test
-	@DisplayName("detail은 입력된 username으로 ManagerDetailResponse를 반환")
-	void detail_success() {
-		// given
-		String inputName = "test";
-
-		// when
-		ManagerDetailResponse detail = managerService.detail(inputName);
-
-		// then
-		assertNotNull(detail);
-		assertEquals(1L, detail.id());
-		assertEquals(inputName, detail.username());
-		assertEquals(HEADQUARTER, detail.role());
-		assertEquals(1L, detail.manageId());
-	}
-
-	@Test
 	@DisplayName("mypage는 SecurityContextHolder의 정보로 ManagerDetailResponse를 반환")
 	void mypage_success() {
 		// when

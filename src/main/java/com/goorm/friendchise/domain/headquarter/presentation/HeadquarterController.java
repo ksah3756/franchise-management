@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -34,39 +35,46 @@ public class HeadquarterController {
     private final ItemService itemService;
     private final StoreRecommendationService storeRecommendationService;
 
+    @Secured("ROLE_HEADQUARTER")
     @PostMapping("/register")
     public ResponseEntity<HeadquarterResDto> createHeadquarter(@Valid @RequestBody HeadquarterReqDto headquarterReqDto) {
         return ResponseEntity.created(URI.create("/headquarter")).body(headquarterService.createHeadquarter(headquarterReqDto));
     }
 
+    @Secured("ROLE_HEADQUARTER")
     @GetMapping
     public ResponseEntity<HeadquarterDetailResDto> getHeadquarter() {
         return ResponseEntity.ok().body(headquarterService.getHeadquarter());
     }
 
     // 엔티티 전체 필드가 들어오는 경우 PUT, 일부만 들어오는 경우 PATCH로 구분하는게 맞을거같은데..그냥 PATCH로 구현
+    @Secured("ROLE_HEADQUARTER")
     @PatchMapping("/update")
     public ResponseEntity<HeadquarterResDto> updateHeadquarter(@Valid @RequestBody HeadquarterReqDto headquarterReqDto) {
         return ResponseEntity.ok().body(headquarterService.updateHeadquarterName(headquarterReqDto));
     }
 
+    @Secured("ROLE_HEADQUARTER")
     @DeleteMapping
     public ResponseEntity<Void> deleteHeadquarter() {
         headquarterService.deleteHeadquarter();
         return ResponseEntity.ok().body(null);
     }
 
+    @Secured("ROLE_HEADQUARTER")
     @PageableAsQueryParam
     @GetMapping("/items")
     public ResponseEntity<Slice<ItemResDto>> getItems(Pageable pageable) {
         return ResponseEntity.ok().body(itemService.getItemsNative(pageable));
     }
 
+    @Secured("ROLE_HEADQUARTER")
     @PostMapping("/items/register")
     public ResponseEntity<List<ItemResDto>> createItems(@Valid @RequestBody ItemReqDtoList itemReqDtoList) {
         return ResponseEntity.created(URI.create("/headquarter/items")).body(itemService.createItems(itemReqDtoList));
     }
 
+    @Secured("ROLE_HEADQUARTER")
     @PostMapping("/store-recommendation")
     public ResponseEntity<ChatCompletionResponseDto> getRecommendationResult(@Valid @RequestBody StoreRecommendReqDto req) {
         return ResponseEntity.ok().body(storeRecommendationService.getRecommendation(req));
