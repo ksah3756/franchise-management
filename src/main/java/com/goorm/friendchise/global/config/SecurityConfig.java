@@ -73,7 +73,8 @@ public class SecurityConfig {
 		"*/login",
 		"*/reissue",
 		"/headquarter/store-recommendation-dummy",
-		"/headquarter/store-recommendation-stream"
+		"/headquarter/store-recommendation-stream",
+		"/notifications/subscribe/**"
 	};
 
 	CorsConfigurationSource corsConfigurationSource() {

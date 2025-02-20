@@ -9,6 +9,7 @@ import com.goorm.friendchise.domain.notification.dto.response.ReceivedNotificati
 import com.goorm.friendchise.domain.notification.event.NotificationDeletedEvent;
 import com.goorm.friendchise.domain.notification.event.NotificationReadEvent;
 import com.goorm.friendchise.global.auth.application.AuthService;
+import com.goorm.friendchise.global.auth.jwt.TokenProvider;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class NotificationManager {
 	private final NotificationRepository repository;
 	private final AuthService authService;
 	private final ApplicationEventPublisher eventPublisher;
+	private final TokenProvider tokenProvider;
 
 	private Manager getAuthStoreManager() {
 		Manager manager = authService.findManagerByAuth();
@@ -34,6 +36,13 @@ public class NotificationManager {
 			throw new CustomException(ErrorCode.NO_STORE_AUTHENTICATION_ERROR);
 		}
 		return manager;
+	}
+
+	protected void verifyRole(String token) {
+		String role = tokenProvider.getStoreRole(token);
+		if (!role.equals("STORE")) {
+			throw new CustomException(ErrorCode.NO_STORE_AUTHENTICATION_ERROR);
+		}
 	}
 
 	public List<Notification> createNotifications(List<StoreIdDto> storeIds, String title, String content) {

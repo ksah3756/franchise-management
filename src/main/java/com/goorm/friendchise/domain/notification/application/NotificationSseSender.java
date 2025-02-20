@@ -17,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class NotificationSseSender {
 	private final Map<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
 	private final ObjectMapper objectMapper;
+	private final NotificationManager notificationManager;
 
 	public void sendSse(Long targetId, String title, String content, Long notificationId) {
 		SseEmitter emitter = emitters.get(targetId);
@@ -41,7 +42,9 @@ public class NotificationSseSender {
 		}
 	}
 
-	public SseEmitter subscribe(Long targetId) {
+	public SseEmitter subscribe(Long targetId, String token) {
+		notificationManager.verifyRole(token);
+
 		SseEmitter emitter = new SseEmitter(30 * 60 * 1000L);
 		emitters.put(targetId, emitter);
 		log.info("Subscription successful for targetId: {}", targetId);

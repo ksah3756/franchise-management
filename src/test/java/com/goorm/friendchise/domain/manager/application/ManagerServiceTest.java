@@ -17,6 +17,7 @@ import com.goorm.friendchise.domain.manager.dto.response.ManagerPersistResponse;
 import com.goorm.friendchise.domain.manager.exception.HeadquarterAuthNotMatchException;
 import com.goorm.friendchise.domain.manager.exception.ManagerNotFoundException;
 import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
+import com.goorm.friendchise.domain.notification.application.NotificationManager;
 import com.goorm.friendchise.domain.notification.application.NotificationSseSender;
 import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
@@ -28,6 +29,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -54,7 +56,8 @@ class ManagerServiceTest {
 		RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
 		CustomerRepository customerRepository = new FakeCustomerRepository();
 		this.headquarterRepository = new FakeHeadquarterRepository();
-		NotificationSseSender notificationSseSender = new NotificationSseSender(new ObjectMapper());
+		NotificationManager notificationManager = Mockito.mock(NotificationManager.class);
+		NotificationSseSender notificationSseSender = new NotificationSseSender(new ObjectMapper(), notificationManager);
 		StoreRepository storeRepository = new FakeStoreRepository();
 		AuthService authService = new AuthService(managerRepository, tokenProvider,
 			refreshTokenRepository, headquarterRepository, customerRepository, storeRepository);

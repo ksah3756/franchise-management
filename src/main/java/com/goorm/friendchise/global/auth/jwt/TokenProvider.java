@@ -142,6 +142,11 @@ public class TokenProvider {
 		return claims.get("subCategory", String.class);
 	}
 
+	public String getStoreRole(String token) {
+		Claims claims = getClaims(token);
+		return claims.get("role", String.class);
+	}
+
 	private Claims getClaims(String token) {
 		return Jwts.parser()
 			.setSigningKey(jwtProperties.getSecretKey())

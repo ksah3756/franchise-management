@@ -7,6 +7,7 @@ import com.goorm.friendchise.domain.notification.domain.Notification;
 import com.goorm.friendchise.domain.notification.dto.response.ReceivedNotificationResponse;
 import com.goorm.friendchise.domain.notification.infrastructure.FakeNotificationRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
+import com.goorm.friendchise.global.auth.jwt.TokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,13 +24,14 @@ class NotificationManagerTest {
 	private FakeNotificationRepository repository;
 	private AuthService authService;
 	private ApplicationEventPublisher eventPublisher;
-
+	private TokenProvider tokenProvider;
 	@BeforeEach
 	void setUp() {
 		repository = new FakeNotificationRepository();
 		authService = Mockito.mock(AuthService.class);
 		eventPublisher = Mockito.mock(ApplicationEventPublisher.class);
-		notificationManager = new NotificationManager(repository, authService, eventPublisher);
+		tokenProvider = Mockito.mock(TokenProvider.class);
+		notificationManager = new NotificationManager(repository, authService, eventPublisher,tokenProvider);
 	}
 
 	@Test
