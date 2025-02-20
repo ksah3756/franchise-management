@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/store")
-@Secured("ROLE_STORE")
 public class SalesController {
 
     private final SalesService salesService;
 
+    @Secured("ROLE_STORE")
     @PostMapping("/{storeId}/sales")
     public ResponseEntity<String> registerSale(@PathVariable("storeId") Long storeId, @RequestBody SalesReqDto reqDto) {
         salesService.registerSales(storeId, reqDto);
@@ -29,11 +29,13 @@ public class SalesController {
         return ResponseEntity.ok("sales registered successfully");
     }
 
+    @Secured({"ROLE_HEADQUARTER", "ROLE_STORE"})
     @GetMapping("/{storeId}/sales")
     public ResponseEntity<Page<SalesResDto>> getSales(@PageableDefault(size = 8) Pageable pageable, @PathVariable("storeId") Long storeId) {
         return ResponseEntity.ok(salesService.getSales(storeId, pageable));
     }
 
+    @Secured({"ROLE_HEADQUARTER", "ROLE_STORE"})
     @GetMapping("/{storeId}/sales/{salesId}")
     public ResponseEntity<SalesDetailedResDto> getDetailedSale(@PathVariable("storeId") Long storeId, @PathVariable("salesId") Long salesId) {
         return ResponseEntity.ok(salesService.getSalesInfo(storeId, salesId));
