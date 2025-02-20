@@ -78,6 +78,7 @@ public class KakaoApiClient {
                 .bodyToMono(KakaoApiResultDto.class)
                 .timeout(Duration.ofSeconds(3))
                 .retryWhen(Retry.backoff(3, Duration.ofMillis(200))
+                        .filter(throwable -> throwable instanceof CustomException) // 4xx 에러의 경우 재시도 X
                         .jitter(0.5));
     }
 }

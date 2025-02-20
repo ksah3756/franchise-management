@@ -1,9 +1,16 @@
 package com.goorm.friendchise.domain.headquarter.application;
 
 import com.goorm.friendchise.domain.headquarter.dto.openai.*;
+import com.goorm.friendchise.global.exception.CustomException;
+import com.goorm.friendchise.global.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -38,12 +45,36 @@ public class OpenAiApiService {
     public ChatCompletionResponseDto requestChatCompletion(String data) {
         ChatMessage developerRoleMsg = ChatMessage.of(OpenAiRole.DEVELOPER.getValue(), initialSettingMessage);
         ChatMessage userRoleMsg = ChatMessage.of(OpenAiRole.USER.getValue(), data);
-        ChatCompletionRequestDto chatCompletionRequestDto = ChatCompletionRequestDto.of(OpenAiModel.GPT_4o_MINI.getValue(), List.of(developerRoleMsg, userRoleMsg));
+        ChatCompletionRequestDto chatCompletionRequestDto = ChatCompletionRequestDto.of(OpenAiModel.GPT_4o_MINI.getValue(), List.of(developerRoleMsg, userRoleMsg), false);
 
         return webClient.post()
                 .bodyValue(chatCompletionRequestDto)
                 .retrieve()
                 .bodyToMono(ChatCompletionResponseDto.class)
                 .block();
+    }
+
+    public Flux<String> requestChatCompletionStream(String data) {
+        ChatMessage developerRoleMsg = ChatMessage.of(OpenAiRole.DEVELOPER.getValue(), initialSettingMessage);
+        ChatMessage userRoleMsg = ChatMessage.of(OpenAiRole.USER.getValue(), data);
+        ChatCompletionRequestDto chatCompletionRequestDto = ChatCompletionRequestDto.of(OpenAiModel.GPT_4o_MINI.getValue(), List.of(developerRoleMsg, userRoleMsg), true);
+
+        return webClient.post()
+                .bodyValue(chatCompletionRequestDto)
+                .accept(MediaType.TEXT_EVENT_STREAM)
+                .retrieve()
+                .bodyToFlux(ChatCompletionStreamResponseDto.class)
+                .onErrorResume(error -> {
+                    if (error.getMessage().contains("JsonToken.START_ARRAY")) {
+                        return Flux.empty();
+                    } else {
+                        return Flux.error(error);
+                    }
+                })
+                .filter(response -> {
+                    String content = response.choices().get(0).getDelta().getContent();
+                    return content != null;
+                })
+                .map(response -> response.choices().get(0).getDelta().getContent());
     }
 }
