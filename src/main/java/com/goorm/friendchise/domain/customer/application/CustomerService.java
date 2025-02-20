@@ -137,6 +137,18 @@ public class CustomerService {
         else
             throw new CustomerException(ErrorCode.UNKNOWN_ERROR);
     }
+    public String findNearestStoreWithNoCache(CustomerRecommendStoreRequest customerRecommendStoreRequest) {
+        String address = customerRecommendStoreRequest.address();
+        String franchiseName = customerRecommendStoreRequest.franchiseName();
+
+
+        String nearestAddress = calculateNearestStore(address, franchiseName);
+
+        double elapsedTime = Duration.between(serviceStartTime, Instant.now()).toMillis(); // 실행 시간(ms)
+        log.info("✅ OPENAPI로 찾은 매장: " + nearestAddress + " 응답시간: " + elapsedTime / 1000 + "초");
+        return nearestAddress;
+    }
+
     private String findNearestStore(String address,String franchiseName)
     {
         String cacheKey = CACHE_PREFIX + address;

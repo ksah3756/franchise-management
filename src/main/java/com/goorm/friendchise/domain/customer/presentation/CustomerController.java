@@ -64,4 +64,11 @@ public class CustomerController
         String storeAddress = customerService.findNearestStoreWithCache(request);
         return ResponseEntity.ok(storeAddress);
     }
+
+    @GetMapping("/nearest-store/no-cache")
+    public ResponseEntity<String> findNearestStoreWithNoCache(@RequestParam String address, @RequestParam String franchiseName) {
+        CustomerRecommendStoreRequest request = new CustomerRecommendStoreRequest(address, franchiseName);
+        String storeAddress = customerService.findNearestStoreWithNoCache(request);
+        return ResponseEntity.ok(storeAddress);
+    }
 }
