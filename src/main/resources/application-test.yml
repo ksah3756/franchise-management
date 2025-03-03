@@ -12,6 +12,9 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
     show-sql: true
     generate-ddl: true
+  sql:
+    init:
+      mode: never
 
   data:
     jpa:
