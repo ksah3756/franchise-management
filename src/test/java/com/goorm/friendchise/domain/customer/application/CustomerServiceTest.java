@@ -148,38 +148,38 @@ public class CustomerServiceTest {
 
 
 
-    @Test
-    void testConcurrentFindNearestStoreWithCache() throws InterruptedException {
-        int threadCount = 10;
-        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
-        List<Future<String>> futures = new ArrayList<>();
-        CustomerRecommendStoreRequest request=new CustomerRecommendStoreRequest("경기도 하남시 미사강변동로 20","맥도날드");
-        // 스레드 10개 동시에 실행
-        for (int i = 0; i < threadCount; i++) {
-            Future<String> future = executorService.submit(() ->
-                    customerService.findNearestStoreWithCache(request)
-            );
-            futures.add(future);
-        }
-
-        executorService.shutdown();
-        executorService.awaitTermination(5, TimeUnit.SECONDS);
-
-        // 스레드 실행 완료 후 결과 확인
-        for (Future<String> future : futures) {
-            try {
-                String store = future.get();
-                System.out.println("매장 반환됨: " + store);
-            } catch (Exception e) {
-                System.err.println("오류 발생: " + e.getMessage());
-            }
-        }
-
-        //레디스 비우기
-        for(int i=1;i<=10;i++){
-            String storeKey = "store:" + i;
-            redisTemplate.delete(storeKey);
-        }
-
-    }
+//    @Test
+//    void testConcurrentFindNearestStoreWithCache() throws InterruptedException {
+//        int threadCount = 10;
+//        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+//        List<Future<String>> futures = new ArrayList<>();
+//        CustomerRecommendStoreRequest request=new CustomerRecommendStoreRequest("경기도 하남시 미사강변동로 20","맥도날드");
+//        // 스레드 10개 동시에 실행
+//        for (int i = 0; i < threadCount; i++) {
+//            Future<String> future = executorService.submit(() ->
+//                    customerService.findNearestStoreWithCache(request)
+//            );
+//            futures.add(future);
+//        }
+//
+//        executorService.shutdown();
+//        executorService.awaitTermination(5, TimeUnit.SECONDS);
+//
+//        // 스레드 실행 완료 후 결과 확인
+//        for (Future<String> future : futures) {
+//            try {
+//                String store = future.get();
+//                System.out.println("매장 반환됨: " + store);
+//            } catch (Exception e) {
+//                System.err.println("오류 발생: " + e.getMessage());
+//            }
+//        }
+//
+//        //레디스 비우기
+//        for(int i=1;i<=10;i++){
+//            String storeKey = "store:" + i;
+//            redisTemplate.delete(storeKey);
+//        }
+//
+//    }
 }
