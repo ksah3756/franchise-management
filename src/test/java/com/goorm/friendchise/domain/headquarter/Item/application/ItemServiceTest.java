@@ -2,20 +2,17 @@ package com.goorm.friendchise.domain.headquarter.Item.application;
 
 import com.goorm.friendchise.domain.customer.domain.CustomerRepository;
 import com.goorm.friendchise.domain.customer.infrastructure.FakeCustomerRepository;
-import com.goorm.friendchise.domain.customer.infrastructure.FakeStoreRepository;
 import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
 import com.goorm.friendchise.domain.headquarter.Item.domain.ItemRepository;
 import com.goorm.friendchise.domain.headquarter.Item.dto.ItemReqDto;
 import com.goorm.friendchise.domain.headquarter.Item.dto.ItemReqDtoList;
 import com.goorm.friendchise.domain.headquarter.Item.dto.ItemResDto;
 import com.goorm.friendchise.domain.headquarter.Item.infrastructure.ItemRepositoryImpl;
-import com.goorm.friendchise.domain.headquarter.application.HeadquarterService;
-import com.goorm.friendchise.domain.headquarter.domain.Category;
+import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.domain.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.headquarter.infrastructure.HeadquarterRepositoryImpl;
-import com.goorm.friendchise.domain.headquarter.insfrastructure.FakeHeadquarterRepository;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
 import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
@@ -65,7 +62,6 @@ class ItemServiceTest {
     @Autowired
     private ItemRepository itemRepository;
 
-    private AuthService authService;
     private ManagerRepository managerRepository;
 
     private ItemService itemService;
@@ -75,13 +71,8 @@ class ItemServiceTest {
     void setup() {
         // authService에 의존성이 많아서(역할이 많아서)..본시/매장과 고객을 분리하고 토큰 관련 로직도 분리하는게 어떨까..?
         managerRepository = new FakeManagerRepository();
-        CustomerRepository customerRepository = new FakeCustomerRepository();
-        TokenProvider tokenProvider = new TokenProvider(new JwtProperties());
-        RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
 
-        authService = new AuthService(managerRepository, tokenProvider, refreshTokenRepository, headquarterRepository, customerRepository, storeRepository);
-
-        itemService = new ItemService(headquarterRepository, itemRepository, authService);
+        itemService = new ItemService(headquarterRepository, itemRepository);
     }
 
     // TODO: AfterEach로 테스트 독립성 보장
@@ -93,27 +84,28 @@ class ItemServiceTest {
         );
     }
 
-    private Long createManagerAndHeadquarter() {
-        Manager manager = Manager.create("test", "test1234", HEADQUARTER);
-        Manager savedManager = managerRepository.save(manager);
-        setContextHolder(savedManager);
-
-        Headquarter headquarter = Headquarter.builder()
-                .franchiseName("test")
-                .category(Category.FASTFOOD)
-                .subCategory(SubCategory.NONE)
+    private Manager createManager(Long headquarterId) {
+        return Manager.builder()
+                .id(1L)
+                .username("test")
+                .password("test1234")
+                .role(HEADQUARTER)
+                .manageId(headquarterId)
                 .build();
-        Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
-        savedManager.updateManageId(savedHeadquarter.getId());
-
-        return savedHeadquarter.getId();
     }
 
     @Test
     @DisplayName("Cascade persist로 다대일 양방향 연관관계인 Headquarter외 Item들이 모두 잘 저장되는지 확인")
     void testCreateItems_CascadePersist() {
         // given: Headquarter 생성 및 저장
-        Long savedHeadquarterId = createManagerAndHeadquarter();
+        Headquarter headquarter = Headquarter.builder()
+                .franchiseName("test")
+                .category(Category.FASTFOOD)
+                .subCategory(SubCategory.NONE)
+                .build();
+        Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
+        Long savedHeadquarterId = savedHeadquarter.getId();
+        Manager manager = createManager(savedHeadquarter.getId());
 
         // given: ItemReqDtoList 생성 (예: 2개의 아이템 요청)
         List<ItemReqDto> itemReqDtos = List.of(
@@ -123,7 +115,7 @@ class ItemServiceTest {
         ItemReqDtoList itemReqDtoList = new ItemReqDtoList(itemReqDtos);
 
         // when: createItems 메서드 호출
-        List<ItemResDto> itemResDtos = itemService.createItems(itemReqDtoList);
+        List<ItemResDto> itemResDtos = itemService.createItems(manager, itemReqDtoList);
 
         // then: Headquarter와 연관된 Item이 DB에 저장되었는지 검증
         Headquarter foundHeadquarter = headquarterRepository.findById(savedHeadquarterId)
@@ -155,24 +147,31 @@ class ItemServiceTest {
     @DisplayName("Headquarter에 연관된 Item들을 조회한다.")
     void testGetItems_hibernateQuery() {
         // given
-        Long savedHeadquarterId = createManagerAndHeadquarter();
+        Headquarter headquarter = Headquarter.builder()
+                .franchiseName("test")
+                .category(Category.FASTFOOD)
+                .subCategory(SubCategory.NONE)
+                .build();
+        Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
+        Long savedHeadquarterId = savedHeadquarter.getId();
+        Manager manager = createManager(savedHeadquarter.getId());
 
-        Headquarter headquarter = headquarterRepository.findById(savedHeadquarterId)
+        Headquarter foundHeadquarter = headquarterRepository.findById(savedHeadquarterId)
                 .orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
         List<ItemResDto> savedItemResDtos = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             Item item = Item.builder()
                     .name("item" + i)
                     .price(1000)
-                    .headquarter(headquarter)
+                    .headquarter(foundHeadquarter)
                     .build();
             Item savedItem = itemRepository.save(item);
             savedItemResDtos.add(ItemResDto.fromEntity(savedItem));
         }
 
         // when
-        Slice<ItemResDto> itemResDtos1 = itemService.getItems(PageRequest.of(0,5));
-        Slice<ItemResDto> itemResDtos2 = itemService.getItems(PageRequest.of(1,5));
+        Slice<ItemResDto> itemResDtos1 = itemService.getItems(manager, PageRequest.of(0,5));
+        Slice<ItemResDto> itemResDtos2 = itemService.getItems(manager, PageRequest.of(1,5));
 
         // then
         assertThat(itemResDtos1).hasSize(5);
@@ -188,40 +187,4 @@ class ItemServiceTest {
         assertThat(itemNames).containsExactlyInAnyOrder("item6", "item7", "item8", "item9", "item10");
     }
 
-    @Test
-    @DisplayName("Headquarter에 연관된 Item들을 조회한다.(네이티브 쿼리)")
-    void testGetItems_nativeQuery() {
-        // given
-        Long savedHeadquarterId = createManagerAndHeadquarter();
-
-        Headquarter headquarter = headquarterRepository.findById(savedHeadquarterId)
-                .orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
-        List<ItemResDto> savedItemResDtos = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            Item item = Item.builder()
-                    .name("item" + i)
-                    .price(1000)
-                    .headquarter(headquarter)
-                    .build();
-            Item savedItem = itemRepository.save(item);
-            savedItemResDtos.add(ItemResDto.fromEntity(savedItem));
-        }
-
-        // when
-        Slice<ItemResDto> itemResDtos1 = itemService.getItemsNative(PageRequest.of(0,5));
-        Slice<ItemResDto> itemResDtos2 = itemService.getItemsNative(PageRequest.of(1,5));
-
-        // then
-        assertThat(itemResDtos1).hasSize(5);
-        List<String> itemNames = itemResDtos1.stream()
-                .map(ItemResDto::name)
-                .collect(Collectors.toList());
-        assertThat(itemNames).containsExactlyInAnyOrder("item1", "item2", "item3", "item4", "item5");
-
-        assertThat(itemResDtos2).hasSize(5);
-        itemNames = itemResDtos2.stream()
-                .map(ItemResDto::name)
-                .collect(Collectors.toList());
-        assertThat(itemNames).containsExactlyInAnyOrder("item6", "item7", "item8", "item9", "item10");
-    }
 }

@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goorm.friendchise.domain.customer.domain.CustomerRepository;
 import com.goorm.friendchise.domain.customer.infrastructure.FakeCustomerRepository;
 import com.goorm.friendchise.domain.customer.infrastructure.FakeStoreRepository;
-import com.goorm.friendchise.domain.headquarter.domain.Category;
+import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.domain.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.headquarter.insfrastructure.FakeHeadquarterRepository;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
@@ -47,6 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class ManagerServiceTest {
 	private ManagerService managerService;
 	private HeadquarterRepository headquarterRepository;
+	private Manager manager;
 
 	@BeforeEach
 	void setUp() {
@@ -74,10 +75,10 @@ class ManagerServiceTest {
 
 		savedManager.updateManageId(headquarter.getId());
 
-		UserDetails manger = managerService.findManagerByUsername("test");
+		manager = managerService.findManagerByUsername("test");
 		SecurityContext context = SecurityContextHolder.getContext();
 		context.setAuthentication(
-			new UsernamePasswordAuthenticationToken(manger, manger.getUsername(), manger.getAuthorities())
+			new UsernamePasswordAuthenticationToken(manager, manager.getUsername(), manager.getAuthorities())
 		);
 	}
 
@@ -162,7 +163,7 @@ class ManagerServiceTest {
 	@DisplayName("mypage는 SecurityContextHolder의 정보로 ManagerDetailResponse를 반환")
 	void mypage_success() {
 		// when
-		ManagerDetailResponse mypage = managerService.mypage();
+		ManagerDetailResponse mypage = managerService.mypage(manager);
 
 		// then
 		assertNotNull(mypage);
@@ -180,7 +181,7 @@ class ManagerServiceTest {
 		Long newStoreId = 1L;
 
 		// when
-		managerService.updateManager(newStoreId);
+		managerService.updateManager(manager, newStoreId);
 		Manager manager = managerService.findManagerByUsername("test");
 
 		// then
@@ -196,7 +197,7 @@ class ManagerServiceTest {
 		String newPassword = "newPassword";
 
 		// when
-		managerService.updatePassword(newPassword);
+		managerService.updatePassword(manager, newPassword);
 
 		// then
 		assertNotEquals(oldPassword, manager.getPassword());
@@ -206,7 +207,7 @@ class ManagerServiceTest {
 	@DisplayName("delete는 Manager를 삭제")
 	void delete_success() {
 		// when
-		managerService.delete();
+		managerService.delete(manager);
 
 		// then
 		Assertions.assertThrows(

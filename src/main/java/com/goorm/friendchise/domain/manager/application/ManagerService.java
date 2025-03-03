@@ -62,8 +62,7 @@ public class ManagerService {
 		return authService.managerLogin(manager);
 	}
 
-	public ManagerDetailResponse mypage() {
-		Manager manager = authService.findManagerByAuth();
+	public ManagerDetailResponse mypage(Manager manager) {
 
 		if (manager.getRole().equals(HEADQUARTER)) {
 			Headquarter headquarter = headquarterRepository.findById(manager.getManageId())
@@ -73,19 +72,16 @@ public class ManagerService {
 		return ManagerDetailResponse.from(manager);
 	}
 
-	public void updateManager(Long newStoreId) {
-		Manager manager = authService.findManagerByAuth();
+	public void updateManager(Manager manager, Long newStoreId) {
 		manager.updateManageId(newStoreId);
 	}
 
-	public void updatePassword(String newPassword) {
+	public void updatePassword(Manager manager, String newPassword) {
 		String encode = bCryptPasswordEncoder.encode(newPassword);
-		Manager manager = authService.findManagerByAuth();
 		manager.updatePassword(encode);
 	}
 
-	public void delete() {
-		Manager manager = authService.findManagerByAuth();
+	public void delete(Manager manager) {
 		managerRepository.delete(manager);
 	}
 

@@ -1,10 +1,8 @@
-package com.goorm.friendchise.domain.headquarter.domain;
+package com.goorm.friendchise.domain.headquarter.domain.category;
 
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.Getter;
-
-import java.util.Arrays;
 
 @Getter
 public enum Category {

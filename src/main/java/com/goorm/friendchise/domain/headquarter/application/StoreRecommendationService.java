@@ -13,6 +13,7 @@ import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionStreamR
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionStreamResponseDto.Delta;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionStreamResponseDto.StreamChoice;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatMessage;
+import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.global.aop.ExecutionTime;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
@@ -40,13 +41,13 @@ public class StoreRecommendationService {
      * @return ChatCompletionResponseDto
      */
     @ExecutionTime
-    public ChatCompletionResponseDto getRecommendation(StoreRecommendReqDto req) {
+    public ChatCompletionResponseDto getRecommendation(Manager currentManager, StoreRecommendReqDto req) {
         // franchiseName, category, subCategory SecurityContextHolder 에서 가져와서 keyword로 사용
         StringBuilder sb = new StringBuilder();
         CommercialArea area = commercialAreaService.getCommercialArea(req.x(), req.y());
         sb.append("m² 당 임대료: ").append(area.getRentalFee()).append("\n");
         
-        Headquarter headquarter = headquarterService.getHeadquarterByContext();
+        Headquarter headquarter = headquarterService.getHeadquarterByContext(currentManager);
 
         List<String> userSelectedCategory = getUserSelectedCategory(req);
         Mono<Map<String, KakaoApiResultDto>> mono = kakaoApiService.getTotalPlaceData(
@@ -83,13 +84,13 @@ public class StoreRecommendationService {
         return res;
     }
 
-    public Flux<String> getRecommendationStream(StoreRecommendReqDto req) {
+    public Flux<String> getRecommendationStream(Manager manager, StoreRecommendReqDto req) {
         // franchiseName, category, subCategory SecurityContextHolder 에서 가져와서 keyword로 사용
         StringBuilder sb = new StringBuilder();
         CommercialArea area = commercialAreaService.getCommercialArea(req.x(), req.y());
         sb.append("m² 당 임대료: ").append(area.getRentalFee()).append("\n");
 
-        Headquarter headquarter = headquarterService.getHeadquarterByContext();
+        Headquarter headquarter = headquarterService.getHeadquarterByContext(manager);
 
         List<String> userSelectedCategory = getUserSelectedCategory(req);
         Mono<Map<String, KakaoApiResultDto>> mono = kakaoApiService.getTotalPlaceData(

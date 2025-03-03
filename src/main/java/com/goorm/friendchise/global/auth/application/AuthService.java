@@ -46,17 +46,6 @@ public class AuthService {
 	private static final Duration REFRESH_TOKEN_EXP = Duration.ofDays(1);
 	private static final Duration ACCESS_TOKEN_EXP = Duration.ofHours(1);
 
-	public Manager findManagerByAuth() {
-		try {
-			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			String username = ((UserDetails) principal).getUsername();
-			return managerRepository.findByUsername(username)
-				.orElseThrow(ManagerNotFoundException::new);
-		} catch (Exception e) {
-			throw new ManagerNotFoundException();
-		}
-	}
-
 	public Customer findCustomerByAuth() {
 		try {
 			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

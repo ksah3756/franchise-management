@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.goorm.friendchise.domain.manager.domain.Role.HEADQUARTER;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -23,7 +24,6 @@ class PromotionServiceTest {
 	private PromotionService promotionService;
 	private PromotionRepository promotionRepository;
 	private ApplicationEventPublisher eventPublisher;
-	private AuthService authService;
 	private Manager headquarterManager;
 	private Manager storeManager;
 
@@ -31,8 +31,7 @@ class PromotionServiceTest {
 	void setUp() {
 		promotionRepository = new FakePromotionRepository();
 		eventPublisher = mock(ApplicationEventPublisher.class);
-		authService = mock(AuthService.class);
-		promotionService = new PromotionService(promotionRepository, eventPublisher, authService);
+		promotionService = new PromotionService(promotionRepository, eventPublisher);
 
 		headquarterManager = Manager.builder()
 			.username("testHQ")
@@ -49,9 +48,18 @@ class PromotionServiceTest {
 			.build();
 	}
 
+	private Manager createManager(Long headquarterId) {
+		return Manager.builder()
+				.id(1L)
+				.username("test")
+				.password("test1234")
+				.role(HEADQUARTER)
+				.manageId(headquarterId)
+				.build();
+	}
+
 	@Test
 	void 본사_관리자가_프로모션_생성_성공() {
-		when(authService.findManagerByAuth()).thenReturn(headquarterManager);
 
 		PromotionCreateRequest request = new PromotionCreateRequest(
 			"깜짝 봄맞이 할인 이벤트", "전 제품 30% 할인!",
@@ -60,7 +68,7 @@ class PromotionServiceTest {
 		);
 
 		// When
-		promotionService.createPromotion(request);
+		promotionService.createPromotion(headquarterManager,request);
 
 		// Then
 		List<Promotion> promotions = promotionRepository.findAll();
@@ -78,7 +86,6 @@ class PromotionServiceTest {
 	@Test
 	void 본사_권한이_없는_사용자는_프로모션_생성_실패() {
 		// Given (매장 관리자)
-		when(authService.findManagerByAuth()).thenReturn(storeManager);
 
 		PromotionCreateRequest request = new PromotionCreateRequest(
 			"비정상 할인 이벤트", "허위 이벤트",
@@ -87,7 +94,7 @@ class PromotionServiceTest {
 		);
 
 		// When & Then (예외 발생 확인)
-		assertThatThrownBy(() -> promotionService.createPromotion(request))
+		assertThatThrownBy(() -> promotionService.createPromotion(storeManager, request))
 			.isInstanceOf(RuntimeException.class)
 			.hasMessageContaining("본사가 아니므로 권한이 없습니다.");
 	}

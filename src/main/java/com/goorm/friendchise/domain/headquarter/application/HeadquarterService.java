@@ -8,7 +8,6 @@ import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDt
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.store.exception.NoAuthenticationException;
-import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,35 +21,28 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HeadquarterService {
 
-    private final AuthService authService;
     private final HeadquarterRepository headquarterRepository;
 
-    private Manager getCurrentManager(){
-        return authService.findManagerByAuth();
-    }
-
     @Transactional
-    public HeadquarterResDto createHeadquarter(HeadquarterReqDto headquarterReqDto) {
-        Manager currentManager = getCurrentManager();
-
+    public HeadquarterResDto createHeadquarter(Manager currentManager, HeadquarterReqDto headquarterReqDto) {
         checkIfFranchiseNameExists(headquarterReqDto);
         Headquarter headquarter = HeadquarterReqDto.toEntity(headquarterReqDto);
         headquarterRepository.save(headquarter);
+        // 이러면 manager가 영속성 컨텍스트에서 관리되어서 업데이트 되나?
         currentManager.updateManageId(headquarter.getId());
         return HeadquarterResDto.from(headquarter);
     }
 
     @Transactional(readOnly = true)
-    public HeadquarterDetailResDto getHeadquarter() {
-        Headquarter headquarter = getHeadquarterByContext();
+    public HeadquarterDetailResDto getHeadquarter(Manager currentManager) {
+        Headquarter headquarter = getHeadquarterByContext(currentManager);
         return HeadquarterDetailResDto.from(headquarter);
     }
 
 
     @Transactional
-    public HeadquarterResDto updateHeadquarterName(HeadquarterReqDto headquarterReqDto) {
-        Manager currentManager = getCurrentManager();
-        Headquarter headquarter = findHeadquarterById(currentManager);
+    public HeadquarterResDto updateHeadquarterName(Manager currentManager, HeadquarterReqDto headquarterReqDto) {
+        Headquarter headquarter = getHeadquarterById(currentManager);
 
         findIfMine(headquarter, currentManager);
 
@@ -59,9 +51,8 @@ public class HeadquarterService {
     }
 
     @Transactional
-    public void deleteHeadquarter() {
-        Manager currentManager = getCurrentManager();
-        Headquarter headquarter = findHeadquarterById(currentManager);
+    public void deleteHeadquarter(Manager currentManager) {
+        Headquarter headquarter = getHeadquarterById(currentManager);
 
         findIfMine(headquarter, currentManager);
 
@@ -71,15 +62,14 @@ public class HeadquarterService {
 
     @Transactional(readOnly = true)
     public List<StoreIdDto> getStoreIdList(Long id) {
-        Headquarter headquarter = getHeadquarterByContext();
+        Headquarter headquarter = getHeadquarterById(id);
         return headquarter.getStores().stream()
                 .map(store -> StoreIdDto.of(store.getId()))
                 .toList();
     }
 
-    public Headquarter getHeadquarterByContext() {
-        Manager currentManager = getCurrentManager();
-        return findHeadquarterById(currentManager);
+    public Headquarter getHeadquarterByContext(Manager manager) {
+        return getHeadquarterById(manager);
     }
 
     private void checkIfFranchiseNameExists(HeadquarterReqDto headquarterReqDto) {
@@ -88,12 +78,17 @@ public class HeadquarterService {
         }
     }
 
-    private Headquarter findHeadquarterById(Manager currentManager) {
+    private Headquarter getHeadquarterById(Manager currentManager) {
         if(currentManager.getManageId() == null) {
             throw new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND);
         }
 
         return headquarterRepository.findById(currentManager.getManageId())
+                .orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
+    }
+
+    private Headquarter getHeadquarterById(Long id) {
+        return headquarterRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
     }
 

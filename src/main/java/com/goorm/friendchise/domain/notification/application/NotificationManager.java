@@ -2,7 +2,9 @@ package com.goorm.friendchise.domain.notification.application;
 
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
 import com.goorm.friendchise.domain.manager.domain.Manager;
+import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
 import com.goorm.friendchise.domain.manager.domain.Role;
+import com.goorm.friendchise.domain.manager.exception.ManagerNotFoundException;
 import com.goorm.friendchise.domain.notification.domain.Notification;
 import com.goorm.friendchise.domain.notification.domain.NotificationRepository;
 import com.goorm.friendchise.domain.notification.dto.response.ReceivedNotificationResponse;
@@ -15,6 +17,8 @@ import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,12 +30,23 @@ import java.util.stream.Collectors;
 @Slf4j
 public class NotificationManager {
 	private final NotificationRepository repository;
-	private final AuthService authService;
+	private final ManagerRepository managerRepository;
 	private final ApplicationEventPublisher eventPublisher;
 	private final TokenProvider tokenProvider;
 
+	private Manager findManagerByAuth() {
+		try {
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username = ((UserDetails) principal).getUsername();
+			return managerRepository.findByUsername(username)
+					.orElseThrow(ManagerNotFoundException::new);
+		} catch (Exception e) {
+			throw new ManagerNotFoundException();
+		}
+	}
+
 	private Manager getAuthStoreManager() {
-		Manager manager = authService.findManagerByAuth();
+		Manager manager = findManagerByAuth();
 		if (manager.getRole() != Role.STORE) {
 			throw new CustomException(ErrorCode.NO_STORE_AUTHENTICATION_ERROR);
 		}

@@ -77,7 +77,7 @@ public class CustomerServiceTest {
         RedisService redisService = new RedisService(redisServiceRedisTemplate);
 
         StoreService storeService = new StoreService(storeRepository,null,
-                null,null,null,redisServiceRedisTemplate,new ObjectMapper());
+                null,null, redisServiceRedisTemplate, new ObjectMapper());
 
         customerService = new CustomerService(customerRepository, bCryptPasswordEncoder,
                 kaKaoApiService,redisTemplate,authService,null,redisService,storeService);

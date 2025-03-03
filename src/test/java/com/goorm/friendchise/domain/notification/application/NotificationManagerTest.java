@@ -2,7 +2,9 @@ package com.goorm.friendchise.domain.notification.application;
 
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
 import com.goorm.friendchise.domain.manager.domain.Manager;
+import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
 import com.goorm.friendchise.domain.manager.domain.Role;
+import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
 import com.goorm.friendchise.domain.notification.domain.Notification;
 import com.goorm.friendchise.domain.notification.dto.response.ReceivedNotificationResponse;
 import com.goorm.friendchise.domain.notification.infrastructure.FakeNotificationRepository;
@@ -13,6 +15,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
@@ -22,16 +27,26 @@ import static org.mockito.Mockito.*;
 class NotificationManagerTest {
 	private NotificationManager notificationManager;
 	private FakeNotificationRepository repository;
-	private AuthService authService;
+	private ManagerRepository managerRepository;
 	private ApplicationEventPublisher eventPublisher;
 	private TokenProvider tokenProvider;
 	@BeforeEach
 	void setUp() {
 		repository = new FakeNotificationRepository();
-		authService = Mockito.mock(AuthService.class);
+		managerRepository = new FakeManagerRepository();
 		eventPublisher = Mockito.mock(ApplicationEventPublisher.class);
 		tokenProvider = Mockito.mock(TokenProvider.class);
-		notificationManager = new NotificationManager(repository, authService, eventPublisher,tokenProvider);
+		notificationManager = new NotificationManager(repository, managerRepository, eventPublisher, tokenProvider);
+	}
+
+	private Manager createManager(Long storeId) {
+		return Manager.builder()
+				.id(1L)
+				.username("test")
+				.password("test1234")
+				.role(Role.STORE)
+				.manageId(storeId)
+				.build();
 	}
 
 	@Test
@@ -55,16 +70,15 @@ class NotificationManagerTest {
 	void getNotifications() {
 		// Given
 		Long storeId = 101L;
-		Manager mockManager = Manager.builder()
-			.manageId(storeId)
-			.role(Role.STORE)
-			.build();
-
-		when(authService.findManagerByAuth()).thenReturn(mockManager);
-
 		repository.save(Notification.create(101L, "Title1", "Content1"));
 		repository.save(Notification.create(101L, "Title2", "Content2"));
 		repository.save(Notification.create(102L, "Title3", "Content3")); // 다른 스토어 ID
+
+		Manager manager = createManager(storeId);
+		managerRepository.save(manager);
+		SecurityContextHolder.getContext().setAuthentication(
+				new UsernamePasswordAuthenticationToken(manager, manager.getUsername(), manager.getAuthorities())
+		);
 
 		// When
 		List<ReceivedNotificationResponse> foundNotifications = notificationManager.getNotifications();
@@ -72,7 +86,6 @@ class NotificationManagerTest {
 		// Then
 		assertThat(foundNotifications).hasSize(2);
 		assertThat(foundNotifications).extracting("title").contains("Title1", "Title2");
-		verify(authService, times(1)).findManagerByAuth();
 	}
 
 	@Test
@@ -83,12 +96,11 @@ class NotificationManagerTest {
 		Notification notification = repository.save(Notification.create(storeId, "Title", "Content"));
 		Long notificationId = notification.getId();
 
-		Manager mockManager = Manager.builder()
-			.manageId(storeId)
-			.role(Role.STORE)
-			.build();
-
-		when(authService.findManagerByAuth()).thenReturn(mockManager);
+		Manager manager = createManager(storeId);
+		managerRepository.save(manager);
+		SecurityContextHolder.getContext().setAuthentication(
+				new UsernamePasswordAuthenticationToken(manager, manager.getUsername(), manager.getAuthorities())
+		);
 
 		// When
 		notificationManager.markAsRead(notificationId);

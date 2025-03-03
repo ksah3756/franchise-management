@@ -2,11 +2,10 @@ package com.goorm.friendchise.domain.headquarter.application;
 
 import com.goorm.friendchise.domain.customer.domain.CustomerRepository;
 import com.goorm.friendchise.domain.customer.infrastructure.FakeCustomerRepository;
-import com.goorm.friendchise.domain.customer.infrastructure.FakeStoreRepository;
-import com.goorm.friendchise.domain.headquarter.domain.Category;
+import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.domain.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetailResDto;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDto;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDto;
@@ -34,40 +33,27 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
-import java.util.Optional;
 
 import static com.goorm.friendchise.domain.manager.domain.Role.HEADQUARTER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@ExtendWith(MockitoExtension.class)
 class HeadquarterServiceTest {
-
-	@Mock
-	private StoreRepository storeRepository;
 
 	private HeadquarterService headquarterService;
 	private HeadquarterRepository headquarterRepository;
 
-	@InjectMocks
-	private AuthService authService;
 	private ManagerRepository managerRepository;
 
 	@BeforeEach
 	void setup() {
 		headquarterRepository = new FakeHeadquarterRepository();
 		managerRepository = new FakeManagerRepository();
-		CustomerRepository customerRepository = new FakeCustomerRepository();
-		TokenProvider tokenProvider = new TokenProvider(new JwtProperties());
-		RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
-		
-    authService = new AuthService(managerRepository, tokenProvider, refreshTokenRepository, headquarterRepository, customerRepository, storeRepository);
-		headquarterService = new HeadquarterService(authService, headquarterRepository);
+		headquarterService = new HeadquarterService(headquarterRepository);
 	}
 
 	@AfterEach
@@ -138,7 +124,7 @@ class HeadquarterServiceTest {
 	@DisplayName("존재하지 않는 본사의 매장 ID 목록을 조회하면 예외를 던진다.")
 	void getStoreIdList_headquarterNotFound() {
 		// given
-		createManager();
+		createManagerWithoutManageId();
 		Long nonExistentId = 999L;
 
 		// when, then
@@ -151,37 +137,50 @@ class HeadquarterServiceTest {
 	@DisplayName("성공적으로 본사를 생성한다.")
 	void createHeadquarter() {
 		// given
-		createManager();
+		Manager manager = createManagerWithoutManageId();
 		HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "패스트푸드", "");
 
 		// when
-		 HeadquarterResDto res = headquarterService.createHeadquarter(headquarterReqDto);
+		 HeadquarterResDto res = headquarterService.createHeadquarter(manager, headquarterReqDto);
 
 		// then
 		assertThat(res.franchiseName()).isEqualTo("test");
 	}
 
-	private void createManager() {
-		Manager manager = Manager.create("test", "test1234", HEADQUARTER);
-		managerRepository.save(manager);
-		setContextHolder(manager);
+	private Manager createManagerWithoutManageId() {
+		return Manager.builder()
+				.id(1L)
+				.username("test")
+				.password("test1234")
+				.role(HEADQUARTER)
+				.build();
+	}
+
+	private Manager createManager(Long headquarterId) {
+		return Manager.builder()
+				.id(1L)
+				.username("test")
+				.password("test1234")
+				.role(HEADQUARTER)
+				.manageId(headquarterId)
+				.build();
 	}
 
 	@Test
 	@DisplayName("동일한 프랜차이즈 이름의 본사가 이미 있을 경우 예외를 던진다.")
 	void createHeadquarter_duplicateFranchiseName() {
 		// given
-		createManager();
 		Headquarter headquarter = Headquarter.builder()
 			.franchiseName("test")
 			.category(Category.FASTFOOD)
 			.subCategory(SubCategory.NONE)
 			.build();
-		headquarterRepository.save(headquarter);
+		Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
+		Manager manager = createManager(savedHeadquarter.getId());
 
 		// when, then
 		HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "패스트푸드", "");
-		assertThatThrownBy(() -> headquarterService.createHeadquarter(headquarterReqDto))
+		assertThatThrownBy(() -> headquarterService.createHeadquarter(manager, headquarterReqDto))
 			.isInstanceOf(CustomException.class)
 			.hasFieldOrPropertyWithValue("errorCode", ErrorCode.FRANCHISE_NAME_DUPLICATION);
 	}
@@ -190,11 +189,11 @@ class HeadquarterServiceTest {
 	@DisplayName("카테고리 정보가 정의되어 있지 않을 경우 예외를 던진다.")
 	void createHeadquarter_noCategory() {
 		// given
-		createManager();
+		Manager manager = createManagerWithoutManageId();
 		HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "", "");
 
 		// when, then
-		assertThatThrownBy(() -> headquarterService.createHeadquarter(headquarterReqDto))
+		assertThatThrownBy(() -> headquarterService.createHeadquarter(manager, headquarterReqDto))
 			.isInstanceOf(CustomException.class)
 			.hasFieldOrPropertyWithValue("errorCode", ErrorCode.FRANCHISE_CATEGORY_NOT_FOUND);
 	}
@@ -203,11 +202,11 @@ class HeadquarterServiceTest {
 	@DisplayName("서브 카테고리 정보가 정의되어 있지 않을 경우 예외를 던진다.")
 	void createHeadquarter_noSubCategory() {
 		// given
-		createManager();
+		Manager manager = createManagerWithoutManageId();
 		HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "패스트푸드", "dsadsa");
 
 		// when, then
-		assertThatThrownBy(() -> headquarterService.createHeadquarter(headquarterReqDto))
+		assertThatThrownBy(() -> headquarterService.createHeadquarter(manager, headquarterReqDto))
 			.isInstanceOf(CustomException.class)
 			.hasFieldOrPropertyWithValue("errorCode", ErrorCode.FRANCHISE_SUBCATEGORY_NOT_FOUND);
 	}
@@ -217,39 +216,29 @@ class HeadquarterServiceTest {
 	@DisplayName("성공적으로 본사를 조회한다.")
 	void getHeadquarter() {
 		// given
-		createManagerAndHeadquarter();
-
-		// when
-		HeadquarterDetailResDto headquarterResDto = headquarterService.getHeadquarter();
-
-		// then
-		assertThat(headquarterResDto.franchiseName()).isEqualTo("test");
-	}
-
-	private Long createManagerAndHeadquarter() {
-		Manager manager = Manager.create("test", "test1234", HEADQUARTER);
-		Manager savedManager = managerRepository.save(manager);
-		setContextHolder(savedManager);
-
 		Headquarter headquarter = Headquarter.builder()
 				.franchiseName("test")
 				.category(Category.FASTFOOD)
 				.subCategory(SubCategory.NONE)
-			.build();
+				.build();
 		Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
-		savedManager.updateManageId(savedHeadquarter.getId());
+		Manager manager = createManager(savedHeadquarter.getId());
 
-		return savedHeadquarter.getId();
+		// when
+		HeadquarterDetailResDto headquarterResDto = headquarterService.getHeadquarter(manager);
+
+		// then
+		assertThat(headquarterResDto.franchiseName()).isEqualTo("test");
 	}
 
 	@Test
 	@DisplayName("존재하지 않는 본사를 조회할 경우 예외를 던진다.")
 	void getHeadquarter_notFound() {
 		// given
-		createManager();
+		Manager manager = createManagerWithoutManageId();
 
 		// when, then
-		assertThatThrownBy(() -> headquarterService.getHeadquarter())
+		assertThatThrownBy(() -> headquarterService.getHeadquarter(manager))
 			.isInstanceOf(CustomException.class)
 			.hasFieldOrPropertyWithValue("errorCode", ErrorCode.HEADQUARTER_NOT_FOUND);
 	}
@@ -258,28 +247,40 @@ class HeadquarterServiceTest {
 	@DisplayName("성공적으로 프랜차이즈 정보를 수정한다.")
 	void updateHeadquarterName() {
 		// given
-		createManagerAndHeadquarter();
+		Headquarter headquarter = Headquarter.builder()
+				.franchiseName("test")
+				.category(Category.FASTFOOD)
+				.subCategory(SubCategory.NONE)
+				.build();
+		Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
+		Manager manager = createManager(savedHeadquarter.getId());
 
 		// when
-		HeadquarterResDto res = headquarterService.updateHeadquarterName(HeadquarterReqDto.of("newTest", "한식", "국밥"));
+		HeadquarterResDto res = headquarterService.updateHeadquarterName(manager, HeadquarterReqDto.of("newTest", "한식", "국밥"));
 
 		// then
-		Headquarter headquarter = headquarterRepository.findById(res.id()).orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
-		assertThat(headquarter.getFranchiseName()).isEqualTo("newTest");
-		assertThat(headquarter.getCategory()).isEqualTo(Category.KOREANFOOD);
-		assertThat(headquarter.getSubCategory()).isEqualTo(SubCategory.GOOKBAB);
+		Headquarter foundHeadquarter = headquarterRepository.findById(res.id()).orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
+		assertThat(foundHeadquarter.getFranchiseName()).isEqualTo("newTest");
+		assertThat(foundHeadquarter.getCategory()).isEqualTo(Category.KOREANFOOD);
+		assertThat(foundHeadquarter.getSubCategory()).isEqualTo(SubCategory.GOOKBAB);
 	}
 
 	@Test
 	@DisplayName("성공적으로 본사를 삭제한다.")
 	void deleteHeadquarter() {
 		// given
-		Long headquarterId = createManagerAndHeadquarter();
+		Headquarter headquarter = Headquarter.builder()
+				.franchiseName("test")
+				.category(Category.FASTFOOD)
+				.subCategory(SubCategory.NONE)
+				.build();
+		Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
+		Manager manager = createManager(savedHeadquarter.getId());
 
 		// when
-		headquarterService.deleteHeadquarter();
+		headquarterService.deleteHeadquarter(manager);
 
 		// then
-		assertThat(headquarterRepository.findById(headquarterId).isEmpty()).isTrue();
+		assertThat(headquarterRepository.findById(headquarter.getId()).isEmpty()).isTrue();
 	}
 }

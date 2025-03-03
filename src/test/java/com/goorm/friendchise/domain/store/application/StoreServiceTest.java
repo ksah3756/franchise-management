@@ -2,10 +2,10 @@ package com.goorm.friendchise.domain.store.application;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.goorm.friendchise.domain.headquarter.domain.Category;
+import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.domain.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
 import com.goorm.friendchise.domain.store.domain.Store;
@@ -90,13 +90,12 @@ class StoreServiceTest {
                 .build();
 
      //when
-        when(authService.findManagerByAuth()).thenReturn(storeManager);
         when(headquarterRepository.findByFranchiseName(headquarter.getFranchiseName()))
                 .thenReturn(Optional.ofNullable(headquarter));
         when(redisTemplate.opsForValue()).thenReturn(mockValueOperations);
         when(objectMapper.writeValueAsString(any(StoreRedisDto.class))).thenReturn("jsonString");  // mock 처리
 
-        storeService.createStore(reqDto);
+        storeService.createStore(storeManager ,reqDto);
      //then
         verify(headquarterRepository, times(1)).findByFranchiseName(headquarter.getFranchiseName());
         verify(storeRepository).save(any(Store.class));
@@ -121,9 +120,8 @@ class StoreServiceTest {
         storeManager.updateManageId(store.getId());
 
      //when
-        when(authService.findManagerByAuth()).thenReturn(storeManager);
         when(storeRepository.findById(storeManager.getManageId())).thenReturn(Optional.of(store));
-        StoreResDto result = storeService.getStoreInfo();
+        StoreResDto result = storeService.getStoreInfo(storeManager);
 
      //then
         assertThat(result).isNotNull();
@@ -161,10 +159,9 @@ class StoreServiceTest {
                 .build();
 
      //when
-        when(authService.findManagerByAuth()).thenReturn(storeManager);
         when(storeRepository.findById(storeManager.getManageId())).thenReturn(Optional.of(store));
         when(headquarterRepository.findByFranchiseName(headquarter.getFranchiseName())).thenReturn(Optional.ofNullable(headquarter));
-        storeService.updateStoreInfo(updatedDto);
+        storeService.updateStoreInfo(storeManager,updatedDto);
 
      //then
         assertThat(store.getAddress()).isEqualTo(updatedDto.address());
@@ -193,12 +190,11 @@ class StoreServiceTest {
         storeManager.updateManageId(store.getId());
 
      //when
-        when(authService.findManagerByAuth()).thenReturn(storeManager);
         when(storeRepository.findById(storeManager.getManageId())).thenReturn(Optional.of(store));
 
         when(redisTemplate.delete("store:" + store.getId())).thenReturn(true);
 
-        storeService.deleteStore();
+        storeService.deleteStore(storeManager);
 
         //then
         assertThat(storeManager.getManageId()).isNull();

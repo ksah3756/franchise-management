@@ -1,6 +1,7 @@
 package com.goorm.friendchise.domain.manager.presentation;
 
 import com.goorm.friendchise.domain.manager.application.ManagerService;
+import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.dto.request.ManageCreateRequest;
 import com.goorm.friendchise.domain.manager.dto.request.ManageLoginRequest;
 import com.goorm.friendchise.domain.manager.dto.request.ManagerPasswordRequest;
@@ -9,6 +10,7 @@ import com.goorm.friendchise.domain.manager.dto.response.ManagerPersistResponse;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.dto.request.TokenReissueRequest;
 import com.goorm.friendchise.global.auth.dto.response.TokenResponse;
+import com.goorm.friendchise.global.auth.resolver.AuthManager;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -46,31 +48,35 @@ public class ManagerController {
 	}
 
 	@GetMapping("/mypage")
-	public ResponseEntity<ManagerDetailResponse> mypage() {
-		return ResponseEntity.ok(managerService.mypage());
+	public ResponseEntity<ManagerDetailResponse> mypage(
+			@AuthManager Manager manager
+			) {
+		return ResponseEntity.ok(managerService.mypage(manager));
 	}
 
 	@Secured({"ROLE_HEADQUARTER", "ROLE_STORE"})
 	@PutMapping("/update/store-id")
 	public ResponseEntity<Void> update(
-		@RequestParam Long newStoreId
+			@AuthManager Manager manager,
+			@RequestParam Long newStoreId
 	) {
-		managerService.updateManager(newStoreId);
+		managerService.updateManager(manager, newStoreId);
 		return ResponseEntity.noContent().build();
 	}
 
 	@Secured({"ROLE_HEADQUARTER", "ROLE_STORE"})
 	@PutMapping("/update/password")
 	public ResponseEntity<Void> updatePassword(
-		@RequestBody @Valid ManagerPasswordRequest request
+			@AuthManager Manager manager,
+			@RequestBody @Valid ManagerPasswordRequest request
 	) {
-		managerService.updatePassword(request.password());
+		managerService.updatePassword(manager, request.password());
 		return ResponseEntity.noContent().build();
 	}
 
 	@DeleteMapping
-	public ResponseEntity<Void> delete() {
-		managerService.delete();
+	public ResponseEntity<Void> delete(@AuthManager Manager manager) {
+		managerService.delete(manager);
 		return ResponseEntity.noContent().build();
 	}
 

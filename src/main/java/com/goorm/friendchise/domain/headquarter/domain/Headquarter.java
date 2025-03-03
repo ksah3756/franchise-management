@@ -1,6 +1,8 @@
 package com.goorm.friendchise.domain.headquarter.domain;
 
 import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
+import com.goorm.friendchise.domain.headquarter.domain.category.Category;
+import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDto;
 import com.goorm.friendchise.domain.manager.exception.HeadquarterAuthNotMatchException;
 import com.goorm.friendchise.domain.store.domain.Store;
@@ -41,10 +43,12 @@ public class Headquarter extends BaseEntity {
     private String certificationNumber = UUID.randomUUID().toString();
 
     // Headquarter의 persist, remove 시 Item도 같이 처리
+    // TODO: 라이프사이클이 같지 않으므로 엔티티 대신 ID로 관리
     @Builder.Default
     @OneToMany(mappedBy = "headquarter", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Item> items = new ArrayList<>();
 
+    // TODO: 라이프사이클이 같지 않으므로 엔티티 대신 ID로 관리
     @Builder.Default
     @OneToMany(mappedBy = "headquarter", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Store> stores = new ArrayList<>();

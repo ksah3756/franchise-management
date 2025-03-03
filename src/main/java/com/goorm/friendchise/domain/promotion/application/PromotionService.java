@@ -26,10 +26,8 @@ import java.util.stream.Collectors;
 public class PromotionService {
 	private final PromotionRepository promotionRepository;
 	private final ApplicationEventPublisher eventPublisher;
-	private final AuthService authService;
 
-	public void createPromotion(PromotionCreateRequest request) {
-		Manager manager = authService.findManagerByAuth();
+	public void createPromotion(Manager manager, PromotionCreateRequest request) {
 		Promotion promotion = Promotion.create(manager, request.title(), request.content(), request.startDate(), request.endDate());
 		promotionRepository.save(promotion);
 		log.info("프로모션 저장 완료: {}", promotion.getTitle());
@@ -39,8 +37,7 @@ public class PromotionService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<PromotionDetailResponse> getMyHeadquarterPromotions() {
-		Manager manager = authService.findManagerByAuth();
+	public List<PromotionDetailResponse> getMyHeadquarterPromotions(Manager manager) {
 		Long headquarterId = Optional.ofNullable(manager.getManageId())
 			.orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
 

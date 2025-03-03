@@ -1,18 +1,21 @@
 package com.goorm.friendchise.domain.headquarter.application;
 
 import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialArea;
-import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaRepository;
 import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaService;
-import com.goorm.friendchise.domain.headquarter.domain.Category;
+import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
-import com.goorm.friendchise.domain.headquarter.domain.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.StoreRecommendReqDto;
 import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoApiResultDto;
 import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoPlaceDto;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto.Choice;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatMessage;
+import com.goorm.friendchise.domain.manager.domain.Manager;
+import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
+import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +31,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
+import static com.goorm.friendchise.domain.manager.domain.Role.HEADQUARTER;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 
@@ -49,10 +53,20 @@ class StoreRecommendationServiceTest {
     @InjectMocks
     private StoreRecommendationService storeRecommendationService;
 
+    private Manager createManagerWithoutManageId() {
+        return Manager.builder()
+                .id(1L)
+                .username("test")
+                .password("test1234")
+                .role(HEADQUARTER)
+                .build();
+    }
+
     // 이게 맞는건지 모르겠다...
     @Test
     @DisplayName("매장 입점 추천 여부를 받아온다.")
     void getRecommendation() {
+        Manager manager = createManagerWithoutManageId();
         // given
         given(commercialAreaService.getCommercialArea(anyDouble(), anyDouble())).willReturn(CommercialArea.builder()
                 .areaName("test")
@@ -60,7 +74,7 @@ class StoreRecommendationServiceTest {
                 .geom(new Polygon(null, null, new GeometryFactory()))
                 .build());
 
-        given(headquarterService.getHeadquarterByContext()).willReturn(Headquarter.builder()
+        given(headquarterService.getHeadquarterByContext(manager)).willReturn(Headquarter.builder()
                 .franchiseName("맥도날드")
                 .category(Category.FASTFOOD)
                 .subCategory(SubCategory.NONE)
@@ -76,7 +90,8 @@ class StoreRecommendationServiceTest {
         given(openAiApiService.requestChatCompletion(anyString())).willReturn(ChatCompletionResponseDto.of(choices, new ChatCompletionResponseDto.Usage(0, 0)));
 
         // when
-        ChatCompletionResponseDto response = storeRecommendationService.getRecommendation(new StoreRecommendReqDto(List.of("대형마트"), 126.2132132, 37.1231231));
+
+        ChatCompletionResponseDto response = storeRecommendationService.getRecommendation(manager, new StoreRecommendReqDto(List.of("대형마트"), 126.2132132, 37.1231231));
 
         // then
         Assertions.assertThat(response.choices()).isEqualTo(choices);

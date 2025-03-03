@@ -29,7 +29,7 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public Slice<Item> findByHeadquarterId(Long headquarterId, Pageable pageable) {
+    public Slice<Item> findByHeadquarter(Long headquarterId, Pageable pageable) {
         return jpaItemRepository.findByHeadquarterId(headquarterId, pageable);
     }
 

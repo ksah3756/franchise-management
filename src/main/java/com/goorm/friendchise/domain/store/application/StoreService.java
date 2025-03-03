@@ -43,16 +43,12 @@ public class StoreService {
     private final StoreRepository storeRepository;
     private final HeadquarterRepository headquarterRepository;
     private final WebClient webClient;
-    private final AuthService authService;
     private final NotificationSseSender notificationSseSender;
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final ObjectMapper objectMapper; // JSON 변환용
-	private Manager getCurrentManager(){
-        return authService.findManagerByAuth();
-    }
 
-    public List<KakaoApiAddressResDto> searchAddress(String address) {
+    public List<KakaoApiAddressResDto> searchAddress(Manager manager, String address) {
 
         KakaoApiRes query = webClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -71,8 +67,7 @@ public class StoreService {
     }
 
     @Transactional
-    public void createStore(StoreReqDto req) {
-        Manager currentManager = getCurrentManager();
+    public void createStore(Manager currentManager, StoreReqDto req) {
         Headquarter headquarter = findHeadquarterByHeadQuarterName(req.headQuarterName());
 
         Store store = new Store(req, headquarter, currentManager);
@@ -86,16 +81,14 @@ public class StoreService {
 	}
 
     @Transactional(readOnly = true)
-    public StoreResDto getStoreInfo() {
-        Manager currentManager = getCurrentManager();
+    public StoreResDto getStoreInfo(Manager currentManager) {
         Store store = findIfStoreExists(currentManager);
 
         return new StoreResDto(store);
     }
 
     @Transactional
-    public void updateStoreInfo(StoreReqDto req) {
-        Manager currentManager = getCurrentManager();
+    public void updateStoreInfo(Manager currentManager, StoreReqDto req) {
         Store store = findIfStoreExists(currentManager);
         Headquarter headquarter = findHeadquarterByHeadQuarterName(req.headQuarterName());
 
@@ -105,8 +98,7 @@ public class StoreService {
     }
 
     @Transactional
-    public void deleteStore(){
-        Manager currentManager = getCurrentManager();
+    public void deleteStore(Manager currentManager){
         Store store = findIfStoreExists(currentManager);
 
         findIfMine(store, currentManager);

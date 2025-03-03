@@ -8,7 +8,6 @@ import com.goorm.friendchise.domain.headquarter.Item.dto.ItemResDto;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
 import com.goorm.friendchise.domain.manager.domain.Manager;
-import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -25,15 +24,10 @@ import java.util.List;
 public class ItemService {
     private final HeadquarterRepository headquarterRepository;
     private final ItemRepository itemRepository;
-    private final AuthService authService;
-
-    private Manager getCurrentManager(){
-        return authService.findManagerByAuth();
-    }
 
     @Transactional
-    public List<ItemResDto> createItems(ItemReqDtoList itemReqDtoList) {
-        Headquarter headquarter = getCurrentHeadquarter();
+    public List<ItemResDto> createItems(Manager currentManager, ItemReqDtoList itemReqDtoList) {
+        Headquarter headquarter = getCurrentHeadquarter(currentManager);
 
         // 2. 들어온 요청 DTO 리스트를 순회하며 Item 생성 후 연관관계 설정
         List<ItemResDto> savedItemDtoList = new ArrayList<>();
@@ -48,27 +42,26 @@ public class ItemService {
     }
 
     @Transactional(readOnly = true)
-    public Slice<ItemResDto> getItems(Pageable pageable) {
-        Headquarter headquarter = getCurrentHeadquarter();
+    public Slice<ItemResDto> getItems(Manager currentManager, Pageable pageable) {
+        Headquarter headquarter = getCurrentHeadquarter(currentManager);
 
         // headquarter.id = headquarterId 이런식으로 조회되기 때문에 페치 조인이 아님에도 left join해서 headquarter까지 가져옮
-        return itemRepository.findByHeadquarterId(headquarter.getId(), pageable).map(ItemResDto::fromEntity);
+        return itemRepository.findByHeadquarter(headquarter.getId(), pageable).map(ItemResDto::fromEntity);
     }
 
-    @Transactional(readOnly = true)
-    public Slice<ItemResDto> getItemsNative(Pageable pageable) {
-        Headquarter headquarter = getCurrentHeadquarter();
+//    @Transactional(readOnly = true)
+//    public Slice<ItemResDto> getItemsNative(Pageable pageable) {
+//        Headquarter headquarter = getCurrentHeadquarter();
+//
+//        // native query로 불필요한 left join X
+//        return itemRepository.findItemsByHeadquarterIdNative(headquarter.getId(), pageable).map(ItemResDto::fromEntity);
+//    }
 
-        // native query로 불필요한 left join X
-        return itemRepository.findItemsByHeadquarterIdNative(headquarter.getId(), pageable).map(ItemResDto::fromEntity);
+    private Headquarter getCurrentHeadquarter(Manager currentManager) {
+        return getHeadquarterById(currentManager);
     }
 
-    private Headquarter getCurrentHeadquarter() {
-        Manager currentManager = getCurrentManager();
-        return findHeadquarterById(currentManager);
-    }
-
-    private Headquarter findHeadquarterById(Manager currentManager) {
+    private Headquarter getHeadquarterById(Manager currentManager) {
         if (currentManager.getManageId() == null) {
             throw new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND);
         }

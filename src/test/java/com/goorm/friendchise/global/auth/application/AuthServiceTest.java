@@ -48,17 +48,4 @@ class AuthServiceTest {
 			new UsernamePasswordAuthenticationToken(manger, manger.getUsername(), manger.getAuthorities())
 		);
 	}
-
-	@Test
-	@DisplayName("findManagerByAuth는 SecurityContextHolder의 정보로 Manager를 생성")
-	void findManagerByAuth_success() {
-		// when
-		Manager manager = authService.findManagerByAuth();
-
-		// then
-		assertNotNull(manager);
-		assertEquals(1L, manager.getId());
-		assertEquals("test", manager.getUsername());
-		assertEquals(HEADQUARTER, manager.getRole());
-	}
 }

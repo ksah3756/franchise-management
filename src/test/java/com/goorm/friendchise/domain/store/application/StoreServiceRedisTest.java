@@ -59,7 +59,7 @@ public class StoreServiceRedisTest {
         redisService = new RedisService(redisTemplate);
 
         storeService= new StoreService(fakeStoreRepository,headquarterRepository,
-                null,authService,null,
+                null,null,
                 redisTemplate,objectMapper);
         manager = Manager.create("test", "test1234", HEADQUARTER);
         managerRepository.save(
@@ -71,8 +71,8 @@ public class StoreServiceRedisTest {
         );
 
         HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "패스트푸드", "");
-        HeadquarterService headquarterService = new HeadquarterService(authService, headquarterRepository);
-        headquarterService.createHeadquarter(headquarterReqDto);
+        HeadquarterService headquarterService = new HeadquarterService(headquarterRepository);
+        headquarterService.createHeadquarter(manager, headquarterReqDto);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class StoreServiceRedisTest {
                 .headQuarterName("test")
                 .build();
 
-        storeService.createStore(reqDto);
+        storeService.createStore(manager, reqDto);
 
         String storeKey = "store:11";
         Object value = redisTemplate.opsForValue().get(storeKey);
@@ -97,7 +97,7 @@ public class StoreServiceRedisTest {
         StoreRedisDto storeDto = objectMapper.readValue(jsonValue, StoreRedisDto.class);
 
 
-        storeService.deleteStore();
+        storeService.deleteStore(manager);
 
         Object value2 = redisTemplate.opsForValue().get(storeKey);
 

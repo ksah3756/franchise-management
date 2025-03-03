@@ -11,8 +11,11 @@ import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDt
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.StoreRecommendReqDto;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionStreamResponseDto;
+import com.goorm.friendchise.domain.manager.domain.Manager;
+import com.goorm.friendchise.global.auth.resolver.AuthManager;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.geolatte.geom.M;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -37,52 +40,62 @@ public class HeadquarterController {
 
     @Secured("ROLE_HEADQUARTER")
     @PostMapping("/register")
-    public ResponseEntity<HeadquarterResDto> createHeadquarter(@Valid @RequestBody HeadquarterReqDto headquarterReqDto) {
-        return ResponseEntity.created(URI.create("/headquarter")).body(headquarterService.createHeadquarter(headquarterReqDto));
+    public ResponseEntity<HeadquarterResDto> createHeadquarter(
+            @AuthManager Manager manager,
+            @Valid @RequestBody HeadquarterReqDto headquarterReqDto) {
+        return ResponseEntity.created(URI.create("/headquarter")).body(headquarterService.createHeadquarter(manager, headquarterReqDto));
     }
 
     @Secured("ROLE_HEADQUARTER")
     @GetMapping
-    public ResponseEntity<HeadquarterDetailResDto> getHeadquarter() {
-        return ResponseEntity.ok().body(headquarterService.getHeadquarter());
+    public ResponseEntity<HeadquarterDetailResDto> getHeadquarter(@AuthManager Manager manager) {
+        return ResponseEntity.ok().body(headquarterService.getHeadquarter(manager));
     }
 
     // 엔티티 전체 필드가 들어오는 경우 PUT, 일부만 들어오는 경우 PATCH로 구분하는게 맞을거같은데..그냥 PATCH로 구현
     @Secured("ROLE_HEADQUARTER")
     @PatchMapping("/update")
-    public ResponseEntity<HeadquarterResDto> updateHeadquarter(@Valid @RequestBody HeadquarterReqDto headquarterReqDto) {
-        return ResponseEntity.ok().body(headquarterService.updateHeadquarterName(headquarterReqDto));
+    public ResponseEntity<HeadquarterResDto> updateHeadquarter(
+            @AuthManager Manager manager,
+            @Valid @RequestBody HeadquarterReqDto headquarterReqDto) {
+        return ResponseEntity.ok().body(headquarterService.updateHeadquarterName(manager, headquarterReqDto));
     }
 
     @Secured("ROLE_HEADQUARTER")
     @DeleteMapping
-    public ResponseEntity<Void> deleteHeadquarter() {
-        headquarterService.deleteHeadquarter();
+    public ResponseEntity<Void> deleteHeadquarter(@AuthManager Manager manager) {
+        headquarterService.deleteHeadquarter(manager);
         return ResponseEntity.ok().body(null);
     }
 
     @Secured("ROLE_HEADQUARTER")
     @PageableAsQueryParam
     @GetMapping("/items")
-    public ResponseEntity<Slice<ItemResDto>> getItems(Pageable pageable) {
-        return ResponseEntity.ok().body(itemService.getItemsNative(pageable));
+    public ResponseEntity<Slice<ItemResDto>> getItems(@AuthManager Manager manager, Pageable pageable) {
+        return ResponseEntity.ok().body(itemService.getItems(manager, pageable));
     }
 
     @Secured("ROLE_HEADQUARTER")
     @PostMapping("/items/register")
-    public ResponseEntity<List<ItemResDto>> createItems(@Valid @RequestBody ItemReqDtoList itemReqDtoList) {
-        return ResponseEntity.created(URI.create("/headquarter/items")).body(itemService.createItems(itemReqDtoList));
+    public ResponseEntity<List<ItemResDto>> createItems(
+            @AuthManager Manager manager,
+            @Valid @RequestBody ItemReqDtoList itemReqDtoList) {
+        return ResponseEntity.created(URI.create("/headquarter/items")).body(itemService.createItems(manager, itemReqDtoList));
     }
 
     @Secured("ROLE_HEADQUARTER")
     @PostMapping("/store-recommendation")
-    public ResponseEntity<ChatCompletionResponseDto> getRecommendationResult(@Valid @RequestBody StoreRecommendReqDto req) {
-        return ResponseEntity.ok().body(storeRecommendationService.getRecommendation(req));
+    public ResponseEntity<ChatCompletionResponseDto> getRecommendationResult(
+            @AuthManager Manager manager,
+            @Valid @RequestBody StoreRecommendReqDto req) {
+        return ResponseEntity.ok().body(storeRecommendationService.getRecommendation(manager, req));
     }
 
     @PostMapping(value = "/store-recommendation-stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public ResponseEntity<Flux<String>> getRecommendationStreamResult(@Valid @RequestBody StoreRecommendReqDto req) {
-        return ResponseEntity.ok().body(storeRecommendationService.getRecommendationStream(req));
+    public ResponseEntity<Flux<String>> getRecommendationStreamResult(
+            @AuthManager Manager manager,
+            @Valid @RequestBody StoreRecommendReqDto req) {
+        return ResponseEntity.ok().body(storeRecommendationService.getRecommendationStream(manager, req));
     }
 
     @PostMapping("/store-recommendation-dummy")

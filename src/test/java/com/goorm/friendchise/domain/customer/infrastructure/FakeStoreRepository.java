@@ -1,9 +1,8 @@
 package com.goorm.friendchise.domain.customer.infrastructure;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.goorm.friendchise.domain.headquarter.domain.Category;
+import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
-import com.goorm.friendchise.domain.headquarter.domain.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.Role;
 import com.goorm.friendchise.domain.store.domain.Store;
