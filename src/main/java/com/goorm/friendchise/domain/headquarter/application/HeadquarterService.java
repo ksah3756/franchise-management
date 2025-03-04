@@ -44,18 +44,13 @@ public class HeadquarterService {
     public HeadquarterResDto updateHeadquarterName(Manager currentManager, HeadquarterReqDto headquarterReqDto) {
         Headquarter headquarter = getHeadquarterById(currentManager);
 
-        findIfMine(headquarter, currentManager);
-
         headquarter.updateByRequestDto(headquarterReqDto);
         return HeadquarterResDto.from(headquarter);
     }
 
     @Transactional
     public void deleteHeadquarter(Manager currentManager) {
-        Headquarter headquarter = getHeadquarterById(currentManager);
-
-        findIfMine(headquarter, currentManager);
-
+        // TODO: hard delete 대신 soft delete로 구현
         headquarterRepository.deleteById(currentManager.getManageId());
         currentManager.updateManageId(null);
     }
@@ -90,12 +85,6 @@ public class HeadquarterService {
     private Headquarter getHeadquarterById(Long id) {
         return headquarterRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
-    }
-
-    private static void findIfMine(Headquarter headquarter, Manager currentManager) {
-        if(headquarter == null || !headquarter.getId().equals(currentManager.getManageId())){
-            throw new NoAuthenticationException();
-        }
     }
 
 }

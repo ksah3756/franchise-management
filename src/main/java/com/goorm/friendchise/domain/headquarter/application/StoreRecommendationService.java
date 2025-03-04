@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class StoreRecommendationService {
+    // 너무 구체적인 구현방식에 의존하는거같은데
     private final KakaoApiService kakaoApiService;
     private final OpenAiApiService openAiApiService;
     private final CommercialAreaService commercialAreaService;

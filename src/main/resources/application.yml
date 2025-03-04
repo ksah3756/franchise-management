@@ -13,7 +13,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       default_batch_fetch_size: 1000
       jdbc:
         time_zone: Asia/Seoul
@@ -29,9 +29,6 @@ spring:
       host: 172.31.33.228
       port: 6379
       password: ${REDIS_PASSWORD}
-  sql:
-    init:
-      mode: always # 한번 하고 삭제
 kakao:
   apiKey: ${KAKAO_API_KEY}
   api:

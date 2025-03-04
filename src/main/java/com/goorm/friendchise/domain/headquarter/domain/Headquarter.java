@@ -4,8 +4,10 @@ import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
 import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDto;
+import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.exception.HeadquarterAuthNotMatchException;
 import com.goorm.friendchise.domain.store.domain.Store;
+import com.goorm.friendchise.domain.store.exception.NoAuthenticationException;
 import com.goorm.friendchise.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -82,5 +84,11 @@ public class Headquarter extends BaseEntity {
     public void validateCertificationNumber(String certificationNumber){
 		if (! this.certificationNumber.equals(certificationNumber))
 			throw new HeadquarterAuthNotMatchException();
+    }
+
+    public void verifyManager(Manager manager) {
+        if(manager == null || !manager.getManageId().equals(this.id)) {
+            throw new NoAuthenticationException();
+        }
     }
 }
