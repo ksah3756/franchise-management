@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -131,6 +132,16 @@ public class StoreRecommendationService {
         Thread.sleep(5000);
 
         return ChatCompletionResponseDto.of(List.of(), new ChatCompletionResponseDto.Usage(0, 0));
+    }
+
+    public Flux<String> getRecommendationStreamDummy(StoreRecommendReqDto req) throws InterruptedException {
+        // 카카오 API 호출
+        Thread.sleep(100);
+        // OpenAI API 호출
+        Thread.sleep(100);
+
+        String result = String.join("", Collections.nCopies(300, "s"));
+        return Flux.just(result).delayElements(Duration.ofMillis(10));
     }
 
     private static List<String> getUserSelectedCategory(StoreRecommendReqDto req) {

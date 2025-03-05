@@ -75,7 +75,7 @@ public class StoreService {
 
         currentManager.updateManageId(store.getId());
 
-        saveStoreToRedis(store);
+        // saveStoreToRedis(store);
 
         log.info("초기 스토어 생성 완료 storeId = {}", store.getId());
 	}
@@ -103,8 +103,8 @@ public class StoreService {
 
         findIfMine(store, currentManager);
 
-        String storeKey = "store:" + store.getId();
-        redisTemplate.delete(storeKey);
+//        String storeKey = "store:" + store.getId();
+//        redisTemplate.delete(storeKey);
 
         currentManager.updateManageId(null);
         storeRepository.delete(store);

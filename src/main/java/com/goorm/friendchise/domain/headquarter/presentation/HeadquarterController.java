@@ -103,4 +103,11 @@ public class HeadquarterController {
         return ResponseEntity.ok().body(storeRecommendationService.getRecommendationDummy(req));
     }
 
+    @PostMapping(value = "/store-recommendation-stream-dummy", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public ResponseEntity<Flux<String>> getRecommendationStreamResultDummy(
+            @AuthManager Manager manager,
+            @Valid @RequestBody StoreRecommendReqDto req) throws InterruptedException {
+        return ResponseEntity.ok().body(storeRecommendationService.getRecommendationStreamDummy(req));
+    }
+
 }
