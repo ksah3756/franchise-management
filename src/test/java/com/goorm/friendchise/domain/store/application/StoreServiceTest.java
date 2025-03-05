@@ -92,8 +92,8 @@ class StoreServiceTest {
      //when
         when(headquarterRepository.findByFranchiseName(headquarter.getFranchiseName()))
                 .thenReturn(Optional.ofNullable(headquarter));
-        when(redisTemplate.opsForValue()).thenReturn(mockValueOperations);
-        when(objectMapper.writeValueAsString(any(StoreRedisDto.class))).thenReturn("jsonString");  // mock 처리
+//        when(redisTemplate.opsForValue()).thenReturn(mockValueOperations);
+//        when(objectMapper.writeValueAsString(any(StoreRedisDto.class))).thenReturn("jsonString");  // mock 처리
 
         storeService.createStore(storeManager ,reqDto);
      //then
@@ -192,7 +192,7 @@ class StoreServiceTest {
      //when
         when(storeRepository.findById(storeManager.getManageId())).thenReturn(Optional.of(store));
 
-        when(redisTemplate.delete("store:" + store.getId())).thenReturn(true);
+//        when(redisTemplate.delete("store:" + store.getId())).thenReturn(true);
 
         storeService.deleteStore(storeManager);
 
