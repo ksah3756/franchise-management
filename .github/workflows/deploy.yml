@@ -3,7 +3,7 @@ name: Deploy to EC2 with Docker
 on:
   push:
     branches:
-      - 'dev', 'refactor/architecture'
+      - ['dev', 'refactor/architecture']
 
 jobs:
   deploy:
