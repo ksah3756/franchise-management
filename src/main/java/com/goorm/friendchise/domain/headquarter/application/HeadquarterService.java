@@ -8,8 +8,10 @@ import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDt
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.store.exception.NoAuthenticationException;
+import com.goorm.friendchise.global.auth.managerevent.ManagerUpdateEvent;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,14 +24,16 @@ import java.util.List;
 public class HeadquarterService {
 
     private final HeadquarterRepository headquarterRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public HeadquarterResDto createHeadquarter(Manager currentManager, HeadquarterReqDto headquarterReqDto) {
         checkIfFranchiseNameExists(headquarterReqDto);
         Headquarter headquarter = HeadquarterReqDto.toEntity(headquarterReqDto);
         headquarterRepository.save(headquarter);
-        // 이러면 manager가 영속성 컨텍스트에서 관리되어서 업데이트 되나?
-        currentManager.updateManageId(headquarter.getId());
+
+        // Manager의 manageId를 업데이트하기 위한 이벤트 발행
+        eventPublisher.publishEvent(ManagerUpdateEvent.create(headquarter.getId(), currentManager));
         return HeadquarterResDto.from(headquarter);
     }
 

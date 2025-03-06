@@ -14,6 +14,7 @@ import com.goorm.friendchise.domain.store.dto.StoreReqDto;
 import com.goorm.friendchise.domain.store.dto.StoreResDto;
 import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
+import com.goorm.friendchise.global.auth.managerevent.ManagerUpdateEvent;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -50,6 +52,8 @@ class StoreServiceTest {
     private WebClient webClient;
     @Mock
     private AuthService authService;
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
     @InjectMocks
     private StoreService storeService;
 
@@ -94,7 +98,6 @@ class StoreServiceTest {
                 .thenReturn(Optional.ofNullable(headquarter));
 //        when(redisTemplate.opsForValue()).thenReturn(mockValueOperations);
 //        when(objectMapper.writeValueAsString(any(StoreRedisDto.class))).thenReturn("jsonString");  // mock 처리
-
         storeService.createStore(storeManager ,reqDto);
      //then
         verify(headquarterRepository, times(1)).findByFranchiseName(headquarter.getFranchiseName());

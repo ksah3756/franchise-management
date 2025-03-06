@@ -22,6 +22,7 @@ import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
 import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
 import com.goorm.friendchise.global.auth.jwt.JwtProperties;
 import com.goorm.friendchise.global.auth.jwt.TokenProvider;
+import com.goorm.friendchise.global.auth.managerevent.ManagerUpdateEvent;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import org.junit.jupiter.api.AfterEach;
@@ -53,7 +54,14 @@ class HeadquarterServiceTest {
 	void setup() {
 		headquarterRepository = new FakeHeadquarterRepository();
 		managerRepository = new FakeManagerRepository();
-		headquarterService = new HeadquarterService(headquarterRepository);
+
+		headquarterService = new HeadquarterService(headquarterRepository, event -> {
+			ManagerUpdateEvent managerUpdateEvent = (ManagerUpdateEvent) event;
+			Manager manager = managerUpdateEvent.getManager();
+			manager.updateManageId(managerUpdateEvent.getManageId());
+			managerRepository.save(manager);
+			System.out.println("manageId " + managerUpdateEvent.getManageId() + "가 연결되었습니다. Role: " + manager.getRole().getDescription());
+		});
 	}
 
 	@AfterEach
@@ -145,6 +153,7 @@ class HeadquarterServiceTest {
 
 		// then
 		assertThat(res.franchiseName()).isEqualTo("test");
+		assertThat(managerRepository.findById(manager.getId()).get().getManageId()).isEqualTo(res.id());
 	}
 
 	private Manager createManagerWithoutManageId() {
