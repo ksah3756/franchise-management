@@ -74,6 +74,7 @@ public class SecurityConfig {
 		"*/reissue",
 		"/headquarter/store-recommendation-dummy",
 		"/headquarter/store-recommendation-stream",
+			"/headquarter/store-recommendation-stream-dummy",
 		"/notifications/subscribe/**"
 	};
 

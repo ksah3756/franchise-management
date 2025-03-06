@@ -42,6 +42,7 @@ public class RedisService {
         String pattern = "store:*";
 
         // Redis에서 모든 key를 찾기 위한 scan
+        // TODO:
         Cursor<byte[]> cursor = redisTemplate.executeWithStickyConnection(
                 connection -> connection.scan(ScanOptions.scanOptions().match(pattern).build())
         );
