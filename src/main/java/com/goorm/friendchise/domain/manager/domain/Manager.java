@@ -24,9 +24,6 @@ import static lombok.AccessLevel.PROTECTED;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-@Table(indexes = {
-		@Index(name = "idx_manager_username", columnList = "username", unique = true)
-})
 public class Manager extends BaseEntity implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
