@@ -60,17 +60,18 @@ public class AuthService {
 	public TokenResponse managerLogin(Manager manager) {
 		String name = manager.getUsername();
 		String role = manager.getRole().name();
-		String accessToken = tokenProvider.generateToken(name, ACCESS_TOKEN_EXP, role);
-		String refreshToken = tokenProvider.generateToken(name, REFRESH_TOKEN_EXP, role);
+
+		String accessToken;
 
 		if (role.equals(HEADQUARTER_ROLE) && manager.getManageId() != null) {
 			accessToken = headquarterAccessToken(manager, role, name);
-		}
-
-		if (role.equals(STORE_ROLE) && manager.getManageId() != null) {
+		} else if (role.equals(STORE_ROLE) && manager.getManageId() != null) {
 			accessToken = storeAccessToken(manager, role, name);
+		} else {
+			accessToken = tokenProvider.generateToken(name, ACCESS_TOKEN_EXP, role);
 		}
 
+		String refreshToken = tokenProvider.generateToken(name, REFRESH_TOKEN_EXP, role);
 		refreshTokenRepository.save(
 			RefreshToken.of(refreshToken, manager.getId(), manager.getRole())
 		);
