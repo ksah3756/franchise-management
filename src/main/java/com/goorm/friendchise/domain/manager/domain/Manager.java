@@ -2,11 +2,7 @@ package com.goorm.friendchise.domain.manager.domain;
 
 import com.goorm.friendchise.domain.manager.exception.PasswordNotMatchException;
 import com.goorm.friendchise.global.common.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +24,9 @@ import static lombok.AccessLevel.PROTECTED;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
+@Table(indexes = {
+		@Index(name = "idx_manager_username", columnList = "username", unique = true)
+})
 public class Manager extends BaseEntity implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
