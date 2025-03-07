@@ -63,18 +63,18 @@ jobs:
           touch scripts/deploy.sh
           echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $ECR_REGISTRY" >> scripts/deploy.sh
           echo "docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
-          echo "docker run -p 8080:8080 -e PROFILE=dev -d --restart always --name csbroker-api $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
-          - name: upload to s3
-            env:
-              IMAGE_TAG: ${{ github.sha }}
-            run: |
-              zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml
-              aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://friendchisedeployscript
-          - name: start deploy
-            env:
-              IMAGE_TAG: ${{ github.sha }}
-            run: |
-              aws deploy create-deployment --application-name deploy \
-              --deployment-config-name CodeDeployDefault.OneAtATime \
-              --deployment-group-name deploy-group \
-              --s3-location bucket=friendchisedeployscript,bundleType=zip,key=deploy-$IMAGE_TAG.zip
+          echo "docker run -p 8080:8080 -d --restart always --name friendchise $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
+      - name: upload to s3
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml
+          aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://friendchisedeployscript
+      - name: start deploy
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          aws deploy create-deployment --application-name deploy \
+          --deployment-config-name CodeDeployDefault.OneAtATime \
+          --deployment-group-name deploy-group \
+          --s3-location bucket=friendchisedeployscript,bundleType=zip,key=deploy-$IMAGE_TAG.zip
