@@ -85,6 +85,6 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           aws deploy create-deployment --application-name deploy \
-          --deployment-config-name CodeDeployDefault.OneAtATime \
-          --deployment-group-name deploy-group \
+          --deployment-config-name CodeDeployDefault.AllAtOnce \
+          --deployment-group-name deploy-group \  
           --s3-location bucket=friendchisedeployscript,bundleType=zip,key=deploy-$IMAGE_TAG.zip
