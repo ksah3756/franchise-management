@@ -77,6 +77,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          mv docker-compose.yml scripts/
           zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml docker-compose.yml
           aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://friendchisebucket
       - name: start deploy
