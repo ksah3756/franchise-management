@@ -27,7 +27,7 @@ spring:
     database-platform: org.hibernate.spatial.dialect.MySQL8SpatialDialect
   data:
     redis:
-      host: 172.31.33.228
+      host: redis
       port: 6379
       password: ${REDIS_PASSWORD}
 kakao:
