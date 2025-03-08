@@ -68,9 +68,8 @@ jobs:
           cat > scripts/deploy.sh << 'EOF'
           #!/bin/bash
           set -e
-          echo "Stopping existing containers..."
           docker-compose down || true
-          echo "Starting containers using docker-compose..."
+          cd ..
           docker-compose up -d
           EOF
           chmod +x scripts/deploy.sh
