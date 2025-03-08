@@ -69,7 +69,6 @@ jobs:
           #!/bin/bash
           set -e
           docker-compose down || true
-          cd ..
           docker-compose up -d
           EOF
           chmod +x scripts/deploy.sh
