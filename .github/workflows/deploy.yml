@@ -37,8 +37,13 @@ jobs:
         run: ./gradlew clean build
         env:
           KAKAO_API_KEY: ${{ secrets.KAKAO_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
           EC2_HOST: ${{ secrets.EC2_HOST }}
+          DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+          DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
+          JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -56,19 +61,24 @@ jobs:
             ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
             ECR_REPOSITORY: friendchise-origin
             IMAGE_TAG: ${{ github.sha }}
-        run: |
+        run: | ## ECR에 이미지를 빌드하고 푸시하는 과정
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          mkdir scripts
-          touch scripts/deploy.sh
-          echo "aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin $ECR_REGISTRY" >> scripts/deploy.sh
-          echo "docker pull $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
-          echo "docker run -p 8080:8080 -d --restart always --name friendchise $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> scripts/deploy.sh
+          mkdir -p scripts
+          cat > scripts/deploy.sh << 'EOF'
+          #!/bin/bash
+          set -e
+          echo "Stopping existing containers..."
+          docker-compose down || true
+          echo "Starting containers using docker-compose..."
+          docker-compose up -d
+          EOF
+          chmod +x scripts/deploy.sh
       - name: upload to s3
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml
+          zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml docker-compose.yml
           aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://friendchisedeployscript
       - name: start deploy
         env:
