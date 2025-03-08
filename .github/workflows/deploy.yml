@@ -79,7 +79,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml docker-compose.yml
-          aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://friendchisedeployscript
+          aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://friendchisebucket
       - name: start deploy
         env:
           IMAGE_TAG: ${{ github.sha }}
@@ -87,4 +87,4 @@ jobs:
           aws deploy create-deployment --application-name deploy \
           --deployment-config-name CodeDeployDefault.OneAtATime \
           --deployment-group-name deploy-group \
-          --s3-location bucket=friendchisedeployscript,bundleType=zip,key=deploy-$IMAGE_TAG.zip
+          --s3-location bucket=friendchisebucket,bundleType=zip,key=deploy-$IMAGE_TAG.zip
