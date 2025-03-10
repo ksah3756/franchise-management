@@ -68,9 +68,8 @@ jobs:
           cat > scripts/deploy.sh << 'EOF'
           #!/bin/bash
           set -e
-          ECR_REGISTRY=$ECR_REGISTRY
           echo "Logging in to ECR..."
-          aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+          aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 381492107741.dkr.ecr.ap-northeast-2.amazonaws.com
           DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" 
           docker-compose -f "$DIR/docker-compose.yml" down || true
           docker-compose -f "$DIR/docker-compose.yml" up -d
