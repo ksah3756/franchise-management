@@ -72,10 +72,10 @@ jobs:
           docker-compose -f "$DIR/docker-compose.yml" down || true
           docker-compose -f "$DIR/docker-compose.yml" up -d
           EOF
-          cat > scripts/.env << 'EOF'
-          ECR_REGISTRY: $ECR_REGISTRY
-          ECR_REPOSITORY: friendchise-origin
-          IMAGE_TAG: $IMAGE_TAG
+          cat > scripts/.env << EOF
+          ECR_REGISTRY=$ECR_REGISTRY
+          ECR_REPOSITORY=friendchise-origin
+          IMAGE_TAG=$IMAGE_TAG
           REDIS_PASSWORD=$REDIS_PASSWORD
           DATASOURCE_URL=$DATASOURCE_URL
           DATASOURCE_PASSWORD=$DATASOURCE_PASSWORD
