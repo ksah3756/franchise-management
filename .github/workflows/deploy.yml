@@ -72,6 +72,7 @@ jobs:
           aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 381492107741.dkr.ecr.ap-northeast-2.amazonaws.com
           DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" 
           docker-compose -f "$DIR/docker-compose.yml" down || true
+          docker container prune -f
           docker-compose -f "$DIR/docker-compose.yml" up -d
           EOF
           cat > scripts/.env << EOF
