@@ -61,6 +61,13 @@ jobs:
             ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
             ECR_REPOSITORY: friendchise-origin
             IMAGE_TAG: ${{ github.sha }}
+            REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+            DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+            DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
+            JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
+            JWT_SECRET: ${{ secrets.JWT_SECRET }}
+            KAKAO_API_KEY: ${{ secrets.KAKAO_API_KEY }}
+            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: | ## ECR에 이미지를 빌드하고 푸시하는 과정
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
