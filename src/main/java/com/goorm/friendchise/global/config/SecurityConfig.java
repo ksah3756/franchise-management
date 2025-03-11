@@ -69,13 +69,15 @@ public class SecurityConfig {
 	};
 
 	private static final String[] PUBLIC_ENDPOINTS = {
-		"*/register",
-		"*/login",
-		"*/reissue",
-		"/headquarter/store-recommendation-dummy",
-		"/headquarter/store-recommendation-stream",
+			"/manager/register",
+			"/manager/login",
+			"/customer/register",
+			"/customer/login",
+			"*/reissue",
+			"/headquarter/store-recommendation-dummy",
+			"/headquarter/store-recommendation-stream",
 			"/headquarter/store-recommendation-stream-dummy",
-		"/notifications/subscribe/**"
+			"/notifications/subscribe/**"
 	};
 
 	CorsConfigurationSource corsConfigurationSource() {

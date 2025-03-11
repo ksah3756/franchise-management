@@ -67,7 +67,7 @@ public class CustomerService {
     @Transactional
     public TokenResponse login(CustomerLoginRequest request
                                ) {
-        Customer customer =findCustomerByUsername(request.username());
+        Customer customer = findCustomerByUsername(request.username());
         customer.isPasswordMatch(request.password(), bCryptPasswordEncoder);
 
         locationService.saveStartLocation(request.startY(),request.startX(),customer);
