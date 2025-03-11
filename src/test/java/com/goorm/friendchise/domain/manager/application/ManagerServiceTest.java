@@ -22,6 +22,7 @@ import com.goorm.friendchise.domain.notification.application.NotificationSseSend
 import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
+import com.goorm.friendchise.global.auth.infrastructure.FakeApplicationEventPublisher;
 import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
 import com.goorm.friendchise.global.auth.implement.jwt.JwtProperties;
 import com.goorm.friendchise.global.auth.implement.jwt.TokenProvider;
@@ -30,6 +31,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,14 +55,12 @@ class ManagerServiceTest {
 		ManagerRepository managerRepository = new FakeManagerRepository();
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		TokenProvider tokenProvider = new TokenProvider(new JwtProperties());
-		RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
 		CustomerRepository customerRepository = new FakeCustomerRepository();
 		this.headquarterRepository = new FakeHeadquarterRepository();
 		NotificationManager notificationManager = Mockito.mock(NotificationManager.class);
 		NotificationSseSender notificationSseSender = new NotificationSseSender(new ObjectMapper(), notificationManager);
 		StoreRepository storeRepository = new FakeStoreRepository();
-		AuthService authService = new AuthService(managerRepository, tokenProvider,
-			refreshTokenRepository, headquarterRepository, customerRepository, storeRepository);
+		AuthService authService = new AuthService(tokenProvider, customerRepository, new FakeApplicationEventPublisher()); ;
 		managerService = new ManagerService(managerRepository, bCryptPasswordEncoder,
 			authService, headquarterRepository, notificationSseSender);
 

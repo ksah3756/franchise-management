@@ -1,7 +1,6 @@
 package com.goorm.friendchise.domain.headquarter.application;
 
 import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialArea;
-import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaRepository;
 import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaService;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.StoreRecommendReqDto;
@@ -9,14 +8,9 @@ import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoApiResultDto;
 import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoPlaceDto;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto.Choice;
-import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionStreamResponseDto;
-import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionStreamResponseDto.Delta;
-import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionStreamResponseDto.StreamChoice;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatMessage;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.global.aop.ExecutionTime;
-import com.goorm.friendchise.global.exception.CustomException;
-import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,7 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class StoreRecommendationService {
     // 너무 구체적인 구현방식에 의존하는거같은데
-    private final KakaoApiService kakaoApiService;
+    private final MapApiService mapApiService;
     private final OpenAiApiService openAiApiService;
     private final CommercialAreaService commercialAreaService;
     private final HeadquarterService headquarterService;
@@ -52,7 +46,7 @@ public class StoreRecommendationService {
         Headquarter headquarter = headquarterService.getHeadquarterByContext(currentManager);
 
         List<String> userSelectedCategory = getUserSelectedCategory(req);
-        Mono<Map<String, KakaoApiResultDto>> mono = kakaoApiService.getTotalPlaceData(
+        Mono<Map<String, String>> mono = mapApiService.getTotalPlaceData(
                 headquarter.getFranchiseName(),
                 headquarter.getCategory(),
                 headquarter.getSubCategory(),
@@ -65,20 +59,15 @@ public class StoreRecommendationService {
             return ChatCompletionResponseDto.of(List.of(choice), new ChatCompletionResponseDto.Usage(0, 0));
         }
 
-        Map<String, KakaoApiResultDto> totalPlaceData = mono.block();
+        Map<String, String> placeData = mono.block();
 
-        // 카카오 API로부터 받아온 데이터를 OpenAI API에 넘길 데이터로 파싱
-        totalPlaceData.forEach((key, value) -> {
-            List<KakaoPlaceDto> documents = value.documents();
-            String distances = documents.stream()
-                    .map(KakaoPlaceDto::distance)
-                    .map(String::valueOf)
-                    .collect(Collectors.joining(", "));
-            sb.append(key).append(": [").append(distances).append("]\n");
+        // 지도 API로부터 받아온 데이터를 LLM API에 넘길 데이터로 파싱
+        placeData.forEach((key, value) -> {
+            sb.append(key).append(": [").append(value).append("]\n");
         });
 
         String data = sb.toString();
-        log.info("openAi api에 사용될 데이터 메시지: {}", data);
+        log.info("LLM api에 사용될 데이터 메시지: {}", data);
 
         ChatCompletionResponseDto res = openAiApiService.requestChatCompletion(data);
         int totalTokens = res.usage().getCompletionTokens() + res.usage().getPromptTokens();
@@ -95,7 +84,7 @@ public class StoreRecommendationService {
         Headquarter headquarter = headquarterService.getHeadquarterByContext(manager);
 
         List<String> userSelectedCategory = getUserSelectedCategory(req);
-        Mono<Map<String, KakaoApiResultDto>> mono = kakaoApiService.getTotalPlaceData(
+        Mono<Map<String, String>> mono = mapApiService.getTotalPlaceData(
                 headquarter.getFranchiseName(),
                 headquarter.getCategory(),
                 headquarter.getSubCategory(),
@@ -107,20 +96,15 @@ public class StoreRecommendationService {
             return Flux.just("반경 500m 내 동일한 프랜차이즈 매장이 존재합니다.");
         }
 
-        Map<String, KakaoApiResultDto> totalPlaceData = mono.block();
+        Map<String, String> placeData = mono.block();
 
-        // 카카오 API로부터 받아온 데이터를 OpenAI API에 넘길 데이터로 파싱
-        totalPlaceData.forEach((key, value) -> {
-            List<KakaoPlaceDto> documents = value.documents();
-            String distances = documents.stream()
-                    .map(KakaoPlaceDto::distance)
-                    .map(String::valueOf)
-                    .collect(Collectors.joining(", "));
-            sb.append(key).append(": [").append(distances).append("]\n");
+        // 지도 API로부터 받아온 데이터를 LLM API에 넘길 데이터로 파싱
+        placeData.forEach((key, value) -> {
+            sb.append(key).append(": [").append(value).append("]\n");
         });
 
         String data = sb.toString();
-        log.info("openAi api에 사용될 데이터 메시지: {}", data);
+        log.info("LLM api에 사용될 데이터 메시지: {}", data);
 
         return openAiApiService.requestChatCompletionStream(data);
     }

@@ -18,6 +18,7 @@ import com.goorm.friendchise.domain.store.application.StoreService;
 import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
+import com.goorm.friendchise.global.auth.infrastructure.FakeApplicationEventPublisher;
 import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
 import com.goorm.friendchise.global.auth.implement.jwt.JwtProperties;
 import com.goorm.friendchise.global.auth.implement.jwt.TokenProvider;
@@ -63,8 +64,7 @@ public class CustomerServiceTest {
         StoreRepository storeRepository = new FakeStoreRepository();
 
 
-        AuthService authService = new AuthService(managerRepository, tokenProvider,
-                refreshTokenRepository, headquarterRepository,customerRepository,storeRepository);
+        AuthService authService = new AuthService(tokenProvider,customerRepository, new FakeApplicationEventPublisher());
 
         RedisService redisService = new RedisService(redisServiceRedisTemplate);
 

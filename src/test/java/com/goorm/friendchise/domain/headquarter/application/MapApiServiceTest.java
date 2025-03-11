@@ -23,38 +23,39 @@ import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
-class KakaoApiServiceTest {
+class MapApiServiceTest {
     @Mock
-    private KakaoApiClient kakaoApiClient;
+    private MapApiClient mapApiClient;
 
     @InjectMocks
-    private KakaoApiService kakaoApiService;
+    private MapApiService mapApiService;
 
+    // TODO: FakeMapApiClient를 만들어서 모킹 없이 테스트 진행하기
     @Test
     @DisplayName("반경 500m 내 동일한 프랜차이즈 매장이 존재하지 않는 경우 카카오 API로부터 데이터를 가져온다.")
     void getTotalPlaceData_FranchiseStoreNotExists() {
         // given
-        given(kakaoApiClient.requestPlaceDataByKeywordSync(anyString(), anyDouble(), anyDouble(), eq(500)))
-                .willReturn(new KakaoApiResultDto(Collections.emptyList())); // 동일 프랜차이즈 매장이 없다고 가정
+        given(mapApiClient.searchSameFranchiseStore(anyString(), anyDouble(), anyDouble(), eq(500)))
+                .willReturn(""); // 동일 프랜차이즈 매장이 없다고 가정
 
-        KakaoApiResultDto categoryDummyResult = new KakaoApiResultDto(List.of(new KakaoPlaceDto("123")));
-        given(kakaoApiClient.requestPlaceDataByKeywordAsync(eq(SubCategory.SUSHI.getValue()), anyDouble(), anyDouble(), eq(1000)))
+        String categoryDummyResult = "123, 342";
+        given(mapApiClient.searchCompetitiveStore(eq(SubCategory.SUSHI.getValue()), anyDouble(), anyDouble(), eq(1000)))
                 .willReturn(Mono.just(categoryDummyResult));
 
-        KakaoApiResultDto busStopDummy = new KakaoApiResultDto(List.of(new KakaoPlaceDto("120")));
-        given(kakaoApiClient.requestPlaceDataByKeywordAsync(eq("버스정류장"), anyDouble(), anyDouble(), eq(200)))
+        String busStopDummy = "111, 222";
+        given(mapApiClient.searchBusStation(eq("버스정류장"), anyDouble(), anyDouble(), eq(200)))
                 .willReturn(Mono.just(busStopDummy));
 
-        KakaoApiResultDto subwayDummy = new KakaoApiResultDto(List.of(new KakaoPlaceDto("456")));
-        given(kakaoApiClient.requestPlaceDataByCategoryAsync(eq(CategoryGroupCode.SUBWAY.getCode()), anyDouble(), anyDouble(), eq(500)))
+        String subwayDummy = "333, 444";
+        given(mapApiClient.searchSubwayStation(eq(CategoryGroupCode.SUBWAY.getCode()), anyDouble(), anyDouble(), eq(500)))
                 .willReturn(Mono.just(subwayDummy));
 
-        KakaoApiResultDto userCategoryDummyResult = new KakaoApiResultDto(List.of(new KakaoPlaceDto("222")));
-        given(kakaoApiClient.requestPlaceDataByCategoryAsync(eq(CategoryGroupCode.MART.getCode()), anyDouble(), anyDouble(), eq(500)))
+        String userCategoryDummyResult = "555, 666";
+        given(mapApiClient.searchUserSelectedInfra(eq(CategoryGroupCode.MART.getCode()), anyDouble(), anyDouble(), eq(500)))
                 .willReturn(Mono.just(userCategoryDummyResult));
 
         // when
-        Mono<Map<String, KakaoApiResultDto>> totalPlaceData = kakaoApiService.getTotalPlaceData(
+        Mono<Map<String, String>> totalPlaceData = mapApiService.getTotalPlaceData(
                 "testFranchise",
                 Category.JAPANESEFOOD,
                 SubCategory.SUSHI,
@@ -83,10 +84,10 @@ class KakaoApiServiceTest {
     @DisplayName("반경 500m 내 동일한 프랜차이즈 매장이 존재할 경우 null을 반환한다.")
     void getTotalPlaceData_FranchiseStoreExist() {
         // given
-        given(kakaoApiClient.requestPlaceDataByKeywordSync(anyString(), anyDouble(), anyDouble(), eq(500)))
-                .willReturn(new KakaoApiResultDto(List.of(new KakaoPlaceDto("120")))); // 동일 프랜차이즈 매장이 있음
+        given(mapApiClient.searchSameFranchiseStore(anyString(), anyDouble(), anyDouble(), eq(500)))
+                .willReturn("120"); // 동일 프랜차이즈 매장이 있음
         // when
-        Mono<Map<String, KakaoApiResultDto>> totalPlaceData = kakaoApiService.getTotalPlaceData(
+        Mono<Map<String, String>> totalPlaceData = mapApiService.getTotalPlaceData(
                 "맥도날드",
                 Category.FASTFOOD,
                 SubCategory.NONE,

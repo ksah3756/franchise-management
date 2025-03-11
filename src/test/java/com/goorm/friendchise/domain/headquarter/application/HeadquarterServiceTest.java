@@ -14,6 +14,7 @@ import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
 import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
 import com.goorm.friendchise.domain.store.domain.Store;
 import com.goorm.friendchise.domain.store.dto.StoreReqDto;
+import com.goorm.friendchise.global.auth.infrastructure.FakeApplicationEventPublisher;
 import com.goorm.friendchise.global.event.ManagerUpdateEvent;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
@@ -43,19 +44,12 @@ class HeadquarterServiceTest {
 		headquarterRepository = new FakeHeadquarterRepository();
 		managerRepository = new FakeManagerRepository();
 
-		headquarterService = new HeadquarterService(headquarterRepository, event -> {
-			ManagerUpdateEvent managerUpdateEvent = (ManagerUpdateEvent) event;
-			Manager manager = managerUpdateEvent.getManager();
-			manager.updateManageId(managerUpdateEvent.getManageId());
-			managerRepository.save(manager);
-			System.out.println("manageId " + managerUpdateEvent.getManageId() + "가 연결되었습니다. Role: " + manager.getRole().getDescription());
-		});
+		headquarterService = new HeadquarterService(headquarterRepository, new FakeApplicationEventPublisher());
 	}
 
 	@AfterEach
 	void tearDown() {
 		SecurityContextHolder.clearContext();
-		headquarterRepository.deleteAll();
 	}
 
 	private void setContextHolder(Manager manager) {

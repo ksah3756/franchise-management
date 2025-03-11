@@ -12,10 +12,7 @@ import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionRespons
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto.Choice;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatMessage;
 import com.goorm.friendchise.domain.manager.domain.Manager;
-import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
-import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +36,7 @@ import static org.mockito.BDDMockito.given;
 @ActiveProfiles("test")
 class StoreRecommendationServiceTest {
     @Mock
-    private KakaoApiService kakaoApiService;
+    private MapApiService mapApiService;
 
     @Mock
     private OpenAiApiService openAiApiService;
@@ -80,11 +77,11 @@ class StoreRecommendationServiceTest {
                 .subCategory(SubCategory.NONE)
                 .build());
 
-        given(kakaoApiService.getTotalPlaceData(anyString(), eq(Category.FASTFOOD), eq(SubCategory.NONE), anyList(), anyDouble(), anyDouble()))
-                .willReturn(Mono.just(Map.of("반경 1km 내 동일 업종 경쟁 매장", new KakaoApiResultDto(List.of(new KakaoPlaceDto("123"))),
-                        "반경 200m 내 버스정류장", new KakaoApiResultDto(List.of(new KakaoPlaceDto("120"))),
-                        "반경 500m 내 지하철역", new KakaoApiResultDto(List.of(new KakaoPlaceDto("456"))),
-                        "반경 500m 내 대형마트", new KakaoApiResultDto(List.of(new KakaoPlaceDto("222")))
+        given(mapApiService.getTotalPlaceData(anyString(), eq(Category.FASTFOOD), eq(SubCategory.NONE), anyList(), anyDouble(), anyDouble()))
+                .willReturn(Mono.just(Map.of("반경 1km 내 동일 업종 경쟁 매장", "123",
+                        "반경 200m 내 버스정류장", "120",
+                        "반경 500m 내 지하철역", "456",
+                        "반경 500m 내 대형마트", "222"
                 )));
         List<Choice> choices = List.of(Choice.of(ChatMessage.of("assistant", "test1")), Choice.of(ChatMessage.of("assistant", "test2")));
         given(openAiApiService.requestChatCompletion(anyString())).willReturn(ChatCompletionResponseDto.of(choices, new ChatCompletionResponseDto.Usage(0, 0)));
