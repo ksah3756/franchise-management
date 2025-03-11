@@ -1,7 +1,7 @@
 package com.goorm.friendchise.global.config;
 
 import com.goorm.friendchise.global.auth.filter.TokenAuthenticationFilter;
-import com.goorm.friendchise.global.auth.jwt.TokenProvider;
+import com.goorm.friendchise.global.auth.implement.jwt.TokenParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
-	private final TokenProvider tokenProvider;
+	private final TokenParser tokenParser;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -93,7 +93,7 @@ public class SecurityConfig {
 	}
 
 	public TokenAuthenticationFilter tokenAuthenticationFilter() {
-		return new TokenAuthenticationFilter(tokenProvider);
+		return new TokenAuthenticationFilter(tokenParser);
 	}
 
 	@Bean

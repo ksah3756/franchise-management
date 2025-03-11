@@ -11,7 +11,7 @@ import com.goorm.friendchise.domain.store.application.StoreService;
 import com.goorm.friendchise.domain.store.dto.StoreRedisDto;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.dto.response.TokenResponse;
-import com.goorm.friendchise.global.auth.util.DistanceCalculator;
+import com.goorm.friendchise.global.util.DistanceCalculator;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import com.goorm.friendchise.global.redis.RedisService;
 import lombok.RequiredArgsConstructor;

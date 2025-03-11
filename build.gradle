@@ -50,6 +50,10 @@ dependencies {
 
     // spatial query
     implementation 'org.hibernate.orm:hibernate-spatial'
+
+    // retry
+    implementation 'org.springframework.retry:spring-retry'
+    implementation 'org.springframework:spring-aspects'
 }
 
 tasks.named('test') {

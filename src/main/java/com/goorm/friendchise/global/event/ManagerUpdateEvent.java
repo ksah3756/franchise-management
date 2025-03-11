@@ -1,4 +1,4 @@
-package com.goorm.friendchise.global.auth.managerevent;
+package com.goorm.friendchise.global.event;
 
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import lombok.Getter;

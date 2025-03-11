@@ -1,4 +1,4 @@
-package com.goorm.friendchise.global.auth.jwt;
+package com.goorm.friendchise.global.auth.implement.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

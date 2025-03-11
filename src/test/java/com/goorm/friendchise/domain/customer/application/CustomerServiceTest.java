@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goorm.friendchise.domain.customer.domain.Customer;
 import com.goorm.friendchise.domain.customer.domain.CustomerRepository;
 import com.goorm.friendchise.domain.customer.dto.request.CustomerCreateRequest;
-import com.goorm.friendchise.domain.customer.dto.request.CustomerRecommendStoreRequest;
 import com.goorm.friendchise.domain.customer.dto.response.CustomerDetailResponse;
 import com.goorm.friendchise.domain.customer.dto.response.CustomerPersistResponse;
 import com.goorm.friendchise.domain.customer.exception.CustomerException;
@@ -20,8 +19,8 @@ import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
 import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
-import com.goorm.friendchise.global.auth.jwt.JwtProperties;
-import com.goorm.friendchise.global.auth.jwt.TokenProvider;
+import com.goorm.friendchise.global.auth.implement.jwt.JwtProperties;
+import com.goorm.friendchise.global.auth.implement.jwt.TokenProvider;
 import com.goorm.friendchise.global.config.WebClientConfig;
 import com.goorm.friendchise.global.redis.RedisService;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,13 +33,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 @DataRedisTest // Redis 관련 설정만 로드

@@ -25,7 +25,6 @@ import static com.goorm.friendchise.global.exception.ErrorCode.HEADQUARTER_NOT_F
 import static com.goorm.friendchise.global.exception.ErrorCode.INVALID_PARAMETER;
 
 @Slf4j
-@Transactional
 @Service
 @RequiredArgsConstructor
 public class ManagerService {
@@ -35,6 +34,7 @@ public class ManagerService {
 	private final HeadquarterRepository headquarterRepository;
 	private final NotificationSseSender notificationSseSender;
 
+	@Transactional
 	public ManagerPersistResponse create(ManageCreateRequest request) {
 		// STORE일 경우 HQ의 certificationNumber 비교
 		if (request.role().equals(STORE)) {
@@ -72,15 +72,18 @@ public class ManagerService {
 		return ManagerDetailResponse.from(manager);
 	}
 
+	@Transactional
 	public void updateManager(Manager manager, Long newStoreId) {
 		manager.updateManageId(newStoreId);
 	}
 
+	@Transactional
 	public void updatePassword(Manager manager, String newPassword) {
 		String encode = bCryptPasswordEncoder.encode(newPassword);
 		manager.updatePassword(encode);
 	}
 
+	@Transactional
 	public void delete(Manager manager) {
 		managerRepository.delete(manager);
 	}

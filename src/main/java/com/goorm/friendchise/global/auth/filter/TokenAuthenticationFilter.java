@@ -1,6 +1,6 @@
 package com.goorm.friendchise.global.auth.filter;
 
-import com.goorm.friendchise.global.auth.jwt.TokenProvider;
+import com.goorm.friendchise.global.auth.implement.jwt.TokenParser;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
-	private final TokenProvider tokenProvider;
+	private final TokenParser tokenParser;
 	private final static String HEADER_AUTHORIZATION = "Authorization";
 	private final static String TOKEN_PREFIX = "Bearer ";
 
@@ -24,8 +24,8 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 	) throws ServletException, IOException {
 		String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
 		String token = getAccessToken(authorizationHeader);
-		if (tokenProvider.validateToken(token)) {
-			Authentication authentication = tokenProvider.getAuthentication(token);
+		if (tokenParser.validateToken(token)) {
+			Authentication authentication = tokenParser.getAuthentication(token);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
 		filterChain.doFilter(request, response);

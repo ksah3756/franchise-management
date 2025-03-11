@@ -7,8 +7,7 @@ import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDt
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDto;
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
 import com.goorm.friendchise.domain.manager.domain.Manager;
-import com.goorm.friendchise.domain.store.exception.NoAuthenticationException;
-import com.goorm.friendchise.global.auth.managerevent.ManagerUpdateEvent;
+import com.goorm.friendchise.global.event.ManagerUpdateEvent;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import org.springframework.context.ApplicationEventPublisher;
@@ -46,7 +45,7 @@ public class HeadquarterService {
 
     @Transactional
     public HeadquarterResDto updateHeadquarterName(Manager currentManager, HeadquarterReqDto headquarterReqDto) {
-        Headquarter headquarter = getHeadquarterById(currentManager);
+        Headquarter headquarter = getHeadquarterByContext(currentManager);
 
         headquarter.updateByRequestDto(headquarterReqDto);
         return HeadquarterResDto.from(headquarter);
@@ -91,4 +90,11 @@ public class HeadquarterService {
                 .orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
     }
 
+    @Transactional(readOnly = true)
+    public List<StoreIdDto> getStores(Manager currentManager) {
+        Headquarter headquarter = getHeadquarterByContext(currentManager);
+        return headquarter.getStores().stream()
+                .map(store -> StoreIdDto.of(store.getId()))
+                .toList();
+    }
 }

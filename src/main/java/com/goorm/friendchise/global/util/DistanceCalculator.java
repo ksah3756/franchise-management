@@ -1,4 +1,4 @@
-package com.goorm.friendchise.global.auth.util;
+package com.goorm.friendchise.global.util;
 
 public class DistanceCalculator {
     private static final double EARTH_RADIUS_KM = 6371.0; // 지구 반지름 (킬로미터 단위)

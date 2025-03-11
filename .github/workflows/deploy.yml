@@ -35,15 +35,6 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build
-        env:
-          KAKAO_API_KEY: ${{ secrets.KAKAO_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
-          DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
-          JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

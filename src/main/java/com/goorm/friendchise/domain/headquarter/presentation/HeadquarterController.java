@@ -11,6 +11,7 @@ import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDt
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.StoreRecommendReqDto;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto;
 import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionStreamResponseDto;
+import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.global.auth.resolver.AuthManager;
 import jakarta.validation.Valid;
@@ -81,6 +82,12 @@ public class HeadquarterController {
             @AuthManager Manager manager,
             @Valid @RequestBody ItemReqDtoList itemReqDtoList) {
         return ResponseEntity.created(URI.create("/headquarter/items")).body(itemService.createItems(manager, itemReqDtoList));
+    }
+
+    @Secured("ROLE_HEADQUARTER")
+    @GetMapping("/stores")
+    public ResponseEntity<List<StoreIdDto>> getStores(@AuthManager Manager manager) {
+        return ResponseEntity.ok().body(headquarterService.getStores(manager));
     }
 
     @Secured("ROLE_HEADQUARTER")

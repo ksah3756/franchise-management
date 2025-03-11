@@ -3,7 +3,7 @@ package com.goorm.friendchise.domain.customer.application;
 import com.goorm.friendchise.domain.customer.domain.Customer;
 import com.goorm.friendchise.domain.customer.domain.CustomerRepository;
 import com.goorm.friendchise.domain.location.domain.Location;
-import com.goorm.friendchise.global.auth.util.DistanceCalculator;
+import com.goorm.friendchise.global.util.DistanceCalculator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

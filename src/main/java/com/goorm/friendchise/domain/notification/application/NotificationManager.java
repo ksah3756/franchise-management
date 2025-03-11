@@ -10,8 +10,7 @@ import com.goorm.friendchise.domain.notification.domain.NotificationRepository;
 import com.goorm.friendchise.domain.notification.dto.response.ReceivedNotificationResponse;
 import com.goorm.friendchise.domain.notification.event.NotificationDeletedEvent;
 import com.goorm.friendchise.domain.notification.event.NotificationReadEvent;
-import com.goorm.friendchise.global.auth.application.AuthService;
-import com.goorm.friendchise.global.auth.jwt.TokenProvider;
+import com.goorm.friendchise.global.auth.implement.jwt.TokenParser;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,7 @@ public class NotificationManager {
 	private final NotificationRepository repository;
 	private final ManagerRepository managerRepository;
 	private final ApplicationEventPublisher eventPublisher;
-	private final TokenProvider tokenProvider;
+	private final TokenParser tokenParser;
 
 	private Manager findManagerByAuth() {
 		try {
@@ -54,7 +53,7 @@ public class NotificationManager {
 	}
 
 	protected void verifyRole(String token) {
-		String role = tokenProvider.getStoreRole(token);
+		String role = tokenParser.getStoreRole(token);
 		if (!role.equals("STORE")) {
 			throw new CustomException(ErrorCode.NO_STORE_AUTHENTICATION_ERROR);
 		}

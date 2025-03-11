@@ -13,8 +13,8 @@ import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
 import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
-import com.goorm.friendchise.global.auth.jwt.JwtProperties;
-import com.goorm.friendchise.global.auth.jwt.TokenProvider;
+import com.goorm.friendchise.global.auth.implement.jwt.JwtProperties;
+import com.goorm.friendchise.global.auth.implement.jwt.TokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
