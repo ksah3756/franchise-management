@@ -7,6 +7,7 @@ import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.Role;
 import com.goorm.friendchise.domain.manager.exception.ManagerNotFoundException;
 import com.goorm.friendchise.global.auth.dto.response.TokenResponse;
+import com.goorm.friendchise.global.auth.implement.jwt.TokenProvider;
 import com.goorm.friendchise.global.event.RefreshTokenSaveEvent;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class AuthService {
-	private final TokenService tokenService;
+	private final TokenProvider tokenProvider;
 	private final CustomerRepository customerRepository;
 	private final ApplicationEventPublisher eventPublisher;
 
@@ -39,8 +40,8 @@ public class AuthService {
 		String username = manager.getUsername();
 		String role = manager.getRole().name();
 
-		String accessToken = tokenService.generateAccessToken(username, role);
-		String refreshToken = tokenService.generateRefreshToken(username, role);
+		String accessToken = tokenProvider.generateAccessToken(username, role);
+		String refreshToken = tokenProvider.generateRefreshToken(username, role);
 
 		// 이 부분을 이벤트로 발행해서 비동기로?
 		eventPublisher.publishEvent(RefreshTokenSaveEvent.create(refreshToken, manager.getId(), manager.getRole()));
@@ -50,8 +51,8 @@ public class AuthService {
 	public TokenResponse customerLogin(Customer customer) {
 		String username = customer.getUsername();
 
-		String accessToken = tokenService.generateAccessToken(username, Role.USER.getDescription());
-		String refreshToken = tokenService.generateRefreshToken(username, Role.USER.getDescription());
+		String accessToken = tokenProvider.generateAccessToken(username, Role.USER.getDescription());
+		String refreshToken = tokenProvider.generateRefreshToken(username, Role.USER.getDescription());
 
 		eventPublisher.publishEvent(RefreshTokenSaveEvent.create(refreshToken, customer.getId(), Role.USER));
 		return TokenResponse.of(accessToken, refreshToken);

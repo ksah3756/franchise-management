@@ -22,14 +22,6 @@ public class TokenService {
     private final TokenParser tokenParser;
     private final RefreshTokenIssuer refreshTokenIssuer;
 
-    public String generateAccessToken(String username, String role) {
-        return tokenProvider.generateToken(username, ACCESS_TOKEN_EXP.getExp(), role);
-    }
-
-    public String generateRefreshToken(String username, String role) {
-        return tokenProvider.generateToken(username, REFRESH_TOKEN_EXP.getExp(), role);
-    }
-
     public TokenResponse reissue(TokenReissueRequest request) {
         String inputRefreshToken = request.refreshToken();
 
@@ -39,8 +31,8 @@ public class TokenService {
         Role role = savedRefreshToken.getRole();
         String roleName = role.name();
 
-        String accessToken = tokenProvider.generateToken(username, ACCESS_TOKEN_EXP.getExp(), roleName);
-        String refreshToken = tokenProvider.generateToken(username, REFRESH_TOKEN_EXP.getExp(), roleName);
+        String accessToken = tokenProvider.generateAccessToken(username, roleName);
+        String refreshToken = tokenProvider.generateRefreshToken(username, roleName);
 
         refreshTokenIssuer.saveRefreshToken(refreshToken, savedRefreshToken.getId(), role);
 

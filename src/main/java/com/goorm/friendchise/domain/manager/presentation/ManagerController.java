@@ -32,7 +32,6 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequiredArgsConstructor
 public class ManagerController {
 	private final ManagerService managerService;
-	private final AuthService authService;
 	private final TokenService tokenService;
 
 	@PostMapping("/register")
@@ -80,14 +79,6 @@ public class ManagerController {
 	public ResponseEntity<Void> delete(@AuthManager Manager manager) {
 		managerService.delete(manager);
 		return ResponseEntity.noContent().build();
-	}
-
-	@PostMapping("/reissue")
-	public ResponseEntity<TokenResponse> reissue(
-		@RequestBody @Valid TokenReissueRequest request
-	) {
-		TokenResponse response = tokenService.reissue(request);
-		return ResponseEntity.ok(response);
 	}
 
 }
