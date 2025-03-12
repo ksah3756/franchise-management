@@ -1,14 +1,11 @@
-package com.goorm.friendchise.domain.headquarter.application;
+package com.goorm.friendchise.domain.headquarter.business;
 
 import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialArea;
-import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaService;
+import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaReader;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
+import com.goorm.friendchise.domain.headquarter.implement.LocalDataAnalyzer;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.StoreRecommendReqDto;
-import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoApiResultDto;
-import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoPlaceDto;
-import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto;
-import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto.Choice;
-import com.goorm.friendchise.domain.headquarter.dto.openai.ChatMessage;
+import com.goorm.friendchise.domain.headquarter.implement.MapDataReader;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.global.aop.ExecutionTime;
 import lombok.RequiredArgsConstructor;
@@ -19,16 +16,14 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class StoreRecommendationService {
-    // 너무 구체적인 구현방식에 의존하는거같은데
-    private final MapApiService mapApiService;
-    private final OpenAiApiService openAiApiService;
-    private final CommercialAreaService commercialAreaService;
+public class LocalAnalysisService {
+    private final MapDataReader mapDataReader;
+    private final LocalDataAnalyzer localDataAnalyzer;
+    private final CommercialAreaReader commercialAreaReader;
     private final HeadquarterService headquarterService;
 
     /*
@@ -37,16 +32,16 @@ public class StoreRecommendationService {
      * @return ChatCompletionResponseDto
      */
     @ExecutionTime
-    public ChatCompletionResponseDto getRecommendation(Manager currentManager, StoreRecommendReqDto req) {
+    public List<String> getRecommendation(Manager currentManager, StoreRecommendReqDto req) {
         // franchiseName, category, subCategory SecurityContextHolder 에서 가져와서 keyword로 사용
         StringBuilder sb = new StringBuilder();
-        CommercialArea area = commercialAreaService.getCommercialArea(req.x(), req.y());
+        CommercialArea area = commercialAreaReader.getCommercialArea(req.x(), req.y());
         sb.append("m² 당 임대료: ").append(area.getRentalFee()).append("\n");
         
         Headquarter headquarter = headquarterService.getHeadquarterByContext(currentManager);
 
         List<String> userSelectedCategory = getUserSelectedCategory(req);
-        Mono<Map<String, String>> mono = mapApiService.getTotalPlaceData(
+        Mono<Map<String, String>> mono = mapDataReader.getTotalPlaceData(
                 headquarter.getFranchiseName(),
                 headquarter.getCategory(),
                 headquarter.getSubCategory(),
@@ -54,9 +49,8 @@ public class StoreRecommendationService {
                 req.y(),
                 req.x());
 
-        if(mono == null) { // 반경 500m 내 동일한 프랜차이즈 매장이 존재할 경우
-            Choice choice = Choice.of(ChatMessage.of("assistant", "반경 500m 내 동일한 프랜차이즈 매장이 존재합니다."));
-            return ChatCompletionResponseDto.of(List.of(choice), new ChatCompletionResponseDto.Usage(0, 0));
+        if(mono == null) {
+            return List.of("반경 500m 내 동일한 프랜차이즈 매장이 존재합니다.");
         }
 
         Map<String, String> placeData = mono.block();
@@ -69,22 +63,19 @@ public class StoreRecommendationService {
         String data = sb.toString();
         log.info("LLM api에 사용될 데이터 메시지: {}", data);
 
-        ChatCompletionResponseDto res = openAiApiService.requestChatCompletion(data);
-        int totalTokens = res.usage().getCompletionTokens() + res.usage().getPromptTokens();
-        log.info("전체 사용 토큰 수: {}", totalTokens);
-        return res;
+        return localDataAnalyzer.getLocalDataAnalysis(data);
     }
 
     public Flux<String> getRecommendationStream(Manager manager, StoreRecommendReqDto req) {
         // franchiseName, category, subCategory SecurityContextHolder 에서 가져와서 keyword로 사용
         StringBuilder sb = new StringBuilder();
-        CommercialArea area = commercialAreaService.getCommercialArea(req.x(), req.y());
+        CommercialArea area = commercialAreaReader.getCommercialArea(req.x(), req.y());
         sb.append("m² 당 임대료: ").append(area.getRentalFee()).append("\n");
 
         Headquarter headquarter = headquarterService.getHeadquarterByContext(manager);
 
         List<String> userSelectedCategory = getUserSelectedCategory(req);
-        Mono<Map<String, String>> mono = mapApiService.getTotalPlaceData(
+        Mono<Map<String, String>> mono = mapDataReader.getTotalPlaceData(
                 headquarter.getFranchiseName(),
                 headquarter.getCategory(),
                 headquarter.getSubCategory(),
@@ -106,16 +97,24 @@ public class StoreRecommendationService {
         String data = sb.toString();
         log.info("LLM api에 사용될 데이터 메시지: {}", data);
 
-        return openAiApiService.requestChatCompletionStream(data);
+        return localDataAnalyzer.getLocalDataAnalysisStream(data);
     }
 
-    public ChatCompletionResponseDto getRecommendationDummy(StoreRecommendReqDto req) throws InterruptedException {
+    public List<String> getRecommendationDummy(StoreRecommendReqDto req) throws InterruptedException {
         // 카카오 API 호출
         Thread.sleep(100);
         // OpenAI API 호출
         Thread.sleep(5000);
 
-        return ChatCompletionResponseDto.of(List.of(), new ChatCompletionResponseDto.Usage(0, 0));
+        return List.of("추천(비추천) - [XX점], 예상 월 매출: xxx만원, m²당 임대료: xxx원\n" +
+                "장점:  \n" +
+                "- (필요한 경우 첫번째 장점)\n" +
+                "- (필요한 경우 두번째 장점)\n" +
+                "- (필요한 경우 세번째 장점)\n" +
+                "단점:  \n" +
+                "- (필요한 경우 첫번째 단점)\n" +
+                "- (필요한 경우 두번째 단점)\n" +
+                "- (필요한 경우 세번째 단점)\n");
     }
 
     public Flux<String> getRecommendationStreamDummy(StoreRecommendReqDto req) throws InterruptedException {

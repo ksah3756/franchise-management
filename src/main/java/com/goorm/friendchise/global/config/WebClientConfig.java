@@ -12,6 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
+
+import java.time.Duration;
 
 @Configuration
 @Slf4j
@@ -51,22 +54,15 @@ public class WebClientConfig {
     }
 
 
+
     private ExchangeFilterFunction setExchangeFilterFunction() {
         return ExchangeFilterFunction.ofResponseProcessor(clientResponse -> {
-            if (clientResponse.statusCode().is4xxClientError()) {
-                return clientResponse.bodyToMono(String.class)
-                        .flatMap(errorBody -> {
-                            // Log or process the 4xx error response
-                            log.warn("4xx 에러 발생: " + errorBody);
-                            return Mono.error(new CustomException(ErrorCode.WEBCLIENT_ERROR, errorBody));
-                        });
-            }
-
+            // 서버 측 에러 발생 시 재시도 하지 않고 예외 반환하도록
+            // TODO: 제대로 동작하는지 테스트 필요
             if (clientResponse.statusCode().is5xxServerError()) {
                 return clientResponse.bodyToMono(String.class)
                         .flatMap(errorBody -> {
-                            // Log or process the 5xx error response
-                            log.warn("5xx 에러 발생: " + errorBody);
+                            log.warn("WebClient 호출 도중 5xx 에러 발생: " + errorBody);
                             return Mono.error(new CustomException(ErrorCode.WEBCLIENT_ERROR, errorBody));
                         });
             }

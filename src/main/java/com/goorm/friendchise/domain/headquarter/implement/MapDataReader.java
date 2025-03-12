@@ -1,4 +1,4 @@
-package com.goorm.friendchise.domain.headquarter.application;
+package com.goorm.friendchise.domain.headquarter.implement;
 
 import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
@@ -11,8 +11,8 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
-public class MapApiService {
-    private final MapApiClient mapApiClient;
+public class MapDataReader {
+    private final LocalDataReader localDataReader;
 
     public Mono<Map<String, String>> getTotalPlaceData(
             String franchiseName,
@@ -23,7 +23,7 @@ public class MapApiService {
             Double x
     ) {
         // 1. 동일 프랜차이즈 매장 검색
-        String sameFranchiseStores = mapApiClient.searchSameFranchiseStore(franchiseName, y, x, 500);
+        String sameFranchiseStores = localDataReader.getSameFranchiseStore(franchiseName, y, x, 500);
         if(!sameFranchiseStores.isEmpty()) {
             return null; // 동일 프랜차이즈 매장이 존재하면 바로 리턴
         }
@@ -33,15 +33,15 @@ public class MapApiService {
         // 2. 동일 업종 경쟁 매장 검색
         Mono<String> competitiveStores;
         if(subCategory.equals(SubCategory.NONE)) { // subCategory가 없으면 category로 검색
-            competitiveStores =  mapApiClient.searchCompetitiveStore(category.getValue(), x, y, 1000);
+            competitiveStores =  localDataReader.getCompetitiveStore(category.getValue(), x, y, 1000);
         } else {
-            competitiveStores = mapApiClient.searchCompetitiveStore(subCategory.getValue(), x, y, 1000);
+            competitiveStores = localDataReader.getCompetitiveStore(subCategory.getValue(), x, y, 1000);
         }
         totalSearchResults.put("반경 1km 내 동일 업종 경쟁 매장", competitiveStores);
 
         // 3. 버스 정류장, 지하철역 검색
-        Mono<String> busStations = mapApiClient.searchBusStation("버스정류장", x, y, 200);
-        Mono<String> subwayStations = mapApiClient.searchSubwayStation(CategoryGroupCode.SUBWAY.getCode(), x, y, 500);
+        Mono<String> busStations = localDataReader.getBusStation("버스정류장", x, y, 200);
+        Mono<String> subwayStations = localDataReader.getSubwayStation(CategoryGroupCode.SUBWAY.getCode(), x, y, 500);
         totalSearchResults.put("반경 200m 내 버스정류장", busStations);
         totalSearchResults.put("반경 500m 내 지하철역", subwayStations);
 
@@ -49,7 +49,7 @@ public class MapApiService {
         for(String selectedCategory : userSelectedCategory) {
             CategoryGroupCode categoryGroupCode = CategoryGroupCode.fromString(selectedCategory);
             if(categoryGroupCode == null) continue;
-            Mono<String> userSelectedInfras = mapApiClient.searchUserSelectedInfra(categoryGroupCode.getCode(), x, y, 500);
+            Mono<String> userSelectedInfras = localDataReader.getUserSelectedInfra(categoryGroupCode.getCode(), x, y, 500);
             totalSearchResults.put("반경 500m 내 " + categoryGroupCode.getValue(), userSelectedInfras);
         }
 

@@ -1,4 +1,4 @@
-package com.goorm.friendchise.domain.headquarter.application;
+package com.goorm.friendchise.domain.headquarter.business;
 
 import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
@@ -36,15 +36,15 @@ class HeadquarterServiceTest {
 
 	private HeadquarterService headquarterService;
 	private HeadquarterRepository headquarterRepository;
-
+	private FakeApplicationEventPublisher applicationEventPublisher;
 	private ManagerRepository managerRepository;
 
 	@BeforeEach
 	void setup() {
 		headquarterRepository = new FakeHeadquarterRepository();
 		managerRepository = new FakeManagerRepository();
-
-		headquarterService = new HeadquarterService(headquarterRepository, new FakeApplicationEventPublisher());
+		applicationEventPublisher = new FakeApplicationEventPublisher();
+		headquarterService = new HeadquarterService(headquarterRepository, applicationEventPublisher);
 	}
 
 	@AfterEach
@@ -135,7 +135,7 @@ class HeadquarterServiceTest {
 
 		// then
 		assertThat(res.franchiseName()).isEqualTo("test");
-		assertThat(managerRepository.findById(manager.getId()).get().getManageId()).isEqualTo(res.id());
+		assertThat(applicationEventPublisher.getPublishedEvents().poll()).isInstanceOf(ManagerUpdateEvent.class);
 	}
 
 	private Manager createManagerWithoutManageId() {

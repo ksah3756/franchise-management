@@ -1,16 +1,13 @@
-package com.goorm.friendchise.domain.headquarter.application;
+package com.goorm.friendchise.domain.headquarter.business;
 
 import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialArea;
-import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaService;
+import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaReader;
 import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.StoreRecommendReqDto;
-import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoApiResultDto;
-import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoPlaceDto;
-import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto;
-import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto.Choice;
-import com.goorm.friendchise.domain.headquarter.dto.openai.ChatMessage;
+import com.goorm.friendchise.domain.headquarter.implement.MapDataReader;
+import com.goorm.friendchise.domain.headquarter.implement.OpenAiLocalDataAnalyzer;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -34,21 +31,21 @@ import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
-class StoreRecommendationServiceTest {
+class LocalAnalysisServiceTest {
     @Mock
-    private MapApiService mapApiService;
+    private MapDataReader mapDataReader;
 
     @Mock
-    private OpenAiApiService openAiApiService;
+    private OpenAiLocalDataAnalyzer openAiLocalDataAnalyzer;
 
     @Mock
-    private CommercialAreaService commercialAreaService;
+    private CommercialAreaReader commercialAreaReader;
 
     @Mock
     private HeadquarterService headquarterService;
 
     @InjectMocks
-    private StoreRecommendationService storeRecommendationService;
+    private LocalAnalysisService localAnalysisService;
 
     private Manager createManagerWithoutManageId() {
         return Manager.builder()
@@ -65,7 +62,7 @@ class StoreRecommendationServiceTest {
     void getRecommendation() {
         Manager manager = createManagerWithoutManageId();
         // given
-        given(commercialAreaService.getCommercialArea(anyDouble(), anyDouble())).willReturn(CommercialArea.builder()
+        given(commercialAreaReader.getCommercialArea(anyDouble(), anyDouble())).willReturn(CommercialArea.builder()
                 .areaName("test")
                 .rentalFee(BigDecimal.valueOf(100000))
                 .geom(new Polygon(null, null, new GeometryFactory()))
@@ -77,20 +74,18 @@ class StoreRecommendationServiceTest {
                 .subCategory(SubCategory.NONE)
                 .build());
 
-        given(mapApiService.getTotalPlaceData(anyString(), eq(Category.FASTFOOD), eq(SubCategory.NONE), anyList(), anyDouble(), anyDouble()))
+        given(mapDataReader.getTotalPlaceData(anyString(), eq(Category.FASTFOOD), eq(SubCategory.NONE), anyList(), anyDouble(), anyDouble()))
                 .willReturn(Mono.just(Map.of("반경 1km 내 동일 업종 경쟁 매장", "123",
                         "반경 200m 내 버스정류장", "120",
                         "반경 500m 내 지하철역", "456",
                         "반경 500m 내 대형마트", "222"
                 )));
-        List<Choice> choices = List.of(Choice.of(ChatMessage.of("assistant", "test1")), Choice.of(ChatMessage.of("assistant", "test2")));
-        given(openAiApiService.requestChatCompletion(anyString())).willReturn(ChatCompletionResponseDto.of(choices, new ChatCompletionResponseDto.Usage(0, 0)));
+        given(openAiLocalDataAnalyzer.getLocalDataAnalysis(anyString())).willReturn(List.of("test1", "test2"));
 
         // when
-
-        ChatCompletionResponseDto response = storeRecommendationService.getRecommendation(manager, new StoreRecommendReqDto(List.of("대형마트"), 126.2132132, 37.1231231));
+        List<String> testResult = localAnalysisService.getRecommendation(manager, new StoreRecommendReqDto(List.of("대형마트"), 126.2132132, 37.1231231));
 
         // then
-        Assertions.assertThat(response.choices()).isEqualTo(choices);
+        Assertions.assertThat(testResult).containsExactly("test1", "test2");
     }
 }

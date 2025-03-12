@@ -3,20 +3,17 @@ package com.goorm.friendchise.domain.headquarter.presentation;
 import com.goorm.friendchise.domain.headquarter.Item.application.ItemService;
 import com.goorm.friendchise.domain.headquarter.Item.dto.ItemReqDtoList;
 import com.goorm.friendchise.domain.headquarter.Item.dto.ItemResDto;
-import com.goorm.friendchise.domain.headquarter.application.HeadquarterService;
-import com.goorm.friendchise.domain.headquarter.application.StoreRecommendationService;
+import com.goorm.friendchise.domain.headquarter.business.HeadquarterService;
+import com.goorm.friendchise.domain.headquarter.business.LocalAnalysisService;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetailResDto;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDto;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDto;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.StoreRecommendReqDto;
-import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionResponseDto;
-import com.goorm.friendchise.domain.headquarter.dto.openai.ChatCompletionStreamResponseDto;
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.global.auth.resolver.AuthManager;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.geolatte.geom.M;
 import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -37,7 +34,7 @@ import java.util.List;
 public class HeadquarterController {
     private final HeadquarterService headquarterService;
     private final ItemService itemService;
-    private final StoreRecommendationService storeRecommendationService;
+    private final LocalAnalysisService localAnalysisService;
 
     @Secured("ROLE_HEADQUARTER")
     @PostMapping("/register")
@@ -92,29 +89,29 @@ public class HeadquarterController {
 
     @Secured("ROLE_HEADQUARTER")
     @PostMapping("/store-recommendation")
-    public ResponseEntity<ChatCompletionResponseDto> getRecommendationResult(
+    public ResponseEntity<List<String>> getRecommendationResult(
             @AuthManager Manager manager,
             @Valid @RequestBody StoreRecommendReqDto req) {
-        return ResponseEntity.ok().body(storeRecommendationService.getRecommendation(manager, req));
+        return ResponseEntity.ok().body(localAnalysisService.getRecommendation(manager, req));
     }
 
     @PostMapping(value = "/store-recommendation-stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<Flux<String>> getRecommendationStreamResult(
             @AuthManager Manager manager,
             @Valid @RequestBody StoreRecommendReqDto req) {
-        return ResponseEntity.ok().body(storeRecommendationService.getRecommendationStream(manager, req));
+        return ResponseEntity.ok().body(localAnalysisService.getRecommendationStream(manager, req));
     }
 
     @PostMapping("/store-recommendation-dummy")
-    public ResponseEntity<ChatCompletionResponseDto> getRecommendationResultDummy(@Valid @RequestBody StoreRecommendReqDto req) throws InterruptedException {
-        return ResponseEntity.ok().body(storeRecommendationService.getRecommendationDummy(req));
+    public ResponseEntity<List<String>> getRecommendationResultDummy(@Valid @RequestBody StoreRecommendReqDto req) throws InterruptedException {
+        return ResponseEntity.ok().body(localAnalysisService.getRecommendationDummy(req));
     }
 
     @PostMapping(value = "/store-recommendation-stream-dummy", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<Flux<String>> getRecommendationStreamResultDummy(
             @AuthManager Manager manager,
             @Valid @RequestBody StoreRecommendReqDto req) throws InterruptedException {
-        return ResponseEntity.ok().body(storeRecommendationService.getRecommendationStreamDummy(req));
+        return ResponseEntity.ok().body(localAnalysisService.getRecommendationStreamDummy(req));
     }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -19,5 +20,9 @@ public class FakeApplicationEventPublisher implements ApplicationEventPublisher 
     @Override
     public void publishEvent(Object event) {
         publishedEvents.add(event);
+    }
+
+    public Queue<Object> getPublishedEvents() {
+        return publishedEvents;
     }
 }

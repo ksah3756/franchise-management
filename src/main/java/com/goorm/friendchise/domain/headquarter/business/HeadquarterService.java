@@ -1,4 +1,4 @@
-package com.goorm.friendchise.domain.headquarter.application;
+package com.goorm.friendchise.domain.headquarter.business;
 
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;

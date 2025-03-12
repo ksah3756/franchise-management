@@ -1,10 +1,10 @@
-package com.goorm.friendchise.domain.headquarter.application;
+package com.goorm.friendchise.domain.headquarter.business;
 
 import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.headquarter.dto.kakaomap.CategoryGroupCode;
-import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoApiResultDto;
-import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoPlaceDto;
+import com.goorm.friendchise.domain.headquarter.implement.LocalDataReader;
+import com.goorm.friendchise.domain.headquarter.implement.MapDataReader;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import reactor.core.publisher.Mono;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -23,39 +22,39 @@ import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
-class MapApiServiceTest {
+class MapDataReaderTest {
     @Mock
-    private MapApiClient mapApiClient;
+    private LocalDataReader localDataReader;
 
     @InjectMocks
-    private MapApiService mapApiService;
+    private MapDataReader mapDataReader;
 
     // TODO: FakeMapApiClient를 만들어서 모킹 없이 테스트 진행하기
     @Test
     @DisplayName("반경 500m 내 동일한 프랜차이즈 매장이 존재하지 않는 경우 카카오 API로부터 데이터를 가져온다.")
     void getTotalPlaceData_FranchiseStoreNotExists() {
         // given
-        given(mapApiClient.searchSameFranchiseStore(anyString(), anyDouble(), anyDouble(), eq(500)))
+        given(localDataReader.getSameFranchiseStore(anyString(), anyDouble(), anyDouble(), eq(500)))
                 .willReturn(""); // 동일 프랜차이즈 매장이 없다고 가정
 
         String categoryDummyResult = "123, 342";
-        given(mapApiClient.searchCompetitiveStore(eq(SubCategory.SUSHI.getValue()), anyDouble(), anyDouble(), eq(1000)))
+        given(localDataReader.getCompetitiveStore(eq(SubCategory.SUSHI.getValue()), anyDouble(), anyDouble(), eq(1000)))
                 .willReturn(Mono.just(categoryDummyResult));
 
         String busStopDummy = "111, 222";
-        given(mapApiClient.searchBusStation(eq("버스정류장"), anyDouble(), anyDouble(), eq(200)))
+        given(localDataReader.getBusStation(eq("버스정류장"), anyDouble(), anyDouble(), eq(200)))
                 .willReturn(Mono.just(busStopDummy));
 
         String subwayDummy = "333, 444";
-        given(mapApiClient.searchSubwayStation(eq(CategoryGroupCode.SUBWAY.getCode()), anyDouble(), anyDouble(), eq(500)))
+        given(localDataReader.getSubwayStation(eq(CategoryGroupCode.SUBWAY.getCode()), anyDouble(), anyDouble(), eq(500)))
                 .willReturn(Mono.just(subwayDummy));
 
         String userCategoryDummyResult = "555, 666";
-        given(mapApiClient.searchUserSelectedInfra(eq(CategoryGroupCode.MART.getCode()), anyDouble(), anyDouble(), eq(500)))
+        given(localDataReader.getUserSelectedInfra(eq(CategoryGroupCode.MART.getCode()), anyDouble(), anyDouble(), eq(500)))
                 .willReturn(Mono.just(userCategoryDummyResult));
 
         // when
-        Mono<Map<String, String>> totalPlaceData = mapApiService.getTotalPlaceData(
+        Mono<Map<String, String>> totalPlaceData = mapDataReader.getTotalPlaceData(
                 "testFranchise",
                 Category.JAPANESEFOOD,
                 SubCategory.SUSHI,
@@ -84,10 +83,10 @@ class MapApiServiceTest {
     @DisplayName("반경 500m 내 동일한 프랜차이즈 매장이 존재할 경우 null을 반환한다.")
     void getTotalPlaceData_FranchiseStoreExist() {
         // given
-        given(mapApiClient.searchSameFranchiseStore(anyString(), anyDouble(), anyDouble(), eq(500)))
+        given(localDataReader.getSameFranchiseStore(anyString(), anyDouble(), anyDouble(), eq(500)))
                 .willReturn("120"); // 동일 프랜차이즈 매장이 있음
         // when
-        Mono<Map<String, String>> totalPlaceData = mapApiService.getTotalPlaceData(
+        Mono<Map<String, String>> totalPlaceData = mapDataReader.getTotalPlaceData(
                 "맥도날드",
                 Category.FASTFOOD,
                 SubCategory.NONE,

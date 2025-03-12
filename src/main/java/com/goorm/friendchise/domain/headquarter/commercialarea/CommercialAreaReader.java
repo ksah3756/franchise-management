@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CommercialAreaService {
+public class CommercialAreaReader {
     private final CommercialAreaRepository commercialAreaRepository;
 
     public CommercialArea getCommercialArea(double x, double y) {

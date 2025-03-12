@@ -9,7 +9,6 @@ import com.goorm.friendchise.domain.notification.domain.Notification;
 import com.goorm.friendchise.domain.notification.dto.response.ReceivedNotificationResponse;
 import com.goorm.friendchise.domain.notification.infrastructure.FakeNotificationRepository;
 import com.goorm.friendchise.global.auth.implement.jwt.TokenParser;
-import com.goorm.friendchise.global.auth.implement.jwt.TokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,11 +1,8 @@
-package com.goorm.friendchise.domain.headquarter.application;
+package com.goorm.friendchise.domain.headquarter.implement;
 
 import com.goorm.friendchise.domain.headquarter.dto.openai.*;
-import com.goorm.friendchise.global.exception.CustomException;
-import com.goorm.friendchise.global.exception.ErrorCode;
+import com.goorm.friendchise.global.common.WebClientUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -15,11 +12,11 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 @Service
-public class OpenAiApiService {
+public class OpenAiLocalDataAnalyzer implements LocalDataAnalyzer {
 
     private final WebClient webClient;
 
-    public OpenAiApiService(@Qualifier("openAiWebClient") WebClient webClient) {
+    public OpenAiLocalDataAnalyzer(@Qualifier("openAiWebClient") WebClient webClient) {
         this.webClient = webClient;
     }
 
@@ -42,29 +39,48 @@ public class OpenAiApiService {
                     "서비스가 지원하는 전체 상권의 평균 m²당 임대료는 79135.45원입니다. 다만 임대료가 높은 지역일 수록 일반적으로 유동인구가 많으므로 이를 고려해야 합니다.\n" +
                     "주어진 데이터를 바탕으로 예상 매출과 m²당 임대료를 비교하여 추천 점수를 산출하고, 그 이유를 간결하게 설명하세요.";
 
-    public ChatCompletionResponseDto requestChatCompletion(String data) {
+    @Override
+    public List<String> getLocalDataAnalysis(String localData) {
+        return requestChatCompletion(localData);
+    }
+
+    @Override
+    public Flux<String> getLocalDataAnalysisStream(String localData) {
+        return requestChatCompletionStream(localData);
+    }
+
+    private List<String> requestChatCompletion(String data) {
         ChatMessage developerRoleMsg = ChatMessage.of(OpenAiRole.DEVELOPER.getValue(), initialSettingMessage);
         ChatMessage userRoleMsg = ChatMessage.of(OpenAiRole.USER.getValue(), data);
         ChatCompletionRequestDto chatCompletionRequestDto = ChatCompletionRequestDto.of(OpenAiModel.GPT_4o_MINI.getValue(), List.of(developerRoleMsg, userRoleMsg), false);
 
-        return webClient.post()
+        Mono<ChatCompletionResponseDto> chatCompletionResponseDtoMono = webClient.post()
                 .bodyValue(chatCompletionRequestDto)
                 .retrieve()
-                .bodyToMono(ChatCompletionResponseDto.class)
+                .bodyToMono(ChatCompletionResponseDto.class);
+
+        ChatCompletionResponseDto result = WebClientUtil.applyRetryAndTimeout(chatCompletionResponseDtoMono)
                 .block();
+
+        return result.choices().stream()
+                .map(choice -> choice.getMessage().content())
+                .toList();
     }
 
-    public Flux<String> requestChatCompletionStream(String data) {
+    private Flux<String> requestChatCompletionStream(String data) {
         ChatMessage developerRoleMsg = ChatMessage.of(OpenAiRole.DEVELOPER.getValue(), initialSettingMessage);
         ChatMessage userRoleMsg = ChatMessage.of(OpenAiRole.USER.getValue(), data);
         ChatCompletionRequestDto chatCompletionRequestDto = ChatCompletionRequestDto.of(OpenAiModel.GPT_4o_MINI.getValue(), List.of(developerRoleMsg, userRoleMsg), true);
 
-        return webClient.post()
+        Flux<ChatCompletionStreamResponseDto> chatCompletionStreamResponseDtoFlux = webClient.post()
                 .bodyValue(chatCompletionRequestDto)
                 .accept(MediaType.TEXT_EVENT_STREAM)
                 .retrieve()
-                .bodyToFlux(ChatCompletionStreamResponseDto.class)
-                .onErrorResume(error -> {
+                .bodyToFlux(ChatCompletionStreamResponseDto.class);
+
+        Flux<ChatCompletionStreamResponseDto> result = WebClientUtil.applyRetryAndTimeout(chatCompletionStreamResponseDtoFlux);
+
+        return result.onErrorResume(error -> {
                     if (error.getMessage().contains("JsonToken.START_ARRAY")) {
                         return Flux.empty();
                     } else {
