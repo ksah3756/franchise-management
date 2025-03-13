@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record HeadquarterReqDto (
+public record HeadquarterRequest(
         @NotBlank(message = "프랜차이즈 이름은 필수입니다.")
         @Size(max = 50, message = "프랜차이즈 이름은 50자 이하로 입력해주세요.")
         String franchiseName,
@@ -21,14 +21,14 @@ public record HeadquarterReqDto (
         @NotNull
         String subCategory
 ) {
-    public static HeadquarterReqDto of(String franchiseName, String category, String subCategory) {
-        return new HeadquarterReqDto(franchiseName, category, subCategory);
+    public static HeadquarterRequest of(String franchiseName, String category, String subCategory) {
+        return new HeadquarterRequest(franchiseName, category, subCategory);
     }
 
-    public static Headquarter toEntity(HeadquarterReqDto headquarterReqDto) {
+    public static Headquarter toHeadquarter(HeadquarterRequest headquarterRequest) {
         return Headquarter.of(
-                headquarterReqDto.franchiseName(),
-                Category.fromString(headquarterReqDto.category),
-                SubCategory.fromString(headquarterReqDto.subCategory));
+                headquarterRequest.franchiseName(),
+                Category.fromString(headquarterRequest.category),
+                SubCategory.fromString(headquarterRequest.subCategory));
     }
 }

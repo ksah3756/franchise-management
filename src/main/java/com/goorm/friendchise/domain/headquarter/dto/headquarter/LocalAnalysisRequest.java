@@ -12,7 +12,7 @@ import java.util.List;
     gu(자치구), district(상권)이 null이 아니면 해당 정보를 이용하여 추천, null이면 x, y좌표를 이용하여 추천
  */
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record StoreRecommendReqDto(
+public record LocalAnalysisRequest(
         List<String> userSelectedCategory,
         @DecimalMin(value = "124.0", message = "x좌표는 120.0보다 큰 값이어야 합니다.")
         @DecimalMax(value = "132.0", message = "x좌표는 132.0보다 작은 값이어야 합니다.")

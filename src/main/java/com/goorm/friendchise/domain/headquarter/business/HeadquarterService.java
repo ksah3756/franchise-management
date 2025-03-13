@@ -2,9 +2,9 @@ package com.goorm.friendchise.domain.headquarter.business;
 
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetailResDto;
-import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDto;
-import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDto;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetailResponse;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterRequest;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResponse;
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.global.event.ManagerUpdateEvent;
@@ -26,29 +26,29 @@ public class HeadquarterService {
     private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
-    public HeadquarterResDto createHeadquarter(Manager currentManager, HeadquarterReqDto headquarterReqDto) {
-        checkIfFranchiseNameExists(headquarterReqDto);
-        Headquarter headquarter = HeadquarterReqDto.toEntity(headquarterReqDto);
+    public HeadquarterResponse createHeadquarter(Manager currentManager, HeadquarterRequest headquarterRequest) {
+        checkIfFranchiseNameExists(headquarterRequest);
+        Headquarter headquarter = HeadquarterRequest.toHeadquarter(headquarterRequest);
         headquarterRepository.save(headquarter);
 
         // Manager의 manageId를 업데이트하기 위한 이벤트 발행
         eventPublisher.publishEvent(ManagerUpdateEvent.create(headquarter.getId(), currentManager));
-        return HeadquarterResDto.from(headquarter);
+        return HeadquarterResponse.from(headquarter);
     }
 
     @Transactional(readOnly = true)
-    public HeadquarterDetailResDto getHeadquarter(Manager currentManager) {
+    public HeadquarterDetailResponse getHeadquarter(Manager currentManager) {
         Headquarter headquarter = getHeadquarterByContext(currentManager);
-        return HeadquarterDetailResDto.from(headquarter);
+        return HeadquarterDetailResponse.from(headquarter);
     }
 
 
     @Transactional
-    public HeadquarterResDto updateHeadquarterName(Manager currentManager, HeadquarterReqDto headquarterReqDto) {
+    public HeadquarterResponse updateHeadquarterName(Manager currentManager, HeadquarterRequest headquarterRequest) {
         Headquarter headquarter = getHeadquarterByContext(currentManager);
 
-        headquarter.updateByRequestDto(headquarterReqDto);
-        return HeadquarterResDto.from(headquarter);
+        headquarter.update(HeadquarterRequest.toHeadquarter(headquarterRequest));
+        return HeadquarterResponse.from(headquarter);
     }
 
     @Transactional
@@ -70,8 +70,8 @@ public class HeadquarterService {
         return getHeadquarterById(manager);
     }
 
-    private void checkIfFranchiseNameExists(HeadquarterReqDto headquarterReqDto) {
-        if(headquarterRepository.existsByFranchiseName(headquarterReqDto.franchiseName())) {
+    private void checkIfFranchiseNameExists(HeadquarterRequest headquarterRequest) {
+        if(headquarterRepository.existsByFranchiseName(headquarterRequest.franchiseName())) {
             throw new CustomException(ErrorCode.FRANCHISE_NAME_DUPLICATION);
         }
     }

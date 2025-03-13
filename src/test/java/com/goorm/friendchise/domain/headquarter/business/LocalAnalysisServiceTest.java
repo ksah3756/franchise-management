@@ -5,7 +5,7 @@ import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaRea
 import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
-import com.goorm.friendchise.domain.headquarter.dto.headquarter.StoreRecommendReqDto;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.LocalAnalysisRequest;
 import com.goorm.friendchise.domain.headquarter.implement.MapDataReader;
 import com.goorm.friendchise.domain.headquarter.implement.OpenAiLocalDataAnalyzer;
 import com.goorm.friendchise.domain.manager.domain.Manager;
@@ -83,7 +83,7 @@ class LocalAnalysisServiceTest {
         given(openAiLocalDataAnalyzer.getLocalDataAnalysis(anyString())).willReturn(List.of("test1", "test2"));
 
         // when
-        List<String> testResult = localAnalysisService.getRecommendation(manager, new StoreRecommendReqDto(List.of("대형마트"), 126.2132132, 37.1231231));
+        List<String> testResult = localAnalysisService.getRecommendation(manager, new LocalAnalysisRequest(List.of("대형마트"), 126.2132132, 37.1231231));
 
         // then
         Assertions.assertThat(testResult).containsExactly("test1", "test2");

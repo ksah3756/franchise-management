@@ -4,9 +4,9 @@ import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
 import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
-import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetailResDto;
-import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterReqDto;
-import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResDto;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetailResponse;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterRequest;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResponse;
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
 import com.goorm.friendchise.domain.headquarter.insfrastructure.FakeHeadquarterRepository;
 import com.goorm.friendchise.domain.manager.domain.Manager;
@@ -128,10 +128,10 @@ class HeadquarterServiceTest {
 	void createHeadquarter() {
 		// given
 		Manager manager = createManagerWithoutManageId();
-		HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "패스트푸드", "");
+		HeadquarterRequest headquarterRequest = HeadquarterRequest.of("test", "패스트푸드", "");
 
 		// when
-		 HeadquarterResDto res = headquarterService.createHeadquarter(manager, headquarterReqDto);
+		 HeadquarterResponse res = headquarterService.createHeadquarter(manager, headquarterRequest);
 
 		// then
 		assertThat(res.franchiseName()).isEqualTo("test");
@@ -170,8 +170,8 @@ class HeadquarterServiceTest {
 		Manager manager = createManager(savedHeadquarter.getId());
 
 		// when, then
-		HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "패스트푸드", "");
-		assertThatThrownBy(() -> headquarterService.createHeadquarter(manager, headquarterReqDto))
+		HeadquarterRequest headquarterRequest = HeadquarterRequest.of("test", "패스트푸드", "");
+		assertThatThrownBy(() -> headquarterService.createHeadquarter(manager, headquarterRequest))
 			.isInstanceOf(CustomException.class)
 			.hasFieldOrPropertyWithValue("errorCode", ErrorCode.FRANCHISE_NAME_DUPLICATION);
 	}
@@ -181,10 +181,10 @@ class HeadquarterServiceTest {
 	void createHeadquarter_noCategory() {
 		// given
 		Manager manager = createManagerWithoutManageId();
-		HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "", "");
+		HeadquarterRequest headquarterRequest = HeadquarterRequest.of("test", "", "");
 
 		// when, then
-		assertThatThrownBy(() -> headquarterService.createHeadquarter(manager, headquarterReqDto))
+		assertThatThrownBy(() -> headquarterService.createHeadquarter(manager, headquarterRequest))
 			.isInstanceOf(CustomException.class)
 			.hasFieldOrPropertyWithValue("errorCode", ErrorCode.FRANCHISE_CATEGORY_NOT_FOUND);
 	}
@@ -194,10 +194,10 @@ class HeadquarterServiceTest {
 	void createHeadquarter_noSubCategory() {
 		// given
 		Manager manager = createManagerWithoutManageId();
-		HeadquarterReqDto headquarterReqDto = HeadquarterReqDto.of("test", "패스트푸드", "dsadsa");
+		HeadquarterRequest headquarterRequest = HeadquarterRequest.of("test", "패스트푸드", "dsadsa");
 
 		// when, then
-		assertThatThrownBy(() -> headquarterService.createHeadquarter(manager, headquarterReqDto))
+		assertThatThrownBy(() -> headquarterService.createHeadquarter(manager, headquarterRequest))
 			.isInstanceOf(CustomException.class)
 			.hasFieldOrPropertyWithValue("errorCode", ErrorCode.FRANCHISE_SUBCATEGORY_NOT_FOUND);
 	}
@@ -216,7 +216,7 @@ class HeadquarterServiceTest {
 		Manager manager = createManager(savedHeadquarter.getId());
 
 		// when
-		HeadquarterDetailResDto headquarterResDto = headquarterService.getHeadquarter(manager);
+		HeadquarterDetailResponse headquarterResDto = headquarterService.getHeadquarter(manager);
 
 		// then
 		assertThat(headquarterResDto.franchiseName()).isEqualTo("test");
@@ -247,7 +247,7 @@ class HeadquarterServiceTest {
 		Manager manager = createManager(savedHeadquarter.getId());
 
 		// when
-		HeadquarterResDto res = headquarterService.updateHeadquarterName(manager, HeadquarterReqDto.of("newTest", "한식", "국밥"));
+		HeadquarterResponse res = headquarterService.updateHeadquarterName(manager, HeadquarterRequest.of("newTest", "한식", "국밥"));
 
 		// then
 		Headquarter foundHeadquarter = headquarterRepository.findById(res.id()).orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));

@@ -4,7 +4,7 @@ import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialArea;
 import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaReader;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.implement.LocalDataAnalyzer;
-import com.goorm.friendchise.domain.headquarter.dto.headquarter.StoreRecommendReqDto;
+import com.goorm.friendchise.domain.headquarter.dto.headquarter.LocalAnalysisRequest;
 import com.goorm.friendchise.domain.headquarter.implement.MapDataReader;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.global.aop.ExecutionTime;
@@ -32,7 +32,7 @@ public class LocalAnalysisService {
      * @return ChatCompletionResponseDto
      */
     @ExecutionTime
-    public List<String> getRecommendation(Manager currentManager, StoreRecommendReqDto req) {
+    public List<String> getRecommendation(Manager currentManager, LocalAnalysisRequest req) {
         // franchiseName, category, subCategory SecurityContextHolder 에서 가져와서 keyword로 사용
         StringBuilder sb = new StringBuilder();
         CommercialArea area = commercialAreaReader.getCommercialArea(req.x(), req.y());
@@ -66,7 +66,7 @@ public class LocalAnalysisService {
         return localDataAnalyzer.getLocalDataAnalysis(data);
     }
 
-    public Flux<String> getRecommendationStream(Manager manager, StoreRecommendReqDto req) {
+    public Flux<String> getRecommendationStream(Manager manager, LocalAnalysisRequest req) {
         // franchiseName, category, subCategory SecurityContextHolder 에서 가져와서 keyword로 사용
         StringBuilder sb = new StringBuilder();
         CommercialArea area = commercialAreaReader.getCommercialArea(req.x(), req.y());
@@ -100,7 +100,7 @@ public class LocalAnalysisService {
         return localDataAnalyzer.getLocalDataAnalysisStream(data);
     }
 
-    public List<String> getRecommendationDummy(StoreRecommendReqDto req) throws InterruptedException {
+    public List<String> getRecommendationDummy(LocalAnalysisRequest req) throws InterruptedException {
         // 카카오 API 호출
         Thread.sleep(100);
         // OpenAI API 호출
@@ -117,7 +117,7 @@ public class LocalAnalysisService {
                 "- (필요한 경우 세번째 단점)\n");
     }
 
-    public Flux<String> getRecommendationStreamDummy(StoreRecommendReqDto req) throws InterruptedException {
+    public Flux<String> getRecommendationStreamDummy(LocalAnalysisRequest req) throws InterruptedException {
         // 카카오 API 호출
         Thread.sleep(100);
         // OpenAI API 호출
@@ -127,7 +127,7 @@ public class LocalAnalysisService {
         return Flux.just(result).delayElements(Duration.ofMillis(10));
     }
 
-    private static List<String> getUserSelectedCategory(StoreRecommendReqDto req) {
+    private static List<String> getUserSelectedCategory(LocalAnalysisRequest req) {
         List<String> userSelectedCategory;
         if(req.userSelectedCategory() == null) userSelectedCategory = List.of();
         else userSelectedCategory = req.userSelectedCategory();

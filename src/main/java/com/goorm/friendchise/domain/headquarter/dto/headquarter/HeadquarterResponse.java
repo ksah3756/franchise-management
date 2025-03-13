@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public record HeadquarterResDto(
+public record HeadquarterResponse(
     Long id,
     String franchiseName
 ) {
-    public static HeadquarterResDto from(Headquarter headquarter) {
-        return new HeadquarterResDto(headquarter.getId(), headquarter.getFranchiseName());
+    public static HeadquarterResponse from(Headquarter headquarter) {
+        return new HeadquarterResponse(headquarter.getId(), headquarter.getFranchiseName());
     }
 }
