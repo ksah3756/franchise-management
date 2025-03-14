@@ -25,6 +25,7 @@ public class MapDataReader {
         // 1. 동일 프랜차이즈 매장 검색
         String sameFranchiseStores = localDataReader.getSameFranchiseStore(franchiseName, y, x, 500);
         if(!sameFranchiseStores.isEmpty()) {
+            // TODO: optional 사용?
             return null; // 동일 프랜차이즈 매장이 존재하면 바로 리턴
         }
 

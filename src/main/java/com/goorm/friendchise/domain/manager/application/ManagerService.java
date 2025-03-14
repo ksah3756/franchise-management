@@ -32,7 +32,6 @@ public class ManagerService {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final AuthService authService;
 	private final HeadquarterRepository headquarterRepository;
-	private final NotificationSseSender notificationSseSender;
 
 	@Transactional
 	public ManagerPersistResponse create(ManageCreateRequest request) {
