@@ -34,8 +34,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
+@ActiveProfiles("test")
 @DataRedisTest // Redis 관련 설정만 로드
 @Import({RedisConfigTest.class,WebClientConfig.class,KaKaoApiService.class,TokenProvider.class,JwtProperties.class})
 // 테스트용 Redis 설정만 Import

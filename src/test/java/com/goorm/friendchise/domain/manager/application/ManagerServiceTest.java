@@ -57,12 +57,9 @@ class ManagerServiceTest {
 		TokenProvider tokenProvider = new TokenProvider(new JwtProperties());
 		CustomerRepository customerRepository = new FakeCustomerRepository();
 		this.headquarterRepository = new FakeHeadquarterRepository();
-		NotificationManager notificationManager = Mockito.mock(NotificationManager.class);
-		NotificationSseSender notificationSseSender = new NotificationSseSender(new ObjectMapper(), notificationManager);
-		StoreRepository storeRepository = new FakeStoreRepository();
 		AuthService authService = new AuthService(tokenProvider, customerRepository, new FakeApplicationEventPublisher()); ;
 		managerService = new ManagerService(managerRepository, bCryptPasswordEncoder,
-			authService, headquarterRepository, notificationSseSender);
+			authService, headquarterRepository);
 
 		Manager savedManager = managerRepository.save(
 			Manager.create("test", "test1234", HEADQUARTER)
