@@ -59,6 +59,7 @@ jobs:
             JWT_SECRET: ${{ secrets.JWT_SECRET }}
             KAKAO_API_KEY: ${{ secrets.KAKAO_API_KEY }}
             OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+            K6_SERVER_IP: ${{ secrets.K6_SERVER_IP }}
         run: | 
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -86,6 +87,7 @@ jobs:
           JWT_SECRET=$JWT_SECRET
           KAKAO_API_KEY=$KAKAO_API_KEY
           OPENAI_API_KEY=$OPENAI_API_KEY
+          K6_SERVER_IP=$K6_SERVER_IP
           EOF
           
           chmod +x scripts/deploy.sh
@@ -94,7 +96,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           mv docker-compose.yml scripts/
-          zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml docker-compose.yml .env
+          zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml docker-compose.yml promtail-config.yml .env
           aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://friendchisebucket
       - name: start deploy
         env:
