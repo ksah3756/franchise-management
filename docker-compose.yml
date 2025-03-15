@@ -39,6 +39,7 @@ services:
       - /friendchise/logs:/logs
     command:
       - -config.file=/etc/promtail/config.yml
+      - -config.expand-env=true
     networks:
       - friendchise_network
 
