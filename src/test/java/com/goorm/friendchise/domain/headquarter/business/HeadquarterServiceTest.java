@@ -8,6 +8,8 @@ import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetai
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterRequest;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResponse;
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
+import com.goorm.friendchise.domain.headquarter.implement.headquarter.HeadquarterReader;
+import com.goorm.friendchise.domain.headquarter.implement.headquarter.HeadquarterValidator;
 import com.goorm.friendchise.domain.headquarter.insfrastructure.FakeHeadquarterRepository;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
@@ -38,13 +40,17 @@ class HeadquarterServiceTest {
 	private HeadquarterRepository headquarterRepository;
 	private FakeApplicationEventPublisher applicationEventPublisher;
 	private ManagerRepository managerRepository;
+	private HeadquarterValidator headquarterValidator;
+	private HeadquarterReader headquarterReader;
 
 	@BeforeEach
 	void setup() {
 		headquarterRepository = new FakeHeadquarterRepository();
 		managerRepository = new FakeManagerRepository();
 		applicationEventPublisher = new FakeApplicationEventPublisher();
-		headquarterService = new HeadquarterService(headquarterRepository, applicationEventPublisher);
+		headquarterValidator = new HeadquarterValidator(headquarterRepository);
+		headquarterReader = new HeadquarterReader(headquarterRepository);
+		headquarterService = new HeadquarterService(headquarterRepository, headquarterValidator, headquarterReader, applicationEventPublisher);
 	}
 
 	@AfterEach

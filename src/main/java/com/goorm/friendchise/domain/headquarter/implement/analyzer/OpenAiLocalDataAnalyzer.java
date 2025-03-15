@@ -1,4 +1,4 @@
-package com.goorm.friendchise.domain.headquarter.implement;
+package com.goorm.friendchise.domain.headquarter.implement.analyzer;
 
 import com.goorm.friendchise.domain.headquarter.dto.openai.*;
 import com.goorm.friendchise.global.common.WebClientUtil;

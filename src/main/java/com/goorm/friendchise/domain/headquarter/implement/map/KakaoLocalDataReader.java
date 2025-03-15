@@ -1,4 +1,4 @@
-package com.goorm.friendchise.domain.headquarter.implement;
+package com.goorm.friendchise.domain.headquarter.implement.map;
 
 import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoApiResultDto;
 import com.goorm.friendchise.domain.headquarter.dto.kakaomap.KakaoPlaceDto;

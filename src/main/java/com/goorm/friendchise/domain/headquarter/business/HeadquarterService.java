@@ -6,6 +6,8 @@ import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetai
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterRequest;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResponse;
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
+import com.goorm.friendchise.domain.headquarter.implement.headquarter.HeadquarterReader;
+import com.goorm.friendchise.domain.headquarter.implement.headquarter.HeadquarterValidator;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.global.event.ManagerUpdateEvent;
 import com.goorm.friendchise.global.exception.CustomException;
@@ -21,13 +23,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class HeadquarterService {
-
     private final HeadquarterRepository headquarterRepository;
+    private final HeadquarterValidator headquarterValidator;
+    private final HeadquarterReader headquarterReader;
     private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public HeadquarterResponse createHeadquarter(Manager currentManager, HeadquarterRequest headquarterRequest) {
-        checkIfFranchiseNameExists(headquarterRequest);
+        headquarterValidator.checkIfFranchiseNameExists(headquarterRequest);
         Headquarter headquarter = HeadquarterRequest.toHeadquarter(headquarterRequest);
         headquarterRepository.save(headquarter);
 
@@ -38,14 +41,14 @@ public class HeadquarterService {
 
     @Transactional(readOnly = true)
     public HeadquarterDetailResponse getHeadquarter(Manager currentManager) {
-        Headquarter headquarter = getHeadquarterByContext(currentManager);
+        Headquarter headquarter = headquarterReader.getHeadquarterByManager(currentManager);
         return HeadquarterDetailResponse.from(headquarter);
     }
 
 
     @Transactional
     public HeadquarterResponse updateHeadquarterName(Manager currentManager, HeadquarterRequest headquarterRequest) {
-        Headquarter headquarter = getHeadquarterByContext(currentManager);
+        Headquarter headquarter = headquarterReader.getHeadquarterByManager(currentManager);
 
         headquarter.update(HeadquarterRequest.toHeadquarter(headquarterRequest));
         return HeadquarterResponse.from(headquarter);
@@ -54,45 +57,28 @@ public class HeadquarterService {
     @Transactional
     public void deleteHeadquarter(Manager currentManager) {
         // TODO: hard delete 대신 soft delete로 구현
-        headquarterRepository.deleteById(currentManager.getManageId());
-        currentManager.updateManageId(null);
+        deleteHeadquarterByManager(currentManager);
     }
 
     @Transactional(readOnly = true)
     public List<StoreIdDto> getStoreIdList(Long id) {
-        Headquarter headquarter = getHeadquarterById(id);
+        Headquarter headquarter = headquarterReader.getHeadquarterById(id);
         return headquarter.getStores().stream()
                 .map(store -> StoreIdDto.of(store.getId()))
                 .toList();
     }
 
-    public Headquarter getHeadquarterByContext(Manager manager) {
-        return getHeadquarterById(manager);
-    }
-
-    private void checkIfFranchiseNameExists(HeadquarterRequest headquarterRequest) {
-        if(headquarterRepository.existsByFranchiseName(headquarterRequest.franchiseName())) {
-            throw new CustomException(ErrorCode.FRANCHISE_NAME_DUPLICATION);
-        }
-    }
-
-    private Headquarter getHeadquarterById(Manager currentManager) {
+    private void deleteHeadquarterByManager(Manager currentManager) {
         if(currentManager.getManageId() == null) {
             throw new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND);
         }
-
-        return headquarterRepository.findById(currentManager.getManageId())
-                .orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
-    }
-
-    private Headquarter getHeadquarterById(Long id) {
-        return headquarterRepository.findById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
+        headquarterRepository.deleteById(currentManager.getManageId());
+        currentManager.updateManageId(null);
     }
 
     @Transactional(readOnly = true)
     public List<StoreIdDto> getStores(Manager currentManager) {
-        Headquarter headquarter = getHeadquarterByContext(currentManager);
+        Headquarter headquarter = headquarterReader.getHeadquarterByManager(currentManager);
         return headquarter.getStores().stream()
                 .map(store -> StoreIdDto.of(store.getId()))
                 .toList();

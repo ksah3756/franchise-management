@@ -6,10 +6,12 @@ import com.goorm.friendchise.domain.headquarter.domain.category.Category;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.LocalAnalysisRequest;
-import com.goorm.friendchise.domain.headquarter.implement.MapDataReader;
-import com.goorm.friendchise.domain.headquarter.implement.OpenAiLocalDataAnalyzer;
+import com.goorm.friendchise.domain.headquarter.implement.headquarter.HeadquarterReader;
+import com.goorm.friendchise.domain.headquarter.implement.map.MapDataReader;
+import com.goorm.friendchise.domain.headquarter.implement.analyzer.OpenAiLocalDataAnalyzer;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,7 +44,7 @@ class LocalAnalysisServiceTest {
     private CommercialAreaReader commercialAreaReader;
 
     @Mock
-    private HeadquarterService headquarterService;
+    private HeadquarterReader headquarterReader;
 
     @InjectMocks
     private LocalAnalysisService localAnalysisService;
@@ -68,7 +70,7 @@ class LocalAnalysisServiceTest {
                 .geom(new Polygon(null, null, new GeometryFactory()))
                 .build());
 
-        given(headquarterService.getHeadquarterByContext(manager)).willReturn(Headquarter.builder()
+        given(headquarterReader.getHeadquarterByManager(manager)).willReturn(Headquarter.builder()
                 .franchiseName("맥도날드")
                 .category(Category.FASTFOOD)
                 .subCategory(SubCategory.NONE)

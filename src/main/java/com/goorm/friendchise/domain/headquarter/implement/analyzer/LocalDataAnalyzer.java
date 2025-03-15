@@ -1,4 +1,4 @@
-package com.goorm.friendchise.domain.headquarter.implement;
+package com.goorm.friendchise.domain.headquarter.implement.analyzer;
 
 import reactor.core.publisher.Flux;
 

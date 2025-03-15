@@ -3,9 +3,10 @@ package com.goorm.friendchise.domain.headquarter.business;
 import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialArea;
 import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaReader;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
-import com.goorm.friendchise.domain.headquarter.implement.LocalDataAnalyzer;
+import com.goorm.friendchise.domain.headquarter.implement.analyzer.LocalDataAnalyzer;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.LocalAnalysisRequest;
-import com.goorm.friendchise.domain.headquarter.implement.MapDataReader;
+import com.goorm.friendchise.domain.headquarter.implement.headquarter.HeadquarterReader;
+import com.goorm.friendchise.domain.headquarter.implement.map.MapDataReader;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.global.aop.ExecutionTime;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class LocalAnalysisService {
     private final MapDataReader mapDataReader;
     private final LocalDataAnalyzer localDataAnalyzer;
     private final CommercialAreaReader commercialAreaReader;
-    private final HeadquarterService headquarterService;
+    private final HeadquarterReader headquarterReader;
 
     /*
      * 사용자의 좌표를 받아 카카오 API로부터 주변 매장 데이터를 가져와 OpenAI API에 요청하여 추천 점수를 받아온다.
@@ -38,7 +39,7 @@ public class LocalAnalysisService {
         CommercialArea area = commercialAreaReader.getCommercialArea(req.x(), req.y());
         sb.append("m² 당 임대료: ").append(area.getRentalFee()).append("\n");
         
-        Headquarter headquarter = headquarterService.getHeadquarterByContext(currentManager);
+        Headquarter headquarter = headquarterReader.getHeadquarterByManager(currentManager);
 
         List<String> userSelectedCategory = getUserSelectedCategory(req);
         Mono<Map<String, String>> mono = mapDataReader.getTotalPlaceData(
@@ -72,7 +73,7 @@ public class LocalAnalysisService {
         CommercialArea area = commercialAreaReader.getCommercialArea(req.x(), req.y());
         sb.append("m² 당 임대료: ").append(area.getRentalFee()).append("\n");
 
-        Headquarter headquarter = headquarterService.getHeadquarterByContext(manager);
+        Headquarter headquarter = headquarterReader.getHeadquarterByManager(manager);
 
         List<String> userSelectedCategory = getUserSelectedCategory(req);
         Mono<Map<String, String>> mono = mapDataReader.getTotalPlaceData(
