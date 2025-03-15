@@ -35,7 +35,7 @@ services:
     environment:
         - K6_SERVER_IP=${K6_SERVER_IP}
     volumes:
-      - ../promtail-config.yml:/etc/promtail/config.yml
+      - ./promtail-config.yml:/etc/promtail/config.yml
       - /friendchise/logs:/logs
     command:
       - -config.file=/etc/promtail/config.yml
