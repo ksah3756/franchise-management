@@ -2,14 +2,13 @@ package com.goorm.friendchise.domain.store.application;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.goorm.friendchise.domain.headquarter.domain.category.Category;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantCategory;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantSubCategory;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
 import com.goorm.friendchise.domain.store.domain.Store;
-import com.goorm.friendchise.domain.store.dto.StoreRedisDto;
 import com.goorm.friendchise.domain.store.dto.StoreReqDto;
 import com.goorm.friendchise.domain.store.dto.StoreResDto;
 import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
@@ -21,6 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -50,6 +50,8 @@ class StoreServiceTest {
     private WebClient webClient;
     @Mock
     private AuthService authService;
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
     @InjectMocks
     private StoreService storeService;
 
@@ -63,7 +65,7 @@ class StoreServiceTest {
 
     @BeforeAll
     static void setUp() {
-        headquarter = Headquarter.of("HeadQuarter", Category.FASTFOOD, SubCategory.MEAT);
+        headquarter = Headquarter.of("HeadQuarter", RestaurantCategory.FASTFOOD, RestaurantSubCategory.MEAT);
         ReflectionTestUtils.setField(headquarter, "id", 1L);
 
         headManager = Manager.create("headQuarter", "test1234", HEADQUARTER);
@@ -92,9 +94,8 @@ class StoreServiceTest {
      //when
         when(headquarterRepository.findByFranchiseName(headquarter.getFranchiseName()))
                 .thenReturn(Optional.ofNullable(headquarter));
-        when(redisTemplate.opsForValue()).thenReturn(mockValueOperations);
-        when(objectMapper.writeValueAsString(any(StoreRedisDto.class))).thenReturn("jsonString");  // mock 처리
-
+//        when(redisTemplate.opsForValue()).thenReturn(mockValueOperations);
+//        when(objectMapper.writeValueAsString(any(StoreRedisDto.class))).thenReturn("jsonString");  // mock 처리
         storeService.createStore(storeManager ,reqDto);
      //then
         verify(headquarterRepository, times(1)).findByFranchiseName(headquarter.getFranchiseName());
@@ -192,7 +193,7 @@ class StoreServiceTest {
      //when
         when(storeRepository.findById(storeManager.getManageId())).thenReturn(Optional.of(store));
 
-        when(redisTemplate.delete("store:" + store.getId())).thenReturn(true);
+//        when(redisTemplate.delete("store:" + store.getId())).thenReturn(true);
 
         storeService.deleteStore(storeManager);
 

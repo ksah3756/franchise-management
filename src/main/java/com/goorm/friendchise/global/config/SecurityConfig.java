@@ -1,10 +1,12 @@
 package com.goorm.friendchise.global.config;
 
 import com.goorm.friendchise.global.auth.filter.TokenAuthenticationFilter;
-import com.goorm.friendchise.global.auth.jwt.TokenProvider;
+import com.goorm.friendchise.global.auth.implement.jwt.TokenParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,15 +26,15 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
-	private final TokenProvider tokenProvider;
+	private final TokenParser tokenParser;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		return http
+		http
 			.cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
-			.formLogin(AbstractHttpConfigurer::disable)
+			.formLogin(AbstractHttpConfigurer::disable) // UsernamePasswordAuthenticationFilter disable
 			.logout(AbstractHttpConfigurer::disable)
 			.sessionManagement(session -> session
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -44,9 +46,11 @@ public class SecurityConfig {
 				.requestMatchers(PERMIT_ALL_PATTERNS).permitAll()
 				.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
 				.anyRequest().authenticated()
-			)
-			.build();
+			);
+
+			return http.build();
 	}
+
 
 	private static final String[] SWAGGER_PATTERNS = {
 		"/swagger-ui/**",
@@ -69,12 +73,15 @@ public class SecurityConfig {
 	};
 
 	private static final String[] PUBLIC_ENDPOINTS = {
-		"*/register",
-		"*/login",
-		"*/reissue",
-		"/headquarter/store-recommendation-dummy",
-		"/headquarter/store-recommendation-stream",
-		"/notifications/subscribe/**"
+			"/manager/register",
+			"/manager/login",
+			"/customer/register",
+			"/customer/login",
+			"*/reissue",
+			"/headquarter/store-recommendation-dummy",
+			"/headquarter/store-recommendation-stream",
+			"/headquarter/store-recommendation-stream-dummy",
+			"/notifications/subscribe/**"
 	};
 
 	CorsConfigurationSource corsConfigurationSource() {
@@ -92,7 +99,7 @@ public class SecurityConfig {
 	}
 
 	public TokenAuthenticationFilter tokenAuthenticationFilter() {
-		return new TokenAuthenticationFilter(tokenProvider);
+		return new TokenAuthenticationFilter(tokenParser);
 	}
 
 	@Bean

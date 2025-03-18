@@ -1,7 +1,5 @@
 package com.goorm.friendchise.domain.headquarter.dto.kakaomap;
 
-import com.goorm.friendchise.global.exception.CustomException;
-import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter

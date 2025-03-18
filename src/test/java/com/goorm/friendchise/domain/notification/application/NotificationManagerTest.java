@@ -8,35 +8,32 @@ import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository
 import com.goorm.friendchise.domain.notification.domain.Notification;
 import com.goorm.friendchise.domain.notification.dto.response.ReceivedNotificationResponse;
 import com.goorm.friendchise.domain.notification.infrastructure.FakeNotificationRepository;
-import com.goorm.friendchise.global.auth.application.AuthService;
-import com.goorm.friendchise.global.auth.jwt.TokenProvider;
+import com.goorm.friendchise.global.auth.implement.jwt.TokenParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
 
 class NotificationManagerTest {
 	private NotificationManager notificationManager;
 	private FakeNotificationRepository repository;
 	private ManagerRepository managerRepository;
 	private ApplicationEventPublisher eventPublisher;
-	private TokenProvider tokenProvider;
+	private TokenParser tokenParser;
 	@BeforeEach
 	void setUp() {
 		repository = new FakeNotificationRepository();
 		managerRepository = new FakeManagerRepository();
 		eventPublisher = Mockito.mock(ApplicationEventPublisher.class);
-		tokenProvider = Mockito.mock(TokenProvider.class);
-		notificationManager = new NotificationManager(repository, managerRepository, eventPublisher, tokenProvider);
+		tokenParser = Mockito.mock(TokenParser.class);
+		notificationManager = new NotificationManager(repository, managerRepository, eventPublisher, tokenParser);
 	}
 
 	private Manager createManager(Long storeId) {

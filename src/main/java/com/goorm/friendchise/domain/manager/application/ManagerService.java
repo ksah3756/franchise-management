@@ -9,12 +9,13 @@ import com.goorm.friendchise.domain.manager.dto.request.ManageLoginRequest;
 import com.goorm.friendchise.domain.manager.dto.response.ManagerDetailResponse;
 import com.goorm.friendchise.domain.manager.dto.response.ManagerPersistResponse;
 import com.goorm.friendchise.domain.manager.exception.ManagerNotFoundException;
-import com.goorm.friendchise.domain.notification.application.NotificationSseSender;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.dto.response.TokenResponse;
 import com.goorm.friendchise.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,6 @@ import static com.goorm.friendchise.global.exception.ErrorCode.HEADQUARTER_NOT_F
 import static com.goorm.friendchise.global.exception.ErrorCode.INVALID_PARAMETER;
 
 @Slf4j
-@Transactional
 @Service
 @RequiredArgsConstructor
 public class ManagerService {
@@ -33,8 +33,8 @@ public class ManagerService {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final AuthService authService;
 	private final HeadquarterRepository headquarterRepository;
-	private final NotificationSseSender notificationSseSender;
 
+	@Transactional
 	public ManagerPersistResponse create(ManageCreateRequest request) {
 		// STORE일 경우 HQ의 certificationNumber 비교
 		if (request.role().equals(STORE)) {
@@ -58,7 +58,6 @@ public class ManagerService {
 		String name = request.username();
 		Manager manager = findManagerByUsername(name);
 		manager.isPasswordMatch(request.password(), bCryptPasswordEncoder);
-
 		return authService.managerLogin(manager);
 	}
 
@@ -72,15 +71,18 @@ public class ManagerService {
 		return ManagerDetailResponse.from(manager);
 	}
 
+	@Transactional
 	public void updateManager(Manager manager, Long newStoreId) {
 		manager.updateManageId(newStoreId);
 	}
 
+	@Transactional
 	public void updatePassword(Manager manager, String newPassword) {
 		String encode = bCryptPasswordEncoder.encode(newPassword);
 		manager.updatePassword(encode);
 	}
 
+	@Transactional
 	public void delete(Manager manager) {
 		managerRepository.delete(manager);
 	}

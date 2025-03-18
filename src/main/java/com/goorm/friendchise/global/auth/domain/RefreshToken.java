@@ -10,11 +10,13 @@ import lombok.Getter;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
 
+import java.io.Serializable;
+
 @Getter
 @Builder
 @AllArgsConstructor
-@RedisHash(value = "refreshToken", timeToLive = 60 * 60 * 24)
-public class RefreshToken {
+@RedisHash(value = "refreshToken", timeToLive = 60 * 60 * 24) // 이거 secondary Index, key 목록 set 도 제대로 삭제되는지 확인 필요
+public class RefreshToken implements Serializable {
 	@Indexed
 	private String refreshToken;
 

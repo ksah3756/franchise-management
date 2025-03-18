@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
 import com.goorm.friendchise.domain.manager.domain.Manager;
-import com.goorm.friendchise.domain.notification.application.NotificationSseSender;
 import com.goorm.friendchise.domain.store.domain.Store;
 import com.goorm.friendchise.domain.store.dto.StoreRedisDto;
 import com.goorm.friendchise.domain.store.dto.StoreReqDto;
@@ -16,12 +15,13 @@ import com.goorm.friendchise.domain.store.exception.NoAuthenticationException;
 import com.goorm.friendchise.domain.store.exception.NotFoundAddressException;
 import com.goorm.friendchise.domain.store.exception.StoreNotFoundException;
 import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
-import com.goorm.friendchise.global.auth.application.AuthService;
+import com.goorm.friendchise.global.event.ManagerUpdateEvent;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +43,7 @@ public class StoreService {
     private final StoreRepository storeRepository;
     private final HeadquarterRepository headquarterRepository;
     private final WebClient webClient;
-    private final NotificationSseSender notificationSseSender;
+    private final ApplicationEventPublisher eventPublisher;
 
     private final RedisTemplate<String, Object> redisTemplate;
     private final ObjectMapper objectMapper; // JSON 변환용
@@ -73,9 +73,9 @@ public class StoreService {
         Store store = new Store(req, headquarter, currentManager);
         storeRepository.save(store);
 
-        currentManager.updateManageId(store.getId());
+        eventPublisher.publishEvent(ManagerUpdateEvent.create(store.getId(), currentManager));
 
-        saveStoreToRedis(store);
+        // saveStoreToRedis(store); // 이것도 할거면 트랜잭션 밖에서 해야지
 
         log.info("초기 스토어 생성 완료 storeId = {}", store.getId());
 	}
@@ -103,8 +103,8 @@ public class StoreService {
 
         findIfMine(store, currentManager);
 
-        String storeKey = "store:" + store.getId();
-        redisTemplate.delete(storeKey);
+//        String storeKey = "store:" + store.getId();
+//        redisTemplate.delete(storeKey);
 
         currentManager.updateManageId(null);
         storeRepository.delete(store);

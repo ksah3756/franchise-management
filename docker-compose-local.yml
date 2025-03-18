@@ -1,0 +1,69 @@
+version: "3.4"
+
+services:
+  friendchise:
+    container_name: friendchise
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DATASOURCE_URL=mysql
+      - DATASOURCE_USERNAME=root
+      - DATASOURCE_PASSWORD=1234
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - JWT_ISSUER=${JWT_ISSUER}
+      - JWT_SECRET=${JWT_SECRET}
+      - KAKAO_API_KEY=${KAKAO_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./logs:/logs
+    networks:
+        - friendchise_network
+
+  promtail:
+    image: grafana/promtail:latest
+    container_name: promtail
+    environment:
+        - K6_SERVER_IP=localhost
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml
+      - ./logs:/logs
+    command:
+      - -config.file=/etc/promtail/config.yml
+      - -config.expand-env=true
+    networks:
+      - friendchise_network
+
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+        - friendchise_network
+
+  influxdb:
+    image: bitnami/influxdb:1.8.5
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+      - "8085:8088"
+    environment:
+      - INFLUXDB_ADMIN_USER_PASSWORD=bitnami123
+      - INFLUXDB_ADMIN_USER_TOKEN=admintoken123
+      - INFLUXDB_HTTP_AUTH_ENABLED=false
+      - INFLUXDB_DB=myk6db
+    networks:
+        - friendchise_network
+  grafana:
+    image: bitnami/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+        - friendchise_network
+
+networks:
+  friendchise_network:

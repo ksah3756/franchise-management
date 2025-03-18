@@ -2,6 +2,7 @@ package com.goorm.friendchise.domain.store.domain;
 
 
 import com.goorm.friendchise.domain.store.dto.SalesReqDto;
+import com.goorm.friendchise.global.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Sales {
+public class Sales extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

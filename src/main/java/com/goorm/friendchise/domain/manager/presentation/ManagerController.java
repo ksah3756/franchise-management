@@ -7,7 +7,9 @@ import com.goorm.friendchise.domain.manager.dto.request.ManageLoginRequest;
 import com.goorm.friendchise.domain.manager.dto.request.ManagerPasswordRequest;
 import com.goorm.friendchise.domain.manager.dto.response.ManagerDetailResponse;
 import com.goorm.friendchise.domain.manager.dto.response.ManagerPersistResponse;
+import com.goorm.friendchise.global.aop.ExecutionTime;
 import com.goorm.friendchise.global.auth.application.AuthService;
+import com.goorm.friendchise.global.auth.application.TokenService;
 import com.goorm.friendchise.global.auth.dto.request.TokenReissueRequest;
 import com.goorm.friendchise.global.auth.dto.response.TokenResponse;
 import com.goorm.friendchise.global.auth.resolver.AuthManager;
@@ -31,7 +33,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequiredArgsConstructor
 public class ManagerController {
 	private final ManagerService managerService;
-	private final AuthService authService;
+	private final TokenService tokenService;
 
 	@PostMapping("/register")
 	public ResponseEntity<ManagerPersistResponse> register(
@@ -78,14 +80,6 @@ public class ManagerController {
 	public ResponseEntity<Void> delete(@AuthManager Manager manager) {
 		managerService.delete(manager);
 		return ResponseEntity.noContent().build();
-	}
-
-	@PostMapping("/reissue")
-	public ResponseEntity<TokenResponse> reissue(
-		@RequestBody @Valid TokenReissueRequest request
-	) {
-		TokenResponse response = authService.reissue(request);
-		return ResponseEntity.ok(response);
 	}
 
 }

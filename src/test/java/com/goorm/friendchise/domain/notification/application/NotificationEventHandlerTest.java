@@ -1,6 +1,6 @@
 package com.goorm.friendchise.domain.notification.application;
 
-import com.goorm.friendchise.domain.headquarter.application.HeadquarterService;
+import com.goorm.friendchise.domain.headquarter.business.HeadquarterService;
 import com.goorm.friendchise.domain.headquarter.dto.store.StoreIdDto;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.Role;

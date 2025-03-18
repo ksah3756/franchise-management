@@ -1,9 +1,10 @@
-name: Deploy to EC2 with Docker
+name: Deploy to AWS CodeDeploy
 
 on:
   push:
     branches:
       - 'dev'
+      - 'refactor/architecture'
 
 jobs:
   deploy:
@@ -20,7 +21,7 @@ jobs:
           java-version: '17'
 
       - name: Cache Gradle packages
-        uses: actions/cache@v4.2.0
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
@@ -34,57 +35,75 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Login to ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: build docker file and setting deploy file
         env:
-          KAKAO_API_KEY: ${{ secrets.KAKAO_API_KEY }}
-          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-
-      - name: Log in to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build and Push Docker Image
+            ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+            ECR_REPOSITORY: friendchise-origin
+            IMAGE_TAG: ${{ github.sha }}
+            REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+            DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+            DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
+            JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
+            JWT_SECRET: ${{ secrets.JWT_SECRET }}
+            KAKAO_API_KEY: ${{ secrets.KAKAO_API_KEY }}
+            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+            K6_SERVER_IP: ${{ secrets.K6_SERVER_IP }}
+        run: | 
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          
+          mkdir -p scripts
+          cat > scripts/deploy.sh << 'EOF'
+          #!/bin/bash
+          set -e
+          echo "Logging in to ECR..."
+          aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 381492107741.dkr.ecr.ap-northeast-2.amazonaws.com
+          DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" 
+          docker-compose -f "$DIR/docker-compose.yml" down || true
+          docker container prune -f
+          docker-compose -f "$DIR/docker-compose.yml" up -d
+          EOF
+          
+          cat > scripts/.env << EOF
+          ECR_REGISTRY=$ECR_REGISTRY
+          ECR_REPOSITORY=friendchise-origin
+          IMAGE_TAG=$IMAGE_TAG
+          REDIS_PASSWORD=$REDIS_PASSWORD
+          DATASOURCE_URL=$DATASOURCE_URL
+          DATASOURCE_PASSWORD=$DATASOURCE_PASSWORD
+          JWT_ISSUER=$JWT_ISSUER
+          JWT_SECRET=$JWT_SECRET
+          KAKAO_API_KEY=$KAKAO_API_KEY
+          OPENAI_API_KEY=$OPENAI_API_KEY
+          K6_SERVER_IP=$K6_SERVER_IP
+          EOF
+          
+          chmod +x scripts/deploy.sh
+      - name: upload to s3
+        env:
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-            IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/friendchise
-            TAG=${{ github.sha }}
-            docker build -t $IMAGE_NAME:$TAG .
-            docker push $IMAGE_NAME:$TAG
-      
-
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            # 환경 변수 설정
-            export DATASOURCE_URL="${{ secrets.DATASOURCE_URL }}"
-            export SPRING_DATASOURCE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
-            export REDIS_PASSWORD="${{ secrets.REDIS_PASSWORD }}"
-            export JWT_ISSUER="${{ secrets.JWT_ISSUER }}"
-            export JWT_SECRET="${{ secrets.JWT_SECRET }}"
-            export KAKAO_API_KEY="${{ secrets.KAKAO_API_KEY }}"
-            export OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
-            # 최신 애플리케이션 컨테이너 가져오기
-            docker pull ${{ secrets.DOCKER_USERNAME }}/friendchise:${{ github.sha }}
-
-            # 기존 컨테이너 중지 및 삭제
-            docker stop friendchise || true
-            docker rm friendchise || true
-
-            # 새로운 컨테이너 실행
-            docker run -d \
-              --name friendchise \
-              -e SPRING_DATASOURCE_URL=$DATASOURCE_URL \
-              -e SPRING_DATASOURCE_USERNAME=admin \
-              -e SPRING_DATASOURCE_PASSWORD=$SPRING_DATASOURCE_PASSWORD \
-              -e REDIS_PASSWORD=$REDIS_PASSWORD \
-              -e JWT_ISSUER=$JWT_ISSUER \
-              -e JWT_SECRET=$JWT_SECRET \
-              -e KAKAO_API_KEY=$KAKAO_API_KEY \
-              -e OPENAI_API_KEY=$OPENAI_API_KEY \
-              -p 8080:8080 \
-              ${{ secrets.DOCKER_USERNAME }}/friendchise:${{ github.sha }}
+          mv docker-compose.yml scripts/
+          mv promtail-config.yml scripts/
+          zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml docker-compose.yml promtail-config.yml .env
+          aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://friendchisebucket
+      - name: start deploy
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          aws deploy create-deployment --application-name deploy \
+          --deployment-config-name CodeDeployDefault.OneAtATime \
+          --deployment-group-name deploy-group \
+          --s3-location bucket=friendchisebucket,bundleType=zip,key=deploy-$IMAGE_TAG.zip

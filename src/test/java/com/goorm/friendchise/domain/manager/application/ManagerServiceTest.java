@@ -1,13 +1,11 @@
 package com.goorm.friendchise.domain.manager.application;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.goorm.friendchise.domain.customer.domain.CustomerRepository;
 import com.goorm.friendchise.domain.customer.infrastructure.FakeCustomerRepository;
-import com.goorm.friendchise.domain.customer.infrastructure.FakeStoreRepository;
-import com.goorm.friendchise.domain.headquarter.domain.category.Category;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantCategory;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantSubCategory;
 import com.goorm.friendchise.domain.headquarter.insfrastructure.FakeHeadquarterRepository;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
@@ -17,23 +15,17 @@ import com.goorm.friendchise.domain.manager.dto.response.ManagerPersistResponse;
 import com.goorm.friendchise.domain.manager.exception.HeadquarterAuthNotMatchException;
 import com.goorm.friendchise.domain.manager.exception.ManagerNotFoundException;
 import com.goorm.friendchise.domain.manager.infrastructure.FakeManagerRepository;
-import com.goorm.friendchise.domain.notification.application.NotificationManager;
-import com.goorm.friendchise.domain.notification.application.NotificationSseSender;
-import com.goorm.friendchise.domain.store.infrastructure.StoreRepository;
 import com.goorm.friendchise.global.auth.application.AuthService;
-import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
-import com.goorm.friendchise.global.auth.infrastructure.FakeRefreshTokenRepository;
-import com.goorm.friendchise.global.auth.jwt.JwtProperties;
-import com.goorm.friendchise.global.auth.jwt.TokenProvider;
+import com.goorm.friendchise.global.auth.infrastructure.FakeApplicationEventPublisher;
+import com.goorm.friendchise.global.auth.implement.jwt.JwtProperties;
+import com.goorm.friendchise.global.auth.implement.jwt.TokenProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.UUID;
@@ -54,23 +46,18 @@ class ManagerServiceTest {
 		ManagerRepository managerRepository = new FakeManagerRepository();
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		TokenProvider tokenProvider = new TokenProvider(new JwtProperties());
-		RefreshTokenRepository refreshTokenRepository = new FakeRefreshTokenRepository();
 		CustomerRepository customerRepository = new FakeCustomerRepository();
 		this.headquarterRepository = new FakeHeadquarterRepository();
-		NotificationManager notificationManager = Mockito.mock(NotificationManager.class);
-		NotificationSseSender notificationSseSender = new NotificationSseSender(new ObjectMapper(), notificationManager);
-		StoreRepository storeRepository = new FakeStoreRepository();
-		AuthService authService = new AuthService(managerRepository, tokenProvider,
-			refreshTokenRepository, headquarterRepository, customerRepository, storeRepository);
+		AuthService authService = new AuthService(tokenProvider, customerRepository, new FakeApplicationEventPublisher()); ;
 		managerService = new ManagerService(managerRepository, bCryptPasswordEncoder,
-			authService, headquarterRepository, notificationSseSender);
+			authService, headquarterRepository);
 
 		Manager savedManager = managerRepository.save(
 			Manager.create("test", "test1234", HEADQUARTER)
 		);
 
 		Headquarter headquarter = headquarterRepository.save(
-			Headquarter.of("Mcdonald", Category.FASTFOOD, SubCategory.NONE)
+			Headquarter.of("Mcdonald", RestaurantCategory.FASTFOOD, RestaurantSubCategory.NONE)
 		);
 
 		savedManager.updateManageId(headquarter.getId());
@@ -107,8 +94,8 @@ class ManagerServiceTest {
 		Headquarter mcdonald = Headquarter.builder()
 			.id(1L)
 			.franchiseName("Mcdonald")
-			.category(Category.FASTFOOD)
-			.subCategory(SubCategory.NONE)
+			.restaurantCategory(RestaurantCategory.FASTFOOD)
+			.restaurantSubCategory(RestaurantSubCategory.NONE)
 			.certificationNumber(UUID.randomUUID().toString())
 			.build();
 
@@ -137,8 +124,8 @@ class ManagerServiceTest {
 		Headquarter mcdonald = Headquarter.builder()
 			.id(1L)
 			.franchiseName("Mcdonald")
-			.category(Category.FASTFOOD)
-			.subCategory(SubCategory.NONE)
+			.restaurantCategory(RestaurantCategory.FASTFOOD)
+			.restaurantSubCategory(RestaurantSubCategory.NONE)
 			.certificationNumber(UUID.randomUUID().toString())
 			.build();
 
