@@ -1,11 +1,10 @@
-package com.goorm.friendchise.domain.headquarter.Item.dto;
+package com.goorm.friendchise.domain.headquarter.dto.item;
 
-import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
+import com.goorm.friendchise.domain.headquarter.domain.Item;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
 
 public record ItemReqDto(
         @NotBlank(message = "상품 이름은 필수입니다.")

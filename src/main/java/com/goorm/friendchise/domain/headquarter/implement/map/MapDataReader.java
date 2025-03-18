@@ -1,7 +1,7 @@
 package com.goorm.friendchise.domain.headquarter.implement.map;
 
-import com.goorm.friendchise.domain.headquarter.domain.category.Category;
-import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantSubCategory;
 import com.goorm.friendchise.domain.headquarter.dto.kakaomap.CategoryGroupCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,8 @@ public class MapDataReader {
 
     public Mono<Map<String, String>> getTotalPlaceData(
             String franchiseName,
-            Category category,
-            SubCategory subCategory,
+            RestaurantCategory restaurantCategory,
+            RestaurantSubCategory restaurantSubCategory,
             List<String> userSelectedCategory,
             Double y,
             Double x
@@ -33,10 +33,10 @@ public class MapDataReader {
 
         // 2. 동일 업종 경쟁 매장 검색
         Mono<String> competitiveStores;
-        if(subCategory.equals(SubCategory.NONE)) { // subCategory가 없으면 category로 검색
-            competitiveStores =  localDataReader.getCompetitiveStore(category.getValue(), x, y, 1000);
+        if(restaurantSubCategory.equals(RestaurantSubCategory.NONE)) { // subCategory가 없으면 category로 검색
+            competitiveStores =  localDataReader.getCompetitiveStore(restaurantCategory.getValue(), x, y, 1000);
         } else {
-            competitiveStores = localDataReader.getCompetitiveStore(subCategory.getValue(), x, y, 1000);
+            competitiveStores = localDataReader.getCompetitiveStore(restaurantSubCategory.getValue(), x, y, 1000);
         }
         totalSearchResults.put("반경 1km 내 동일 업종 경쟁 매장", competitiveStores);
 

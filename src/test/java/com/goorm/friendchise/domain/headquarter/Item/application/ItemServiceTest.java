@@ -1,15 +1,16 @@
 package com.goorm.friendchise.domain.headquarter.Item.application;
 
-import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
-import com.goorm.friendchise.domain.headquarter.Item.domain.ItemRepository;
-import com.goorm.friendchise.domain.headquarter.Item.dto.ItemReqDto;
-import com.goorm.friendchise.domain.headquarter.Item.dto.ItemReqDtoList;
-import com.goorm.friendchise.domain.headquarter.Item.dto.ItemResDto;
-import com.goorm.friendchise.domain.headquarter.Item.infrastructure.ItemRepositoryImpl;
-import com.goorm.friendchise.domain.headquarter.domain.category.Category;
+import com.goorm.friendchise.domain.headquarter.domain.Item;
+import com.goorm.friendchise.domain.headquarter.domain.ItemRepository;
+import com.goorm.friendchise.domain.headquarter.dto.item.ItemReqDto;
+import com.goorm.friendchise.domain.headquarter.dto.item.ItemReqDtoList;
+import com.goorm.friendchise.domain.headquarter.dto.item.ItemResDto;
+import com.goorm.friendchise.domain.headquarter.infrastructure.ItemRepositoryImpl;
+import com.goorm.friendchise.domain.headquarter.business.ItemService;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantCategory;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantSubCategory;
 import com.goorm.friendchise.domain.headquarter.infrastructure.HeadquarterRepositoryImpl;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
@@ -93,8 +94,8 @@ class ItemServiceTest {
         // given: Headquarter 생성 및 저장
         Headquarter headquarter = Headquarter.builder()
                 .franchiseName("test")
-                .category(Category.FASTFOOD)
-                .subCategory(SubCategory.NONE)
+                .restaurantCategory(RestaurantCategory.FASTFOOD)
+                .restaurantSubCategory(RestaurantSubCategory.NONE)
                 .build();
         Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
         Long savedHeadquarterId = savedHeadquarter.getId();
@@ -142,8 +143,8 @@ class ItemServiceTest {
         // given
         Headquarter headquarter = Headquarter.builder()
                 .franchiseName("test")
-                .category(Category.FASTFOOD)
-                .subCategory(SubCategory.NONE)
+                .restaurantCategory(RestaurantCategory.FASTFOOD)
+                .restaurantSubCategory(RestaurantSubCategory.NONE)
                 .build();
         Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
         Long savedHeadquarterId = savedHeadquarter.getId();

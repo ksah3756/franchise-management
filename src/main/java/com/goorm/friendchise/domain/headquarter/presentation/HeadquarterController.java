@@ -1,8 +1,8 @@
 package com.goorm.friendchise.domain.headquarter.presentation;
 
-import com.goorm.friendchise.domain.headquarter.Item.application.ItemService;
-import com.goorm.friendchise.domain.headquarter.Item.dto.ItemReqDtoList;
-import com.goorm.friendchise.domain.headquarter.Item.dto.ItemResDto;
+import com.goorm.friendchise.domain.headquarter.business.ItemService;
+import com.goorm.friendchise.domain.headquarter.dto.item.ItemReqDtoList;
+import com.goorm.friendchise.domain.headquarter.dto.item.ItemResDto;
 import com.goorm.friendchise.domain.headquarter.business.HeadquarterService;
 import com.goorm.friendchise.domain.headquarter.business.LocalAnalysisService;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetailResponse;

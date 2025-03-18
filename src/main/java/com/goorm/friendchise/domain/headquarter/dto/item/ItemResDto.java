@@ -1,6 +1,6 @@
-package com.goorm.friendchise.domain.headquarter.Item.dto;
+package com.goorm.friendchise.domain.headquarter.dto.item;
 
-import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
+import com.goorm.friendchise.domain.headquarter.domain.Item;
 
 public record ItemResDto(
         Long id,

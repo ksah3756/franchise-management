@@ -20,7 +20,6 @@ public class OpenAiLocalDataAnalyzer implements LocalDataAnalyzer {
         this.webClient = webClient;
     }
 
-    // 예시
     private static final String initialSettingMessage =
             "당신은 프랜차이즈 본사의 매장 관리 서비스 역할을 수행합니다. 주어진 데이터를 활용해, 매장의 입점 추천 점수를 0~100 사이의 정수로 산출하세요."
                     + "결과는 전문적인 어조로 \"{추천/비추천 - [XX점]}, 예상 월 매출: xxx만원\" 형태로 제시하고, 그 근거를 간결하게 설명해야 합니다.\n"

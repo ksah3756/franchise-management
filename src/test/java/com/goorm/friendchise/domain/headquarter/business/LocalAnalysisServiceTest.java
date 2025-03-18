@@ -1,17 +1,16 @@
 package com.goorm.friendchise.domain.headquarter.business;
 
-import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialArea;
-import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaReader;
-import com.goorm.friendchise.domain.headquarter.domain.category.Category;
+import com.goorm.friendchise.domain.headquarter.domain.CommercialArea;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantCategory;
+import com.goorm.friendchise.domain.headquarter.implement.commercialarea.CommercialAreaReader;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
-import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantSubCategory;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.LocalAnalysisRequest;
 import com.goorm.friendchise.domain.headquarter.implement.headquarter.HeadquarterReader;
 import com.goorm.friendchise.domain.headquarter.implement.map.MapDataReader;
 import com.goorm.friendchise.domain.headquarter.implement.analyzer.OpenAiLocalDataAnalyzer;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -72,11 +71,11 @@ class LocalAnalysisServiceTest {
 
         given(headquarterReader.getHeadquarterByManager(manager)).willReturn(Headquarter.builder()
                 .franchiseName("맥도날드")
-                .category(Category.FASTFOOD)
-                .subCategory(SubCategory.NONE)
+                .restaurantCategory(RestaurantCategory.FASTFOOD)
+                .restaurantSubCategory(RestaurantSubCategory.NONE)
                 .build());
 
-        given(mapDataReader.getTotalPlaceData(anyString(), eq(Category.FASTFOOD), eq(SubCategory.NONE), anyList(), anyDouble(), anyDouble()))
+        given(mapDataReader.getTotalPlaceData(anyString(), eq(RestaurantCategory.FASTFOOD), eq(RestaurantSubCategory.NONE), anyList(), anyDouble(), anyDouble()))
                 .willReturn(Mono.just(Map.of("반경 1km 내 동일 업종 경쟁 매장", "123",
                         "반경 200m 내 버스정류장", "120",
                         "반경 500m 내 지하철역", "456",

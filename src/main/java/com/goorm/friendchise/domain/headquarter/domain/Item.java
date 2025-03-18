@@ -1,6 +1,5 @@
-package com.goorm.friendchise.domain.headquarter.Item.domain;
+package com.goorm.friendchise.domain.headquarter.domain;
 
-import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.global.common.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

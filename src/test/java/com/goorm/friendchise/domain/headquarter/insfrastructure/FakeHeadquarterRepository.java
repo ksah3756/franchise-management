@@ -18,8 +18,8 @@ public class FakeHeadquarterRepository implements HeadquarterRepository {
         Headquarter savedHeadquarter = Headquarter.builder()
                 .id(sequence.getAndIncrement())
                 .franchiseName(headquarter.getFranchiseName())
-                .category(headquarter.getCategory())
-                .subCategory(headquarter.getSubCategory())
+                .restaurantCategory(headquarter.getRestaurantCategory())
+                .restaurantSubCategory(headquarter.getRestaurantSubCategory())
             	.certificationNumber(UUID.randomUUID().toString())
                 .build();
         headquarters.add(savedHeadquarter);

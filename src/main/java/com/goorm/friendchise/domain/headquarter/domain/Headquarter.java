@@ -1,8 +1,5 @@
 package com.goorm.friendchise.domain.headquarter.domain;
 
-import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
-import com.goorm.friendchise.domain.headquarter.domain.category.Category;
-import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.exception.HeadquarterAuthNotMatchException;
 import com.goorm.friendchise.domain.store.domain.Store;
@@ -32,12 +29,12 @@ public class Headquarter extends BaseEntity {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Category category;
+    private RestaurantCategory restaurantCategory;
 
     // 세부 카테고리는 없을 수 있음 -> 이 경우 empty string으로 저장
     @NotNull
     @Enumerated(EnumType.STRING)
-    private SubCategory subCategory;
+    private RestaurantSubCategory restaurantSubCategory;
 
     @NotNull
     @Builder.Default
@@ -54,11 +51,11 @@ public class Headquarter extends BaseEntity {
     @OneToMany(mappedBy = "headquarter", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Store> stores = new ArrayList<>();
 
-    public static Headquarter of(String franchiseName, Category category, SubCategory subCategory) {
+    public static Headquarter of(String franchiseName, RestaurantCategory restaurantCategory, RestaurantSubCategory restaurantSubCategory) {
         return Headquarter.builder()
                 .franchiseName(franchiseName)
-                .category(category)
-                .subCategory(subCategory)
+                .restaurantCategory(restaurantCategory)
+                .restaurantSubCategory(restaurantSubCategory)
                 .build();
     }
 
@@ -67,8 +64,8 @@ public class Headquarter extends BaseEntity {
     */
     public void update(Headquarter headquarter) {
         this.franchiseName = headquarter.getFranchiseName();
-        this.category = headquarter.getCategory();
-        this.subCategory = headquarter.getSubCategory();
+        this.restaurantCategory = headquarter.getRestaurantCategory();
+        this.restaurantSubCategory = headquarter.getRestaurantSubCategory();
     }
 
     public void addItem(Item item) {

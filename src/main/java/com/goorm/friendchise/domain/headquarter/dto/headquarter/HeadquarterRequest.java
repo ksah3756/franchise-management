@@ -2,9 +2,9 @@ package com.goorm.friendchise.domain.headquarter.dto.headquarter;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.goorm.friendchise.domain.headquarter.domain.category.Category;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantCategory;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
-import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantSubCategory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -28,7 +28,7 @@ public record HeadquarterRequest(
     public static Headquarter toHeadquarter(HeadquarterRequest headquarterRequest) {
         return Headquarter.of(
                 headquarterRequest.franchiseName(),
-                Category.fromString(headquarterRequest.category),
-                SubCategory.fromString(headquarterRequest.subCategory));
+                RestaurantCategory.fromString(headquarterRequest.category),
+                RestaurantSubCategory.fromString(headquarterRequest.subCategory));
     }
 }

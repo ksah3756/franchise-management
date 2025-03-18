@@ -1,10 +1,10 @@
-package com.goorm.friendchise.domain.headquarter.Item.application;
+package com.goorm.friendchise.domain.headquarter.business;
 
-import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
-import com.goorm.friendchise.domain.headquarter.Item.domain.ItemRepository;
-import com.goorm.friendchise.domain.headquarter.Item.dto.ItemReqDto;
-import com.goorm.friendchise.domain.headquarter.Item.dto.ItemReqDtoList;
-import com.goorm.friendchise.domain.headquarter.Item.dto.ItemResDto;
+import com.goorm.friendchise.domain.headquarter.domain.Item;
+import com.goorm.friendchise.domain.headquarter.domain.ItemRepository;
+import com.goorm.friendchise.domain.headquarter.dto.item.ItemReqDto;
+import com.goorm.friendchise.domain.headquarter.dto.item.ItemReqDtoList;
+import com.goorm.friendchise.domain.headquarter.dto.item.ItemResDto;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
 import com.goorm.friendchise.domain.manager.domain.Manager;
@@ -45,17 +45,10 @@ public class ItemService {
     public Slice<ItemResDto> getItems(Manager currentManager, Pageable pageable) {
         Headquarter headquarter = getCurrentHeadquarter(currentManager);
 
-        // headquarter.id = headquarterId 이런식으로 조회되기 때문에 페치 조인이 아님에도 left join해서 headquarter까지 가져옮
+        // headquarterId로 조회 시 headquarter.id를 조회하면서 left join 발생
         return itemRepository.findByHeadquarter(headquarter.getId(), pageable).map(ItemResDto::fromEntity);
     }
 
-//    @Transactional(readOnly = true)
-//    public Slice<ItemResDto> getItemsNative(Pageable pageable) {
-//        Headquarter headquarter = getCurrentHeadquarter();
-//
-//        // native query로 불필요한 left join X
-//        return itemRepository.findItemsByHeadquarterIdNative(headquarter.getId(), pageable).map(ItemResDto::fromEntity);
-//    }
 
     private Headquarter getCurrentHeadquarter(Manager currentManager) {
         return getHeadquarterById(currentManager);

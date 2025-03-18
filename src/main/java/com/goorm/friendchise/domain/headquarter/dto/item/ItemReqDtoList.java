@@ -1,4 +1,4 @@
-package com.goorm.friendchise.domain.headquarter.Item.dto;
+package com.goorm.friendchise.domain.headquarter.dto.item;
 
 import jakarta.validation.Valid;
 

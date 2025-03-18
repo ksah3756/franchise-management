@@ -9,6 +9,6 @@ public record HeadquarterDetailResponse(
         String subCategory
 ) {
     public static HeadquarterDetailResponse from(Headquarter headquarter) {
-        return new HeadquarterDetailResponse(headquarter.getId(), headquarter.getFranchiseName(), headquarter.getCategory().getValue(), headquarter.getSubCategory().getValue());
+        return new HeadquarterDetailResponse(headquarter.getId(), headquarter.getFranchiseName(), headquarter.getRestaurantCategory().getValue(), headquarter.getRestaurantSubCategory().getValue());
     }
 }

@@ -1,5 +1,6 @@
 package com.goorm.friendchise.global.event;
 
+import com.goorm.friendchise.global.aop.ExecutionTime;
 import com.goorm.friendchise.global.auth.domain.RefreshToken;
 import com.goorm.friendchise.global.auth.domain.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class RefreshTokenSaveEventListener {
             maxAttempts = 3,
             backoff = @Backoff(delay = 1000, multiplier = 2.0, random = true)
     )
+    @ExecutionTime
     public void handleRefreshTokenSaveEvent(RefreshTokenSaveEvent event) {
         RefreshToken refreshToken = RefreshToken.of(event.getRefreshToken(), event.getUserId(), event.getRole());
         refreshTokenRepository.save(refreshToken);

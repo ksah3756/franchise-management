@@ -1,0 +1,843 @@
+2025-03-16 01:14:23 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 01:14:23 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 01:14:33 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 4664f088-fbf3-4afd-8474-cd2fbf12ff65
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 01:14:36 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 01:14:37 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 02:13:33 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2m9s649ms).
+2025-03-16 02:32:42 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=18m38s346ms).
+2025-03-16 03:27:05 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=53m53s).
+2025-03-16 04:12:56 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=45m50s942ms).
+2025-03-16 05:07:14 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=53m48s868ms).
+2025-03-16 06:01:03 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=53m48s927ms).
+2025-03-16 06:55:22 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=53m48s722ms).
+2025-03-16 07:49:11 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=53m48s909ms).
+2025-03-16 08:05:06 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m24s906ms).
+2025-03-16 08:25:49 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m12s841ms).
+2025-03-16 09:21:19 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=55m30s655ms).
+2025-03-16 10:06:09 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=44m19s938ms).
+2025-03-16 10:08:47 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2m37s772ms).
+2025-03-16 10:10:39 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1m21s556ms).
+2025-03-16 10:14:39 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=3m30s534ms).
+2025-03-16 10:17:42 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=3m2s608ms).
+2025-03-16 10:19:57 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1m44s752ms).
+2025-03-16 10:25:13 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=4m15s344ms).
+2025-03-16 12:02:42 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Retrograde clock change detected (housekeeper delta=27s876ms), soft-evicting connections from pool.
+2025-03-16 14:45:26 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1m9s675ms).
+2025-03-16 15:01:15 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m49s140ms).
+2025-03-16 15:19:32 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m46s952ms).
+2025-03-16 17:00:01 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=5m28s56ms).
+2025-03-16 17:05:30 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=5m28s901ms).
+2025-03-16 17:09:35 [HikariPool-2 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=3m35s720ms).
+2025-03-16 17:25:14 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 17:25:14 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 17:25:15 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: c4f6e2d1-b6a1-4a53-aa9e-02f45c009d2f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 17:25:16 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 17:25:17 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 17:25:21 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 17:25:21 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 17:25:24 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 96b7cb16-2286-48d9-8b9a-d57b6bf61749
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 17:25:24 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 17:25:24 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 18:47:12 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 18:47:12 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 18:47:16 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 8805d6aa-bbc8-48c9-824b-058580c1d104
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 18:47:16 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 18:47:17 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 19:23:15 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 19:23:15 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 19:23:19 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 00cd0e16-dcda-4ecb-93ea-8f352ef2578d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 19:23:19 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 19:23:20 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 19:24:30 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 19:24:30 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 19:24:34 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: c0de31a6-1fbb-4849-ac56-871994df6209
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 19:24:35 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 19:24:35 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 19:31:57 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 19:31:57 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 19:32:02 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 493a6020-fd68-45e1-a9c4-3f10f19445de
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 19:32:02 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 19:32:03 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 19:33:48 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 19:33:48 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 19:33:52 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 5fc69d73-c9c4-4348-af83-cc1e748970cd
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 19:33:52 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 19:33:52 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 19:39:58 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 19:39:58 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 19:39:59 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: b577a76f-32bd-484c-b1bd-a4af75c727b3
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 19:40:00 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 19:40:00 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 19:40:03 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 19:40:03 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 19:40:05 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: b279830e-d6c1-4d28-bf8b-50f040d08217
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 19:40:05 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 19:40:06 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 19:42:37 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 19:42:37 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 19:42:41 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: e080117e-442a-47bb-b2e1-e5a0c8f57296
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 19:42:41 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 19:42:42 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 19:53:48 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 19:53:48 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 19:53:52 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: cc76aa63-2bf7-4f71-acdb-60711b4587d9
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 19:53:53 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 19:53:53 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 21:29:08 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 21:29:08 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 21:29:13 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 75f93367-848e-4399-a32d-ab13c2e923b8
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 21:29:13 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 21:29:13 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 21:33:00 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 21:33:00 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 21:33:06 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 2911a355-39b3-46d7-8b76-f8d3c5a6e415
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 21:33:06 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 21:33:07 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 21:39:09 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 21:39:09 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 21:39:13 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: ddff2e14-96b3-4f0d-81eb-f0a3618798d9
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 21:39:14 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 21:39:14 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 21:40:01 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=52s610ms).
+2025-03-16 21:40:18 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 21:40:18 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 21:40:22 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: d326d788-494d-424d-b6d3-4d5a8e272750
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 21:40:23 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 21:40:23 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 21:40:30 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 21:40:30 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 21:40:33 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 0cb1e097-ca82-4e6b-bd35-f55bbacff565
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 21:40:34 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 21:40:34 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 21:41:05 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 21:41:05 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 21:41:10 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 2455c3b9-362d-4069-a037-0464dc14f32d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 21:41:11 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 21:41:11 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 21:51:32 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 21:51:32 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 21:51:37 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 34941f5d-4b3c-4c8e-afdb-d9df098ba976
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 21:51:38 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 21:51:38 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 22:32:51 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=40m43s816ms).
+2025-03-16 23:07:33 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 23:07:33 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 23:07:42 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 05be5101-6474-48c1-a6a1-9e9bce2854f9
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 23:07:42 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 23:07:43 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 23:13:17 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 23:13:17 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 23:13:19 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 3f2b5e53-008a-4b05-a890-99163ee542a9
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 23:13:19 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 23:13:20 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 23:13:23 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 23:13:23 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 23:13:24 [restartedMain] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 1f97dc11-6f8f-46b9-ba93-5f6cb6e8c5a5
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-03-16 23:13:25 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 23:13:25 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 23:15:55 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 23:15:55 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 23:15:58 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'managerController': Resolution of declared constructors on bean Class [com.goorm.friendchise.domain.manager.presentation.ManagerController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@4b745a3a] failed
+2025-03-16 23:20:57 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 23:20:57 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 23:21:00 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'managerService' defined in file [/Users/kimsangho/spring-study/franchise-management/out/production/classes/com/goorm/friendchise/domain/manager/application/ManagerService.class]: Unsatisfied dependency expressed through constructor parameter 4: No qualifying bean of type 'org.springframework.security.authentication.AuthenticationManager' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-16 23:22:15 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 23:22:15 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 23:22:19 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 23:22:20 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 23:26:32 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 23:26:32 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 23:26:37 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 23:26:37 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 23:56:18 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 23:56:18 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 23:56:23 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 23:56:23 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 23:57:04 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 23:57:04 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 23:57:08 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 23:57:09 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-16 23:58:19 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-16 23:58:19 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-16 23:58:24 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-16 23:58:24 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-17 00:04:45 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 00:04:45 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 00:04:53 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-17 00:04:53 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-17 03:43:22 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m217ms).
+2025-03-17 03:44:00 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<1>: (collect.pinpoint.ncloud.com:9991)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:01 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<1>: (collect.pinpoint.ncloud.com:9991)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:03 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<1>: (collect.pinpoint.ncloud.com:9991)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:03 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:04 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:06 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:06 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<1>: (collect.pinpoint.ncloud.com:9991)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:08 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:09 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<4>: (collect.pinpoint.ncloud.com:9993)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:10 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<4>: (collect.pinpoint.ncloud.com:9993)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:10 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<1>: (collect.pinpoint.ncloud.com:9991)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:11 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<4>: (collect.pinpoint.ncloud.com:9993)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:12 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:14 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<4>: (collect.pinpoint.ncloud.com:9993)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:17 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<1>: (collect.pinpoint.ncloud.com:9991)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:18 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:19 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<4>: (collect.pinpoint.ncloud.com:9993)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:26 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<4>: (collect.pinpoint.ncloud.com:9993)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:29 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:44:30 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<1>: (collect.pinpoint.ncloud.com:9991)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:46:06 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<4>: (collect.pinpoint.ncloud.com:9993)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:46:13 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<1>: (collect.pinpoint.ncloud.com:9991)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:46:16 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:46:22 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m58s902ms).
+2025-03-17 03:46:25 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<4>: (collect.pinpoint.ncloud.com:9993)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:46:36 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<1>: (collect.pinpoint.ncloud.com:9991)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:46:44 [grpc-default-executor-2] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 03:58:07 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m44s749ms).
+2025-03-17 04:52:30 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=53m53s122ms).
+2025-03-17 05:42:19 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=49m48s783ms).
+2025-03-17 06:36:38 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=53m49s5ms).
+2025-03-17 06:43:46 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m37s853ms).
+2025-03-17 07:31:21 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=47m34s916ms).
+2025-03-17 07:44:43 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m51s897ms).
+2025-03-17 08:26:41 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=41m58s808ms).
+2025-03-17 08:45:39 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m27s886ms).
+2025-03-17 09:10:05 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=24m25s752ms).
+2025-03-17 12:02:37 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s856ms), soft-evicting connections from pool.
+2025-03-17 12:29:09 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m30s943ms).
+2025-03-17 12:39:30 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m21s173ms).
+2025-03-17 12:44:01 [grpc-default-executor-5] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com: nodename nor servname provided, or not known
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:934)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:852)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 12:44:02 [grpc-default-executor-5] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 12:44:04 [grpc-default-executor-5] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 12:44:06 [grpc-default-executor-5] WARN  io.grpc.internal.ManagedChannelImpl - [Channel<13>: (collect.pinpoint.ncloud.com:9992)] Failed to resolve name. status=Status{code=UNAVAILABLE, description=Unable to resolve host collect.pinpoint.ncloud.com, cause=java.lang.RuntimeException: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:223)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.doResolve(DnsNameResolver.java:282)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$Resolve.run(DnsNameResolver.java:318)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: java.net.UnknownHostException: collect.pinpoint.ncloud.com
+	at java.base/java.net.InetAddress$CachedAddresses.get(InetAddress.java:801)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1385)
+	at java.base/java.net.InetAddress.getAllByName(InetAddress.java:1306)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver$JdkAddressResolver.resolveAddress(DnsNameResolver.java:631)
+	at pinpoint.agent/pinpoint.agent/io.grpc.internal.DnsNameResolver.resolveAddresses(DnsNameResolver.java:219)
+	... 5 more
+}
+2025-03-17 12:44:21 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m20s950ms).
+2025-03-17 12:46:26 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m4s662ms).
+2025-03-17 13:46:27 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s672ms), soft-evicting connections from pool.
+2025-03-17 16:26:28 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 16:26:28 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 16:26:40 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-17 16:26:42 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-17 16:27:52 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m23s504ms).
+2025-03-17 16:31:02 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 16:31:02 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 16:31:13 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-17 16:31:14 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-17 16:44:45 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 16:44:45 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 16:44:47 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'customerService' defined in file [/Users/kimsangho/spring-study/franchise-management/out/production/classes/com/goorm/friendchise/domain/customer/application/CustomerService.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-17 16:44:55 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 16:44:55 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 16:44:57 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'managerService' defined in file [/Users/kimsangho/spring-study/franchise-management/out/production/classes/com/goorm/friendchise/domain/manager/application/ManagerService.class]: Unsatisfied dependency expressed through constructor parameter 4: No qualifying bean of type 'org.springframework.security.authentication.AuthenticationManager' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-17 16:48:49 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 16:48:49 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 16:48:49 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'customerService' defined in file [/Users/kimsangho/spring-study/franchise-management/out/production/classes/com/goorm/friendchise/domain/customer/application/CustomerService.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-17 17:26:01 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 17:26:01 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 17:26:04 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'managerService' defined in file [/Users/kimsangho/spring-study/franchise-management/out/production/classes/com/goorm/friendchise/domain/manager/application/ManagerService.class]: Unsatisfied dependency expressed through constructor parameter 4: No qualifying bean of type 'org.springframework.security.authentication.AuthenticationManager' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-03-17 17:26:37 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 17:26:37 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 17:26:41 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-17 17:26:41 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration': Unsatisfied dependency expressed through method 'setFilterChains' parameter 0: Error creating bean with name 'filterChain' defined in class path resource [com/goorm/friendchise/global/config/SecurityConfig.class]: Failed to instantiate [org.springframework.security.web.SecurityFilterChain]: Factory method 'filterChain' threw exception with message: This object has already been built
+2025-03-17 17:28:40 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 17:28:40 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 17:28:44 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-17 17:28:44 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-17 17:29:42 [http-nio-8080-exec-8] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource .]
+2025-03-17 17:35:17 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 17:35:17 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 17:35:19 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-17 17:35:19 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-17 17:35:22 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 17:35:22 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 17:35:29 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-17 17:35:30 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-17 18:00:39 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 18:00:39 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 18:00:44 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-17 18:00:45 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-17 18:04:08 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-03-17 18:04:09 [restartedMain] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-03-17 18:04:26 [restartedMain] WARN  o.s.s.c.a.w.c.AuthorizeHttpRequestsConfigurer$AuthorizationManagerRequestMatcherRegistry - One of the patterns in [/manager/register, /manager/login, /customer/register, /customer/login, */reissue, /headquarter/store-recommendation-dummy, /headquarter/store-recommendation-stream, /headquarter/store-recommendation-stream-dummy, /notifications/subscribe/**] is missing a leading slash. This is discouraged; please include the leading slash in all your request matcher patterns. In future versions of Spring Security, leaving out the leading slash will result in an exception.
+2025-03-17 18:04:26 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2025-03-17 18:04:39 [http-nio-8080-exec-1] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 1062, SQLState: 23000

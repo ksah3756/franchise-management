@@ -1,5 +1,7 @@
-package com.goorm.friendchise.domain.headquarter.commercialarea;
+package com.goorm.friendchise.domain.headquarter.implement.commercialarea;
 
+import com.goorm.friendchise.domain.headquarter.infrastructure.CommercialAreaRepository;
+import com.goorm.friendchise.domain.headquarter.domain.CommercialArea;
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;

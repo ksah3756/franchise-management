@@ -1,8 +1,8 @@
 package com.goorm.friendchise.domain.customer.infrastructure;
 
-import com.goorm.friendchise.domain.headquarter.domain.category.Category;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantCategory;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
-import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantSubCategory;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.Role;
 import com.goorm.friendchise.domain.store.domain.Store;
@@ -26,8 +26,8 @@ public class FakeStoreRepository implements StoreRepository {
     Headquarter fakeHeadquarter = Headquarter.builder()
             .id(1L)
             .franchiseName("맥도날드")
-            .category(Category.FASTFOOD)
-            .subCategory(SubCategory.NONE)
+            .restaurantCategory(RestaurantCategory.FASTFOOD)
+            .restaurantSubCategory(RestaurantSubCategory.NONE)
             .certificationNumber(UUID.randomUUID().toString())
             .build();
     private final List<Store> stores = new ArrayList<>();

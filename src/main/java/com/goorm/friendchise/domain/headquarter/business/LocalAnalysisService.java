@@ -1,7 +1,7 @@
 package com.goorm.friendchise.domain.headquarter.business;
 
-import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialArea;
-import com.goorm.friendchise.domain.headquarter.commercialarea.CommercialAreaReader;
+import com.goorm.friendchise.domain.headquarter.domain.CommercialArea;
+import com.goorm.friendchise.domain.headquarter.implement.commercialarea.CommercialAreaReader;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.implement.analyzer.LocalDataAnalyzer;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.LocalAnalysisRequest;
@@ -44,8 +44,8 @@ public class LocalAnalysisService {
         List<String> userSelectedCategory = getUserSelectedCategory(req);
         Mono<Map<String, String>> mono = mapDataReader.getTotalPlaceData(
                 headquarter.getFranchiseName(),
-                headquarter.getCategory(),
-                headquarter.getSubCategory(),
+                headquarter.getRestaurantCategory(),
+                headquarter.getRestaurantSubCategory(),
                 userSelectedCategory,
                 req.y(),
                 req.x());
@@ -78,8 +78,8 @@ public class LocalAnalysisService {
         List<String> userSelectedCategory = getUserSelectedCategory(req);
         Mono<Map<String, String>> mono = mapDataReader.getTotalPlaceData(
                 headquarter.getFranchiseName(),
-                headquarter.getCategory(),
-                headquarter.getSubCategory(),
+                headquarter.getRestaurantCategory(),
+                headquarter.getRestaurantSubCategory(),
                 userSelectedCategory,
                 req.y(),
                 req.x());

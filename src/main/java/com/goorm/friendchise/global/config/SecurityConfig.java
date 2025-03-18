@@ -5,6 +5,8 @@ import com.goorm.friendchise.global.auth.implement.jwt.TokenParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -28,11 +30,11 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		return http
+		http
 			.cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
-			.formLogin(AbstractHttpConfigurer::disable)
+			.formLogin(AbstractHttpConfigurer::disable) // UsernamePasswordAuthenticationFilter disable
 			.logout(AbstractHttpConfigurer::disable)
 			.sessionManagement(session -> session
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -44,9 +46,11 @@ public class SecurityConfig {
 				.requestMatchers(PERMIT_ALL_PATTERNS).permitAll()
 				.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
 				.anyRequest().authenticated()
-			)
-			.build();
+			);
+
+			return http.build();
 	}
+
 
 	private static final String[] SWAGGER_PATTERNS = {
 		"/swagger-ui/**",

@@ -1,11 +1,11 @@
-package com.goorm.friendchise.domain.headquarter.domain.category;
+package com.goorm.friendchise.domain.headquarter.domain;
 
 import com.goorm.friendchise.global.exception.CustomException;
 import com.goorm.friendchise.global.exception.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public enum Category {
+public enum RestaurantCategory {
     FASTFOOD("패스트푸드"),
     SNACKFOOD("분식"),
     KOREANFOOD("한식"),
@@ -20,14 +20,14 @@ public enum Category {
 
     private final String value;
 
-    Category(String value) {
+    RestaurantCategory(String value) {
         this.value = value;
     }
 
-    public static Category fromString(String value) {
-        for (Category category : Category.values()) {
-            if (category.getValue().equalsIgnoreCase(value)) {
-                return category;
+    public static RestaurantCategory fromString(String value) {
+        for (RestaurantCategory restaurantCategory : RestaurantCategory.values()) {
+            if (restaurantCategory.getValue().equalsIgnoreCase(value)) {
+                return restaurantCategory;
             }
         }
         throw new CustomException(ErrorCode.FRANCHISE_CATEGORY_NOT_FOUND);

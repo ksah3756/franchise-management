@@ -1,4 +1,4 @@
-package com.goorm.friendchise.domain.headquarter.commercialarea;
+package com.goorm.friendchise.domain.headquarter.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -24,7 +24,7 @@ public class CommercialArea {
     private Long id;
 
     @NotNull
-    @Column(unique = true, length = 50)
+    @Column(unique = true, length = 50) // 유니크 인덱스가 꼭 필요할까?
     private String areaName;
 
     @NotNull

@@ -1,9 +1,9 @@
 package com.goorm.friendchise.domain.headquarter.business;
 
-import com.goorm.friendchise.domain.headquarter.domain.category.Category;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantCategory;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantSubCategory;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterDetailResponse;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterRequest;
 import com.goorm.friendchise.domain.headquarter.dto.headquarter.HeadquarterResponse;
@@ -75,8 +75,8 @@ class HeadquarterServiceTest {
 
 		Headquarter headquarter = Headquarter.builder()
 				.franchiseName("test")
-				.category(Category.FASTFOOD)
-				.subCategory(SubCategory.NONE)
+				.restaurantCategory(RestaurantCategory.FASTFOOD)
+				.restaurantSubCategory(RestaurantSubCategory.NONE)
 				.build();
 		Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
 		savedManager.updateManageId(savedHeadquarter.getId());
@@ -169,8 +169,8 @@ class HeadquarterServiceTest {
 		// given
 		Headquarter headquarter = Headquarter.builder()
 			.franchiseName("test")
-			.category(Category.FASTFOOD)
-			.subCategory(SubCategory.NONE)
+			.restaurantCategory(RestaurantCategory.FASTFOOD)
+			.restaurantSubCategory(RestaurantSubCategory.NONE)
 			.build();
 		Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
 		Manager manager = createManager(savedHeadquarter.getId());
@@ -215,8 +215,8 @@ class HeadquarterServiceTest {
 		// given
 		Headquarter headquarter = Headquarter.builder()
 				.franchiseName("test")
-				.category(Category.FASTFOOD)
-				.subCategory(SubCategory.NONE)
+				.restaurantCategory(RestaurantCategory.FASTFOOD)
+				.restaurantSubCategory(RestaurantSubCategory.NONE)
 				.build();
 		Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
 		Manager manager = createManager(savedHeadquarter.getId());
@@ -246,8 +246,8 @@ class HeadquarterServiceTest {
 		// given
 		Headquarter headquarter = Headquarter.builder()
 				.franchiseName("test")
-				.category(Category.FASTFOOD)
-				.subCategory(SubCategory.NONE)
+				.restaurantCategory(RestaurantCategory.FASTFOOD)
+				.restaurantSubCategory(RestaurantSubCategory.NONE)
 				.build();
 		Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
 		Manager manager = createManager(savedHeadquarter.getId());
@@ -258,8 +258,8 @@ class HeadquarterServiceTest {
 		// then
 		Headquarter foundHeadquarter = headquarterRepository.findById(res.id()).orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
 		assertThat(foundHeadquarter.getFranchiseName()).isEqualTo("newTest");
-		assertThat(foundHeadquarter.getCategory()).isEqualTo(Category.KOREANFOOD);
-		assertThat(foundHeadquarter.getSubCategory()).isEqualTo(SubCategory.GOOKBAB);
+		assertThat(foundHeadquarter.getRestaurantCategory()).isEqualTo(RestaurantCategory.KOREANFOOD);
+		assertThat(foundHeadquarter.getRestaurantSubCategory()).isEqualTo(RestaurantSubCategory.GOOKBAB);
 	}
 
 	@Test
@@ -268,8 +268,8 @@ class HeadquarterServiceTest {
 		// given
 		Headquarter headquarter = Headquarter.builder()
 				.franchiseName("test")
-				.category(Category.FASTFOOD)
-				.subCategory(SubCategory.NONE)
+				.restaurantCategory(RestaurantCategory.FASTFOOD)
+				.restaurantSubCategory(RestaurantSubCategory.NONE)
 				.build();
 		Headquarter savedHeadquarter = headquarterRepository.save(headquarter);
 		Manager manager = createManager(savedHeadquarter.getId());

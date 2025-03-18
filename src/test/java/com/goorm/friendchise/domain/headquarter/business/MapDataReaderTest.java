@@ -1,7 +1,7 @@
 package com.goorm.friendchise.domain.headquarter.business;
 
-import com.goorm.friendchise.domain.headquarter.domain.category.Category;
-import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantSubCategory;
 import com.goorm.friendchise.domain.headquarter.dto.kakaomap.CategoryGroupCode;
 import com.goorm.friendchise.domain.headquarter.implement.map.LocalDataReader;
 import com.goorm.friendchise.domain.headquarter.implement.map.MapDataReader;
@@ -38,7 +38,7 @@ class MapDataReaderTest {
                 .willReturn(""); // 동일 프랜차이즈 매장이 없다고 가정
 
         String categoryDummyResult = "123, 342";
-        given(localDataReader.getCompetitiveStore(eq(SubCategory.SUSHI.getValue()), anyDouble(), anyDouble(), eq(1000)))
+        given(localDataReader.getCompetitiveStore(eq(RestaurantSubCategory.SUSHI.getValue()), anyDouble(), anyDouble(), eq(1000)))
                 .willReturn(Mono.just(categoryDummyResult));
 
         String busStopDummy = "111, 222";
@@ -56,8 +56,8 @@ class MapDataReaderTest {
         // when
         Mono<Map<String, String>> totalPlaceData = mapDataReader.getTotalPlaceData(
                 "testFranchise",
-                Category.JAPANESEFOOD,
-                SubCategory.SUSHI,
+                RestaurantCategory.JAPANESEFOOD,
+                RestaurantSubCategory.SUSHI,
                 List.of("notExistCategory", "대형마트"),
                 37.55185670851289,
                 126.96979548002724
@@ -88,8 +88,8 @@ class MapDataReaderTest {
         // when
         Mono<Map<String, String>> totalPlaceData = mapDataReader.getTotalPlaceData(
                 "맥도날드",
-                Category.FASTFOOD,
-                SubCategory.NONE,
+                RestaurantCategory.FASTFOOD,
+                RestaurantSubCategory.NONE,
                 List.of("백화점", "학교"),
                 37.55185670851289,
                 126.96979548002724

@@ -7,6 +7,7 @@ import com.goorm.friendchise.domain.manager.dto.request.ManageLoginRequest;
 import com.goorm.friendchise.domain.manager.dto.request.ManagerPasswordRequest;
 import com.goorm.friendchise.domain.manager.dto.response.ManagerDetailResponse;
 import com.goorm.friendchise.domain.manager.dto.response.ManagerPersistResponse;
+import com.goorm.friendchise.global.aop.ExecutionTime;
 import com.goorm.friendchise.global.auth.application.AuthService;
 import com.goorm.friendchise.global.auth.application.TokenService;
 import com.goorm.friendchise.global.auth.dto.request.TokenReissueRequest;

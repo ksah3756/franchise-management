@@ -20,6 +20,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        use_sql_comments: true
     defer-datasource-initialization: true
     show-sql: true
     open-in-view: false
@@ -39,3 +41,8 @@ kakao:
 jwt:
   issuer: ${JWT_ISSUER}
   secret: ${JWT_SECRET}
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql: trace

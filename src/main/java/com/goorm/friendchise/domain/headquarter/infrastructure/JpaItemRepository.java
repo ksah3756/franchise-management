@@ -1,7 +1,6 @@
-package com.goorm.friendchise.domain.headquarter.Item.infrastructure;
+package com.goorm.friendchise.domain.headquarter.infrastructure;
 
-import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
-import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
+import com.goorm.friendchise.domain.headquarter.domain.Item;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,16 +1,12 @@
-package com.goorm.friendchise.domain.headquarter.Item.infrastructure;
+package com.goorm.friendchise.domain.headquarter.infrastructure;
 
-import com.goorm.friendchise.domain.headquarter.Item.domain.Item;
-import com.goorm.friendchise.domain.headquarter.Item.domain.ItemRepository;
-import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
+import com.goorm.friendchise.domain.headquarter.domain.Item;
+import com.goorm.friendchise.domain.headquarter.domain.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository

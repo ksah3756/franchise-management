@@ -1,4 +1,4 @@
-package com.goorm.friendchise.domain.headquarter.Item.domain;
+package com.goorm.friendchise.domain.headquarter.domain;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

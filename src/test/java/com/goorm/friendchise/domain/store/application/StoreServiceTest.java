@@ -2,10 +2,10 @@ package com.goorm.friendchise.domain.store.application;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.goorm.friendchise.domain.headquarter.domain.category.Category;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantCategory;
 import com.goorm.friendchise.domain.headquarter.domain.Headquarter;
 import com.goorm.friendchise.domain.headquarter.domain.HeadquarterRepository;
-import com.goorm.friendchise.domain.headquarter.domain.category.SubCategory;
+import com.goorm.friendchise.domain.headquarter.domain.RestaurantSubCategory;
 import com.goorm.friendchise.domain.manager.domain.Manager;
 import com.goorm.friendchise.domain.manager.domain.ManagerRepository;
 import com.goorm.friendchise.domain.store.domain.Store;
@@ -65,7 +65,7 @@ class StoreServiceTest {
 
     @BeforeAll
     static void setUp() {
-        headquarter = Headquarter.of("HeadQuarter", Category.FASTFOOD, SubCategory.MEAT);
+        headquarter = Headquarter.of("HeadQuarter", RestaurantCategory.FASTFOOD, RestaurantSubCategory.MEAT);
         ReflectionTestUtils.setField(headquarter, "id", 1L);
 
         headManager = Manager.create("headQuarter", "test1234", HEADQUARTER);
