@@ -5,7 +5,7 @@
 
 [2023년 서울시 상가임대차 실태조사](https://sftc.seoul.go.kr/fe/bbs/NR_view.do?bbsCd=2&bbsSeq=767&currentPage=1&rowPerPage=10&ctgCd=+&searchKey=&searchVal=)의 주요 상권 별 임대료 데이터와 [서울 열린 데이터 광장](https://data.seoul.go.kr/dataList/OA-15560/S/1/datasetView.do)의 상권 영역 shp 파일을 활용하였습니다.
 
-> 선정된 주요 상권 110곳의 [geojson](https://github.com/ksah3756/franchise-management/blob/dev/commercial_area.geojson?short_path=cd9e391) 과 [sql](https://github.com/ksah3756/franchise-management/blob/dev/commercial_area_data.sql) 파일을 다운로드하실 수 있습니다.
+> 선정된 주요 상권 110곳의 [geojson](https://github.com/ksah3756/franchise-management/blob/dev/commercial_area.geojson?short_path=cd9e391) 과 [sql](https://github.com/ksah3756/franchise-management/blob/dev/commercial_area_data.sql) 파일을 다운로드하실 수 있습니다. (EPSG 4326)
 
 <img width="820" alt="스크린샷 2025-03-17 오전 12 56 45" src="https://github.com/user-attachments/assets/929d0a3e-634a-44bc-a5b1-197805be500f" />
 
