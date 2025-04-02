@@ -69,10 +69,10 @@ class ItemReaderTest {
         // given
         User user = createUser();
         Headquarter headquarter = Headquarter.builder()
+                .userId(user.getId())
                 .franchiseName("test")
                 .restaurantCategory(RestaurantCategory.FASTFOOD)
                 .restaurantSubCategory(RestaurantSubCategory.NONE)
-                .user(user)
                 .build();
 
         Headquarter savedHeadquarter = headquarterRepository.save(headquarter);

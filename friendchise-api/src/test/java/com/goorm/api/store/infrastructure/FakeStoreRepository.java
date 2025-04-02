@@ -15,7 +15,7 @@ public class FakeStoreRepository implements StoreRepository {
     public Store save(Store store) {
         Store savedStore = Store.builder()
                 .id(sequence.getAndIncrement())
-                .user(store.getUser())
+                .userId(store.getUserId())
                 .address(store.getAddress())
                 .dong(store.getDong())
                 .pointX(store.getPointX())
@@ -38,6 +38,19 @@ public class FakeStoreRepository implements StoreRepository {
     @Override
     public void deleteById(Long id) {
         stores.removeIf(store -> store.getId().equals(id));
+    }
+
+    @Override
+    public Optional<Store> findByUserId(Long userId) {
+        return stores.stream()
+                .filter(store -> store.getUserId().equals(userId))
+                .findFirst();
+    }
+
+    @Override
+    public void deleteAll() {
+        stores.clear();
+        sequence.set(1);
     }
 
 }

@@ -8,4 +8,8 @@ public interface StoreRepository {
     Optional<Store> findById(Long id);
 
     void deleteById(Long id);
+
+    Optional<Store> findByUserId(Long userId);
+
+    void deleteAll();
 }

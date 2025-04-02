@@ -24,6 +24,7 @@ class HeadquarterValidatorTest {
         headquarterRepository = new FakeHeadquarterRepository();
         headquarterValidator = new HeadquarterValidator(headquarterRepository);
         user = User.builder()
+                .id(1L)
                 .username("test")
                 .password("1234")
                 .userRole(UserRole.HEADQUARTER)
@@ -34,14 +35,13 @@ class HeadquarterValidatorTest {
     void checkIfFranchiseNameExists() {
         // given
         HeadquarterCreateRequest headquarterCreateRequest1 = HeadquarterCreateRequest.of("테스트", "패스트푸드", "");
-        headquarterRepository.save(HeadquarterCreateRequest.toEntity(user, headquarterCreateRequest1));
+        headquarterRepository.save(HeadquarterCreateRequest.toEntity(user.getId(), headquarterCreateRequest1));
 
         // when
         HeadquarterCreateRequest headquarterCreateRequest2 = HeadquarterCreateRequest.of("테스트", "일식", "초밥");
 
         // then
         assertThrows(Exception.class, () -> headquarterValidator.checkIfFranchiseNameExists(headquarterCreateRequest2));
-
     }
 
     @Test
@@ -49,7 +49,7 @@ class HeadquarterValidatorTest {
     void validateCertificationNumber_equals() {
         // given
         HeadquarterCreateRequest headquarterCreateRequest1 = HeadquarterCreateRequest.of("테스트", "패스트푸드", "");
-        Headquarter savedHeadquarter = headquarterRepository.save(HeadquarterCreateRequest.toEntity(user, headquarterCreateRequest1));
+        Headquarter savedHeadquarter = headquarterRepository.save(HeadquarterCreateRequest.toEntity(user.getId(), headquarterCreateRequest1));
         String certificationNumber = savedHeadquarter.getCertificationNumber();
 
         // when, then
@@ -61,7 +61,7 @@ class HeadquarterValidatorTest {
     void validateCertificationNumber_notEquals() {
         // given
         HeadquarterCreateRequest headquarterCreateRequest1 = HeadquarterCreateRequest.of("테스트", "패스트푸드", "");
-        Headquarter savedHeadquarter = headquarterRepository.save(HeadquarterCreateRequest.toEntity(user, headquarterCreateRequest1));
+        Headquarter savedHeadquarter = headquarterRepository.save(HeadquarterCreateRequest.toEntity(user.getId(), headquarterCreateRequest1));
         String certificationNumber = savedHeadquarter.getCertificationNumber();
 
         // when, then

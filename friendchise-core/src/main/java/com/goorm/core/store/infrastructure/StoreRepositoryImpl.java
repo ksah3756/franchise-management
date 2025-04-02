@@ -25,4 +25,14 @@ public class StoreRepositoryImpl implements StoreRepository {
     public void deleteById(Long id) {
         jpaStoreRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<Store> findByUserId(Long userId) {
+        return jpaStoreRepository.findByUserId(userId);
+    }
+
+    @Override
+    public void deleteAll() {
+        jpaStoreRepository.deleteAll();
+    }
 }

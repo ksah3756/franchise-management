@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service;
 public class HeadquarterReader {
     private final HeadquarterRepository headquarterRepository;
 
+    public Headquarter getHeadquarterByUserId(Long userId) {
+        return headquarterRepository.findByUserId(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));
+    }
+
     public Headquarter getHeadquarterById(Long id) {
         return headquarterRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.HEADQUARTER_NOT_FOUND));

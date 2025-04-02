@@ -11,5 +11,7 @@ public interface JpaHeadquarterRepository extends JpaRepository<Headquarter, Lon
 
     boolean existsByFranchiseName(@NotNull String franchiseName);
 
-    Optional<Headquarter> findByFranchiseName(String franchiseName);
+    Optional<Headquarter> findByFranchiseName(@NotNull String franchiseName);
+
+    Optional<Headquarter> findByUserId(@NotNull Long userId);
 }

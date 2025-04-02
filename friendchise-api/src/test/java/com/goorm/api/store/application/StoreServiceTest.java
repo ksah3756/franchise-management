@@ -16,6 +16,7 @@ import com.goorm.core.store.domain.StoreRepository;
 import com.goorm.core.user.domain.User;
 import com.goorm.core.user.domain.UserRepository;
 import com.goorm.core.user.domain.UserRole;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,14 +66,20 @@ class StoreServiceTest {
        storeManager = userRepository.save(user);
 
        Headquarter hq = Headquarter.builder()
+               .userId(headquarterManager.getId())
                .franchiseName("맥도날드")
                .certificationNumber("123456")
                .restaurantCategory(RestaurantCategory.FASTFOOD)
                .restaurantSubCategory(RestaurantSubCategory.NONE)
-               .user(headquarterManager)
                .build();
 
        headquarter = headquarterRepository.save(hq);
+    }
+
+    @AfterEach
+    void tearDown() {
+        headquarterRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @DisplayName("인증된 사용자가 Store을 생성합니다.")
@@ -139,14 +146,14 @@ class StoreServiceTest {
                 .build();
 
         Store store = Store.create(
+                storeManager.getId(),
                 req.name(),
                 req.address(),
                 req.dong(),
                 req.x(),
                 req.y(),
                 req.franchiseName(),
-                headquarter.getId(),
-                storeManager
+                headquarter.getId()
         );
 
         storeRepository.save(store);
@@ -177,16 +184,17 @@ class StoreServiceTest {
                 .build();
 
         Store store = Store.create(
+                storeManager.getId(),
                 reqDto.name(),
                 reqDto.address(),
                 reqDto.dong(),
                 reqDto.x(),
                 reqDto.y(),
                 reqDto.franchiseName(),
-                headquarter.getId(),
-                storeManager
+                headquarter.getId()
         );
 
+        storeRepository.save(store);
 
         StoreReqDto updatedDto = StoreReqDto.builder()
                 .name("맥도날드 역삼점")
@@ -201,11 +209,12 @@ class StoreServiceTest {
                 .build();
 
      //when
-        storeService.updateStoreInfo(storeManager,updatedDto);
+        storeService.updateStoreInfo(storeManager, updatedDto);
+        Store updatedStore = storeRepository.findById(store.getId()).orElseThrow(() -> new CustomException(ErrorCode.STORE_NOT_FOUND));
 
-     //then
-        assertThat(store.getAddress()).isEqualTo(updatedDto.address());
-        assertThat(store.getFranchiseName()).isEqualTo("맥도날드 역삼점");
+        //then
+        assertThat(updatedStore.getAddress()).isEqualTo(updatedDto.address());
+        assertThat(updatedStore.getName()).isEqualTo(updatedDto.name());
     }
 
     @DisplayName("Store을 삭제합니다.")
@@ -225,14 +234,14 @@ class StoreServiceTest {
                 .build();
 
         Store store = Store.create(
+                storeManager.getId(),
                 reqDto.name(),
                 reqDto.address(),
                 reqDto.dong(),
                 reqDto.x(),
                 reqDto.y(),
                 reqDto.franchiseName(),
-                headquarter.getId(),
-                storeManager
+                headquarter.getId()
         );
         Store savedStore = storeRepository.save(store);
 

@@ -30,6 +30,13 @@ public class FakeHeadquarterRepository implements HeadquarterRepository {
     }
 
     @Override
+    public Optional<Headquarter> findByUserId(Long userId) {
+        return headquarters.stream()
+                .filter(headquarter -> headquarter.getUserId().equals(userId))
+                .findFirst();
+    }
+
+    @Override
     public boolean existsByFranchiseName(String franchiseName) {
         Optional<Headquarter> foundHeadquarter = headquarters.stream()
                 .filter(headquarter -> headquarter.getFranchiseName().equals(franchiseName))

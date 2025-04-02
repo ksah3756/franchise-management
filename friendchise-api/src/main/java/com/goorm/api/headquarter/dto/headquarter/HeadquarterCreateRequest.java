@@ -27,9 +27,9 @@ public record HeadquarterCreateRequest(
         return new HeadquarterCreateRequest(franchiseName, category, subCategory);
     }
 
-    public static Headquarter toEntity(User user, HeadquarterCreateRequest headquarterCreateRequest) {
+    public static Headquarter toEntity(Long userId, HeadquarterCreateRequest headquarterCreateRequest) {
         return Headquarter.create(
-                user,
+                userId,
                 headquarterCreateRequest.franchiseName(),
                 RestaurantCategory.fromString(headquarterCreateRequest.category),
                 RestaurantSubCategory.fromString(headquarterCreateRequest.subCategory));

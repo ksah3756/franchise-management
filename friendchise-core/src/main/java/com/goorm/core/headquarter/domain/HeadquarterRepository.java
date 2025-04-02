@@ -8,6 +8,8 @@ public interface HeadquarterRepository {
 
     Optional<Headquarter> findById(Long id);
 
+    Optional<Headquarter> findByUserId(Long userId);
+
     boolean existsByFranchiseName(String franchiseName);
 
     void deleteById(Long id);

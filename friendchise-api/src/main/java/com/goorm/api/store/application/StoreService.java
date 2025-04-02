@@ -46,14 +46,14 @@ public class StoreService {
         headquarterValidator.validateCertificationNumber(headquarter.getId(), req.certificationNumber());
 
         Store store = Store.create(
+                user.getId(),
                 req.name(),
                 req.address(),
                 req.dong(),
                 req.x(),
                 req.y(),
                 req.franchiseName(),
-                headquarter.getId(),
-                user
+                headquarter.getId()
         );
         storeRepository.save(store);
 
@@ -76,14 +76,14 @@ public class StoreService {
         Headquarter headquarter = headquarterReader.getHeadquarterByFranchiseName(req.franchiseName());
 
         Store newStore = Store.create(
+                user.getId(),
                 req.name(),
                 req.address(),
                 req.dong(),
                 req.x(),
                 req.y(),
                 req.franchiseName(),
-                headquarter.getId(),
-                user
+                headquarter.getId()
         );
         store.updateStore(newStore);
     }
@@ -99,7 +99,7 @@ public class StoreService {
     }
 
     private Store findIfStoreExists(User user) {
-        return storeRepository.findById(user.getId()).orElseThrow(NoAuthenticationException::new);
+        return storeRepository.findByUserId(user.getId()).orElseThrow(NoAuthenticationException::new);
     }
 
 }

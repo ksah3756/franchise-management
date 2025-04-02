@@ -66,10 +66,10 @@ class ItemWriterTest {
         // given: Headquarter 생성 및 저장
         User user = createUser();
         Headquarter headquarter = Headquarter.builder()
+                .userId(user.getId())
                 .franchiseName("test")
                 .restaurantCategory(RestaurantCategory.FASTFOOD)
                 .restaurantSubCategory(RestaurantSubCategory.NONE)
-                .user(user)
                 .build();
 
         Headquarter savedHeadquarter = headquarterRepository.save(headquarter);

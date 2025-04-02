@@ -21,14 +21,14 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @Entity
+@Table(indexes = @Index(name = "idx_user_id", columnList = "user_id"))
 public class Headquarter extends BaseEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @NotNull
+    private Long userId;
 
     @NotNull
     @Column(unique = true, length = 50)
@@ -58,9 +58,9 @@ public class Headquarter extends BaseEntity {
     @OneToMany(mappedBy = "headquarterId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Store> stores = new ArrayList<>();
 
-    public static Headquarter create(User user, String franchiseName, RestaurantCategory restaurantCategory, RestaurantSubCategory restaurantSubCategory) {
+    public static Headquarter create(Long userId, String franchiseName, RestaurantCategory restaurantCategory, RestaurantSubCategory restaurantSubCategory) {
         return Headquarter.builder()
-                .user(user)
+                .userId(userId)
                 .franchiseName(franchiseName)
                 .restaurantCategory(restaurantCategory)
                 .restaurantSubCategory(restaurantSubCategory)

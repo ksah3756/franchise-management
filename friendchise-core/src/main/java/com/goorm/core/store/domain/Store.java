@@ -14,15 +14,14 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(indexes = @Index(name = "idx_user_id", columnList = "user_id"))
 public class Store extends BaseEntity {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "user_id")
-    private User user;
+    @NotNull
+    private Long userId;
 
     @NotNull
     @Column(length = 50)
@@ -43,7 +42,7 @@ public class Store extends BaseEntity {
     private Double pointY;
 
     @NotNull
-    @Column(unique = true, length = 50)
+    @Column(length = 50)
     private String franchiseName;
 
     @Builder.Default
@@ -54,19 +53,20 @@ public class Store extends BaseEntity {
     @Column(nullable = false)
     private Long headquarterId;
 
-    public Store(String name, String address, String dong, Double pointX, Double pointY, String franchiseName, Long headquarterId, User user) {
+    public Store(Long userId, String name, String address, String dong, Double pointX, Double pointY, String franchiseName, Long headquarterId) {
         this.name = name;
+        this.userId = userId;
         this.address = address;
         this.dong = dong;
         this.pointX = pointX;
         this.pointY = pointY;
         this.franchiseName = franchiseName;
-        this.user = user;
         this.headquarterId = headquarterId;
     }
 
-    public static Store create(String name, String address, String dong, Double pointX, Double pointY, String franchiseName, Long headquarterId, User user) {
+    public static Store create(Long userId, String name, String address, String dong, Double pointX, Double pointY, String franchiseName, Long headquarterId) {
         return Store.builder()
+            .userId(userId)
             .name(name)
             .address(address)
             .dong(dong)
@@ -74,7 +74,6 @@ public class Store extends BaseEntity {
             .pointY(pointY)
             .franchiseName(franchiseName)
             .headquarterId(headquarterId)
-            .user(user)
             .build();
     }
 

@@ -30,7 +30,7 @@ class HeadquarterWriterTest {
     @DisplayName("성공적으로 본사를 생성한다.")
     void createHeadquarter() {
         //given
-        Headquarter headquarter = Headquarter.create(user, "테스트", RestaurantCategory.FASTFOOD, RestaurantSubCategory.NONE);
+        Headquarter headquarter = Headquarter.create(user.getId(), "테스트", RestaurantCategory.FASTFOOD, RestaurantSubCategory.NONE);
 
         // when
         Headquarter createdHeadquarter = headquarterWriter.createHeadquarter(headquarter);
@@ -43,7 +43,7 @@ class HeadquarterWriterTest {
     @DisplayName("성공적으로 본사를 수정한다.")
     void updateHeadquarter() {
         // given
-        Headquarter headquarter = Headquarter.create(user, "테스트", RestaurantCategory.FASTFOOD, RestaurantSubCategory.NONE);
+        Headquarter headquarter = Headquarter.create(user.getId(), "테스트", RestaurantCategory.FASTFOOD, RestaurantSubCategory.NONE);
         Headquarter newHeadquarter = Headquarter.forUpdate("테스트2", RestaurantCategory.FASTFOOD, RestaurantSubCategory.NONE);
 
         // when
@@ -57,7 +57,7 @@ class HeadquarterWriterTest {
     @DisplayName("성공적으로 본사를 삭제한다.")
     void deleteHeadquarter() {
         // given
-        Headquarter headquarter = Headquarter.create(user, "테스트", RestaurantCategory.FASTFOOD, RestaurantSubCategory.NONE);
+        Headquarter headquarter = Headquarter.create(user.getId(), "테스트", RestaurantCategory.FASTFOOD, RestaurantSubCategory.NONE);
         headquarterRepository.save(headquarter);
 
         // when

@@ -24,6 +24,11 @@ public class HeadquarterRepositoryImpl implements HeadquarterRepository {
     }
 
     @Override
+    public Optional<Headquarter> findByUserId(Long userId) {
+        return jpaHeadquarterRepository.findByUserId(userId);
+    }
+
+    @Override
     public boolean existsByFranchiseName(String franchiseName) {
         return jpaHeadquarterRepository.existsByFranchiseName(franchiseName);
     }

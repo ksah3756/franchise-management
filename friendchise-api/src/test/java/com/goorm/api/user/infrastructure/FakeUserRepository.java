@@ -53,4 +53,10 @@ public class FakeUserRepository implements UserRepository {
     public void deleteById(Long id) {
         users.removeIf(user -> user.getId().equals(id));
     }
+
+    @Override
+    public void deleteAll() {
+        users.clear();
+        sequence.set(1);
+    }
 }
