@@ -1,1 +1,3 @@
 rootProject.name = 'friendchise'
+
+include 'friendchise-core', 'friendchise-api', 'friendchise-common'

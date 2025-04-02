@@ -1,0 +1,139 @@
+spring.application.name: friendchise
+spring:
+  profiles:
+    active: prod
+
+---
+
+server:
+  port: ${PORT:8080}
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+    activate:
+      on-profile: prod
+  application:
+    name: friendchise
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME:admin}
+    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      default_batch_fetch_size: 1000
+      jdbc:
+        time_zone: Asia/Seoul
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    defer-datasource-initialization: true
+    show-sql: true
+    open-in-view: false
+    database-platform: org.hibernate.spatial.dialect.MySQL8SpatialDialect
+  data:
+    redis:
+      host: redis
+      port: 6379
+      password: ${REDIS_PASSWORD}
+
+springdoc:
+  show-login-endpoint: true
+
+kakao:
+  apiKey: ${KAKAO_API_KEY}
+  api:
+    findPosition: /search/address.json
+    convert-position-into-info: /geo/coord2regioncode.JSON
+
+jwt:
+  issuer: ${JWT_ISSUER}
+  secret: ${JWT_SECRET}
+
+---
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/friendchise
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      default_batch_fetch_size: 1000
+      jdbc:
+        time_zone: Asia/Seoul
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        use_sql_comments: true
+    defer-datasource-initialization: true
+    show-sql: true
+    open-in-view: false
+    database-platform: org.hibernate.spatial.dialect.MySQL8SpatialDialect
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ${REDIS_PASSWORD}
+
+springdoc:
+  show-login-endpoint: true
+
+kakao:
+  apiKey: ${KAKAO_API_KEY}
+  api:
+    findPosition: /search/address.json
+    convert-position-into-info: /geo/coord2regioncode.JSON
+
+jwt:
+  issuer: ${JWT_ISSUER}
+  secret: ${JWT_SECRET}
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql: trace
+    org.springframework.boot.context.config: DEBUG
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    generate-ddl: true
+  sql:
+    init:
+      mode: never
+
+  data:
+    jpa:
+      auditing:
+        enabled: false
+
+jwt:
+  issuer: test_issuer
+  secret: test_secret
+
