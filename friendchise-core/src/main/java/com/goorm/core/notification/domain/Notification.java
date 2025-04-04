@@ -1,0 +1,44 @@
+package com.goorm.core.notification.domain;
+
+
+import com.goorm.core.common.domain.BaseEntity;
+import jakarta.persistence.*;
+import lombok.*;
+
+import static lombok.AccessLevel.PROTECTED;
+
+@Entity
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
+public class Notification extends BaseEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(nullable = false)
+	private Long storeId;
+
+	@Column(nullable = false, length = 100)
+	private String title;
+
+	@Column(nullable = false, length = 255)
+	private String content;
+
+	@Column(nullable = false)
+	private boolean isRead;
+
+	public static Notification create(Long storeId, String title, String content) {
+		return Notification.builder()
+			.storeId(storeId)
+			.title(title)
+			.content(content)
+			.isRead(false)
+			.build();
+	}
+
+	public void markAsRead() {
+		this.isRead = true;
+	}
+}

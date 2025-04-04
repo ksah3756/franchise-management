@@ -1,0 +1,139 @@
+package com.goorm.api.auth.config;
+
+import com.goorm.api.auth.application.LoginService;
+import com.goorm.api.auth.filter.LoginFilter;
+import com.goorm.api.auth.filter.LoginSuccessHandler;
+import com.goorm.api.auth.filter.TokenAuthenticationFilter;
+import com.goorm.api.auth.implement.jwt.TokenParser;
+import com.goorm.api.auth.implement.jwt.TokenProvider;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.Collections;
+
+@Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
+@EnableMethodSecurity(securedEnabled = true)
+@Slf4j
+public class SecurityConfig {
+	private final TokenParser tokenParser;
+	private final TokenProvider tokenProvider;
+	private final ApplicationEventPublisher eventPublisher;
+	private final LoginService loginService;
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+		http
+			.cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
+			.csrf(AbstractHttpConfigurer::disable)
+			.httpBasic(AbstractHttpConfigurer::disable)
+			.formLogin(AbstractHttpConfigurer::disable) // UsernamePasswordAuthenticationFilter disable
+			.logout(AbstractHttpConfigurer::disable)
+			.sessionManagement(session -> session
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			)
+			.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+			.addFilterBefore(loginFilter(), UsernamePasswordAuthenticationFilter.class)
+			.authorizeHttpRequests(auth -> auth
+				.requestMatchers(SWAGGER_PATTERNS).permitAll()
+				.requestMatchers(STATIC_RESOURCES_PATTERNS).permitAll()
+				.requestMatchers(PERMIT_ALL_PATTERNS).permitAll()
+				.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+				.anyRequest().authenticated()
+			);
+
+			return http.build();
+	}
+
+
+	private static final String[] SWAGGER_PATTERNS = {
+		"/swagger-ui/**",
+		"/actuator/**",
+		"/v3/api-docs/**",
+	};
+
+	private static final String[] STATIC_RESOURCES_PATTERNS = {
+		"/img/**",
+		"/css/**",
+		"/js/**",
+		"/cloud/**",
+	};
+
+	private static final String[] PERMIT_ALL_PATTERNS = {
+		"/error",
+		"/favicon.ico",
+		"/index.html",
+		"/",
+	};
+
+	private static final String[] PUBLIC_ENDPOINTS = {
+			"/user/register",
+			"/user/login",
+			"*/reissue",
+			"/headquarter/store-recommendation-dummy",
+			"/headquarter/store-recommendation-stream",
+			"/headquarter/store-recommendation-stream-dummy",
+			"/notifications/subscribe/**"
+	};
+
+	CorsConfigurationSource corsConfigurationSource() {
+		return request -> {
+			CorsConfiguration config = new CorsConfiguration();
+			config.setAllowedHeaders(Collections.singletonList("*"));
+			config.setAllowedMethods(Collections.singletonList("*"));
+			config.setAllowedOriginPatterns(Arrays.asList(
+				"http://localhost:3000",
+				"http://localhost:8080"
+			));
+			config.setAllowCredentials(true);
+			return config;
+		};
+	}
+
+	public TokenAuthenticationFilter tokenAuthenticationFilter() {
+		return new TokenAuthenticationFilter(tokenParser);
+	}
+
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager() throws Exception {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(loginService);
+		provider.setPasswordEncoder(bCryptPasswordEncoder());
+
+		return new ProviderManager(provider);
+	}
+
+	private LoginFilter loginFilter() throws Exception {
+		LoginFilter loginFilter = new LoginFilter();
+		loginFilter.setFilterProcessesUrl("/user/login");
+		loginFilter.setAuthenticationSuccessHandler(new LoginSuccessHandler(tokenProvider, eventPublisher));
+		loginFilter.setAuthenticationManager(authenticationManager());
+		return loginFilter;
+	}
+}
