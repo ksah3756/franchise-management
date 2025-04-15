@@ -1,5 +1,10 @@
 ## 요식업 프랜차이즈 본사의 매장 입점 여부 결정을 도와주기 위한 입지 분석 기능 (서울특별시 내)
 
+### System Architecture
+---
+
+<img width="752" alt="스크린샷 2025-04-14 오후 12 10 15" src="https://github.com/user-attachments/assets/061531aa-2255-45ba-a7ae-724dac4f49fa" />
+
 ### Demo
 ---
 
